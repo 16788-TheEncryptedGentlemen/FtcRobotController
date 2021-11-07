@@ -7,14 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.RobotParts.Odometry.OdometryOmniWheels; 
 import org.firstinspires.ftc.RobotParts.IMU;
 import org.firstinspires.ftc.RobotParts.Drivetrains.MecanumDrivetrain;
-import org.firstinspires.ftc.RobotParts.Intakes.CompliantIntake;
+import org.firstinspires.ftc.RobotParts.Intakes.TestIntake;
 import org.firstinspires.ftc.RobotParts.Grabbers.*;
 import org.firstinspires.ftc.RobotParts.Webcam.Webcam;
 import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.RingShooterOld;
 import org.firstinspires.ftc.RobotParts.Other.ShootPositionColorSensors;
 
 
-public class WedstrijdRobot extends LoaderDisplay
+public class WedstrijdRobot2022 extends LoaderDisplay
 {
     //---------------------------------------------------------------------
     //Used variabels:
@@ -33,13 +33,9 @@ public class WedstrijdRobot extends LoaderDisplay
         public OdometryOmniWheels Odometry;
         public IMU imu;
         public MecanumDrivetrain Drivetrain; 
-        public CompliantIntake Intake;
-        public WobbleGoalDropper WobbleGoaldropper;
-        public WobbleGoalGrabber WobbleGoalgrabber;
-        public Webcam webcam;
-        public RingShooterOld Shooter;
-        public ShootPositionColorSensors ColorSensors;
-        public TestThreadGrabber TestGrabber;
+      //  public Webcam webcam;
+      //  public ShootPositionColorSensors ColorSensors;
+        public TestIntake Intake;
     //---------------------------------------------------------------------
     //Used variabels:
     //---------------------------------------------------------------------
@@ -53,7 +49,7 @@ public class WedstrijdRobot extends LoaderDisplay
     // * LinearOpMode: The constructor for a LinearOpMode program
     // * OpMode: The constructor for an OpMode program
     //---------------------------------------------------------------------
-        public WedstrijdRobot(LinearOpMode _runningLinearOpMode)
+        public WedstrijdRobot2022(LinearOpMode _runningLinearOpMode)
         { 
             runningLinearOpMode = _runningLinearOpMode;
             HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
@@ -64,25 +60,19 @@ public class WedstrijdRobot extends LoaderDisplay
             imu = new IMU(hardwaremap);
             ShowLoading("Drivetrain"); 
             Drivetrain = new MecanumDrivetrain(runningLinearOpMode, Odometry, imu);
-            ShowLoading("Intake");   
-            Intake = new CompliantIntake(hardwaremap);   
-            ShowLoading("Shooter");
-            Shooter = new RingShooterOld(hardwaremap, Drivetrain);
-            ShowLoading("ColorSensors");
-            ColorSensors = new ShootPositionColorSensors(runningLinearOpMode, Drivetrain);
-            ShowLoading("WobbleGoaldropper");
-            WobbleGoaldropper = new WobbleGoalDropper(runningLinearOpMode);
-            ShowLoading("webcam");
-            webcam = new Webcam(runningLinearOpMode);
-            ShowLoading("TestThreadGrabber");
-            TestGrabber = new TestThreadGrabber(runningLinearOpMode);
+        //    ShowLoading("ColorSensors");
+           // ColorSensors = new ShootPositionColorSensors(runningLinearOpMode, Drivetrain);
+          //  ShowLoading("webcam");
+            //webcam = new Webcam(runningLinearOpMode);
+          //  ShowLoading("Intake"); 
+        //    Intake = new TestIntake (hardwaremap);
             
             ShowLoading("Done initializing! Press start to play");
         }
         
         
         
-        public WedstrijdRobot(OpMode _runningOpmode)
+        public WedstrijdRobot2022(OpMode _runningOpmode)
         {
             runningOpMode = _runningOpmode;
             HardwareMap hardwaremap = runningOpMode.hardwareMap;
@@ -93,16 +83,8 @@ public class WedstrijdRobot extends LoaderDisplay
             imu = new IMU(hardwaremap);  
             ShowLoading("Drivetrain"); 
             Drivetrain = new MecanumDrivetrain(hardwaremap, Odometry, imu); 
-            ShowLoading("Intake");
-            Intake = new CompliantIntake(hardwaremap);         
-            ShowLoading("Shooter");
-            Shooter = new RingShooterOld(hardwaremap, Drivetrain);
-            ShowLoading("ColorSensors");
-            ColorSensors = new ShootPositionColorSensors(hardwaremap, Drivetrain);
-            ShowLoading("WobbleGoalgrabber");
-            WobbleGoalgrabber = new WobbleGoalGrabber(hardwaremap);  
-            ShowLoading("TestThreadGrabber");
-            TestGrabber = new TestThreadGrabber(runningOpMode);            
+            //ShowLoading("ColorSensors");
+           // ColorSensors = new ShootPositionColorSensors(hardwaremap, Drivetrain);
             
             ShowLoading("Done initializing! Press start to play");
         }
@@ -118,10 +100,7 @@ public class WedstrijdRobot extends LoaderDisplay
     //Other methods
     //---------------------------------------------------------------------
     
-        public void KillAllThreads()
-        {
-            TestGrabber.Kill();
-        }
+    
     
     //---------------------------------------------------------------------
     //Other methods

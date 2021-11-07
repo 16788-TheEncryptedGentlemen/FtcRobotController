@@ -19,11 +19,11 @@ public class WobbleGoalGrabber {
     
     public void GrabWobbleGoal()
     {
-        Grabber.setPosition(0.6);
+        Grabber.setPosition(0.0);
     }
     
     public void DropWobbleGoal()
     {
-        Grabber.setPosition(1.0);
+        Grabber.setPosition(0.5);
     }    
 }

@@ -30,7 +30,7 @@ public class MecanumDrivetrain
         public DcMotorEx LV;
         public DcMotorEx LA;
         private OdometryOmniWheels Odometry;
-        private IMU imu;
+        public IMU imu;
     //-----------------------------------------------------------
     //Used Variables
     //-----------------------------------------------------------
@@ -53,8 +53,14 @@ public class MecanumDrivetrain
             LA = hardwareMap.get(DcMotorEx.class, "LA");
             
             //Reversing the left motors because they are mirrored
-            LV.setDirection(DcMotorEx.Direction.REVERSE);
-            LA.setDirection(DcMotorEx.Direction.REVERSE);
+            RV.setDirection(DcMotorEx.Direction.REVERSE);
+            RA.setDirection(DcMotorEx.Direction.REVERSE);
+            
+            RV.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            RA.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            LV.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            LA.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+            
             
             //Run all motors with encoders
             RV.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);    
@@ -213,13 +219,15 @@ public class MecanumDrivetrain
     // * Follow(): The robot will follow a theoretical line with a specific angle. Note that this method does not loop
     // * TurnRobotAO(): Turns the robot on the absolute orientation plane with a certain angle
     //---------------------------------------------------------
-        public void DriveStraight(double Distance, double Speed)
+        public void DriveStraight(double Distance, double Power)
         {
+            Odometry.Reset();
+            
             double OriginYPos = Odometry.getY();
             double endDistance = Math.abs(Distance + OriginYPos);
             
             while(Math.abs(Odometry.getY()) < endDistance && !runningOpMode.isStopRequested())
-                setPower(Speed);
+                setPower(Power*Math.signum(Distance));
             
             setPower(0);            
         }

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.OtherObjects.Timer;
 
 @Autonomous
 
-public class AutonomousRoute extends LinearOpMode{
+public class AutonomousBlueRight1 extends LinearOpMode{
     
     public void runOpMode() {
         
@@ -29,56 +29,61 @@ public class AutonomousRoute extends LinearOpMode{
         //----------------------------------------------------------------------------
         //Routes
         //----------------------------------------------------------------------------
-            BezierCurveRoute Ring0ToDropOff = new BezierCurveRoute(
-                new double[] {104.204, -56.882}, //The x-coefficients 
-                new double[] {-30.5920000000001, 188.332}, //The y-coefficients 
+            BezierCurveRoute blueStartTo0 = new BezierCurveRoute(
+                new double[] {-21.51, 73.4925, -120.695}, //The x-coefficients 
+                new double[] {367.4625, -256.3275, 40.6300000000001}, //The y-coefficients 
                 Robot, 
                 DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
                 this 
-            );        
-            BezierCurveRoute Ring0ToShoot = new BezierCurveRoute(
-                new double[] {-120.456, 0.955999999999989}, //The x-coefficients 
-                new double[] {-58.316, 57.838}, //The y-coefficients 
+            );  
+            
+           BezierCurveRoute blue0ToPowerShot = new BezierCurveRoute(
+                new double[] {117.7075}, //The x-coefficients 
+                new double[] {-3.585}, //The y-coefficients 
                 Robot, 
                 DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
                 this 
             );
             
-            BezierCurveRoute Ring1ToDropOff = new BezierCurveRoute(
-                new double[] {173.514, -157.74, -27.2459999999997}, //The x-coefficients 
-                new double[] {11.4719999999998, 600.846, -405.822}, //The y-coefficients 
+            BezierCurveRoute blueStartTo1 = new BezierCurveRoute(
+                new double[] {215.1, -280.825, -376.425, 1186.0375, -752.85}, //The x-coefficients 
+                new double[] {-11.9500000000002, -137.425, 3035.3, -4561.9125, 1888.6975}, //The y-coefficients 
                 Robot, 
                 DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
-                this 
-            );        
-            BezierCurveRoute Ring1ToShoot = new BezierCurveRoute(
-                new double[] {8.60399999999981, -68.8319999999999}, //The x-coefficients 
-                new double[] {-108.028, 58.794}, //The y-coefficients 
-                Robot, 
-                DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
                 this 
             );
             
-            BezierCurveRoute Ring4ToDropOff = new BezierCurveRoute(
-                new double[] {105.16, -58.3160000000001}, //The x-coefficients 
-                new double[] {-19.1200000000001, 283.932}, //The y-coefficients 
+            BezierCurveRoute blue1ToPowerShot = new BezierCurveRoute(
+                new double[] {-16.1325, 39.4349999999999, 34.6550000000001}, //The x-coefficients 
+                new double[] {-197.175, 236.61, -93.8075000000001}, //The y-coefficients 
                 Robot, 
                 DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
                 this 
             );
-            BezierCurveRoute Ring4ToShoot = new BezierCurveRoute(
-                new double[] {1.43399999999991, -2.86799999999982, -118.066}, //The x-coefficients 
-                new double[] {-331.254, 329.82, -107.55}, //The y-coefficients 
+            
+            BezierCurveRoute blueStartTo4 = new BezierCurveRoute(
+                new double[] {382.4, -1129.275, 1009.775, 268.875, -598.0975}, //The x-coefficients 
+                new double[] {47.8000000000001, -89.625, 2312.325, -3157.7875, 1156.76}, //The y-coefficients 
                 Robot, 
                 DriveSpeed, 
-                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
                 this 
             );
+
+            BezierCurveRoute blue4ToPowerShot = new BezierCurveRoute(
+                new double[] {281.4225, -227.6475, 62.7375}, //The x-coefficients 
+                new double[] {-43.02, 96.795, -167.3}, //The y-coefficients 
+                Robot, 
+                DriveSpeed, 
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW 
+                this 
+            );
+
+
         //----------------------------------------------------------------------------
         //Routes
         //----------------------------------------------------------------------------
@@ -97,19 +102,19 @@ public class AutonomousRoute extends LinearOpMode{
         switch(NumerofRings)
         {
             case 0:
-                Ring0ToDropOff.ExecuteWithPointSkip();
+                blueStartTo0.ExecuteWithPointSkip();
                 Robot.WobbleGoaldropper.Drop(); 
-                Ring0ToShoot.ExecuteWithPointSkip();
+                blue0ToPowerShot.ExecuteWithPointSkip();
                 break;
             case 1:
-                Ring1ToDropOff.ExecuteWithPointSkip();
+                blueStartTo1.ExecuteWithPointSkip();
                 Robot.WobbleGoaldropper.Drop(); 
-                Ring1ToShoot.ExecuteWithPointSkip();
+                blue1ToPowerShot.ExecuteWithPointSkip();
                 break;
             case 4:
-                Ring4ToDropOff.ExecuteWithPointSkip();
+                blueStartTo4.ExecuteWithPointSkip();
                 Robot.WobbleGoaldropper.Drop(); 
-                Ring4ToShoot.ExecuteWithPointSkip();
+                blue4ToPowerShot.ExecuteWithPointSkip();
                 break;
         }
         

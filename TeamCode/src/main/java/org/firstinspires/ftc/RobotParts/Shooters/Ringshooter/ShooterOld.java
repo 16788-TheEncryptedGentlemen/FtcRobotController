@@ -11,7 +11,7 @@ import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
 
 
-public class Shooter
+public class ShooterOld
 {
     //------------------------------------------------------------------------
     //Used variables:    
@@ -27,12 +27,12 @@ public class Shooter
     //------------------------------------------------------------------------
         public DcMotorEx ShootMotor;
         public Target target;
-        private PIDFCoefficients PIDFCoeff = new PIDFCoefficients(1000, 300, 0, 200); 
-        public double VelocityHighGoal = 1700;  
-        public double VelocityPowerShot = 1300;     
-        public final double WarmupTimeHighGoal = 1.5;
-        public final double WarmupTimePowerShot = 1.0;
-        private int ShooterReadyStateMargin = 20;
+        private PIDFCoefficients PIDFCoeff = new PIDFCoefficients(45, 0.3, 0, 12.7); 
+        public double VelocityHighGoal = 1650;  
+        public double VelocityPowerShot = 1430;     //1430
+        public final double WarmupTimeHighGoal = 4;
+        public final double WarmupTimePowerShot = 4;
+        private int ShooterReadyStateMargin = 10;
         
         public enum SHOOTER_STATE
         {
@@ -52,12 +52,12 @@ public class Shooter
     //------------------------------------------------------------------------
     //Constructor
     //------------------------------------------------------------------------
-    public Shooter(HardwareMap hardwaremap, Target _target)
+    public ShooterOld(HardwareMap hardwaremap, Target _target)
     {
         target = _target;
         
         ShootMotor = hardwaremap.get(DcMotorEx.class, "Shooter");
-        //ShootMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODERS, PIDFCoeff);
+        ShootMotor.setPIDFCoefficients(DcMotorEx.RunMode.RUN_USING_ENCODERS, PIDFCoeff);
         ShootMotor.setDirection(DcMotorEx.Direction.REVERSE);
     }
     //------------------------------------------------------------------------

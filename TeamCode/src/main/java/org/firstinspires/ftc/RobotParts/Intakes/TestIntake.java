@@ -3,13 +3,14 @@ package org.firstinspires.ftc.RobotParts.Intakes;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class CompliantIntake {
+public class TestIntake {
 
     //---------------------------------------------------------------------------
     //Used variables
     // * IntakeMotor: The motor used to intake the motors
     //---------------------------------------------------------------------------
-        public DcMotorEx IntakeMotor;
+        public DcMotorEx IntakeMotorL;
+        public DcMotorEx IntakeMotorR;
     //---------------------------------------------------------------------------
     //Used variables
     //---------------------------------------------------------------------------
@@ -21,12 +22,15 @@ public class CompliantIntake {
     //---------------------------------------------------------------------------
     //Constructor
     //---------------------------------------------------------------------------
-        public CompliantIntake(HardwareMap hardwareMap)
+        public TestIntake(HardwareMap hardwareMap)
         {
-            IntakeMotor = hardwareMap.get(DcMotorEx.class, "Intake");
-    
-            IntakeMotor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);  
-            IntakeMotor.setDirection(DcMotorEx.Direction.REVERSE); 
+            IntakeMotorL = hardwareMap.get(DcMotorEx.class, "IntakeL");
+            IntakeMotorR = hardwareMap.get(DcMotorEx.class, "IntakeR");
+             
+            IntakeMotorL.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);  
+            IntakeMotorL.setDirection(DcMotorEx.Direction.REVERSE); 
+            IntakeMotorR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);  
+            IntakeMotorR.setDirection(DcMotorEx.Direction.REVERSE); 
         }
     //---------------------------------------------------------------------------
     //Constructor
@@ -46,24 +50,29 @@ public class CompliantIntake {
     // * - One double argument: The motor is powered at a specific speed to spit out rings
     //---------------------------------------------------------------------------    
         public void Slurp(){
-            IntakeMotor.setPower(-1.0);
+            IntakeMotorL.setPower(-1.0);
+            IntakeMotorR.setPower(-1.0);
         }
         public void Slurp(double power)
         {
-            IntakeMotor.setPower(-power);
+            IntakeMotorL.setPower(-power);
+            IntakeMotorR.setPower(-power);
         }
         
         public void Bleh(){
-            IntakeMotor.setPower(1.0);
+            IntakeMotorL.setPower(1.0);
+            IntakeMotorR.setPower(1.0);
         }
         public void Bleh(double power)
         {
-            IntakeMotor.setPower(power);
+            IntakeMotorL.setPower(power);
+            IntakeMotorR.setPower(power);
         }
         
         public void Stop()
         {
-            IntakeMotor.setPower(0.0);
+            IntakeMotorL.setPower(0.0);
+            IntakeMotorR.setPower(0.0);
         }
     //---------------------------------------------------------------------------
     //Intake methods

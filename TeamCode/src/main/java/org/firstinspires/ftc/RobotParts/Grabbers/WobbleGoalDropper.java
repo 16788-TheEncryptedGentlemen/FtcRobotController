@@ -17,7 +17,7 @@ public class WobbleGoalDropper {
     
     public void Hold()
     {
-        wobbleGoalDropper.setPosition(0.55);
+        wobbleGoalDropper.setPosition(0.45);
     }
     
     public void Drop()

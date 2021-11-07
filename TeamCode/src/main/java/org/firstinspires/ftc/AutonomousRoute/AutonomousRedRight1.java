@@ -12,7 +12,7 @@ import org.firstinspires.ftc.OtherObjects.Timer;
 
 @Autonomous
 
-public class AutonomousRoute extends LinearOpMode{
+public class AutonomousRedRight1 extends LinearOpMode{
     
     public void runOpMode() {
         

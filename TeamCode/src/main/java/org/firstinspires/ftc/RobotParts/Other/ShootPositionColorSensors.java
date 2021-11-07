@@ -58,6 +58,7 @@ public class ShootPositionColorSensors
         public ShootPositionColorSensors(LinearOpMode _runningOpMode, MecanumDrivetrain _Drivetrain)
         {
             this(_runningOpMode.hardwareMap, _Drivetrain);
+            runningOpMode = _runningOpMode;
             isDriverControlled = false;
         }
     //-----------------------------------------------------------------------
@@ -86,7 +87,7 @@ public class ShootPositionColorSensors
         
         public double[] getSpeedValues()
         {
-            if(Left.getHSVvalue() > 130)
+            if(Left.getHSVvalue() > 110)
                 LeftLine = true;
             else 
                 LeftLine = false;

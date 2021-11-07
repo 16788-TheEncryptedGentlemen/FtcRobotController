@@ -2,7 +2,7 @@ package org.firstinspires.ftc.DriverControlled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.Robots.WedstrijdRobot;
+import org.firstinspires.ftc.Robots.WedstrijdRobot2022;
 import org.firstinspires.ftc.OtherObjects.Timer;
 import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
@@ -24,7 +24,7 @@ public class DriverControlled2Players extends OpMode
     // * CorrectionFactor: The correction factor for the motors whilst strafing with gyro correction.
     // * AntiJerkTimer: The timer used to counter any jerk that may be caused by the gyro correction. 
     //--------------------------------------------------------------------
-        WedstrijdRobot Robot;
+        WedstrijdRobot2022 Robot;
     
         private double LeftJoyX = 0;
         private double LeftJoyY = 0;
@@ -55,8 +55,7 @@ public class DriverControlled2Players extends OpMode
         @Override
         public void init() 
         {
-            Robot = new WedstrijdRobot(this); 
-            Robot.Shooter.target.set(TARGET.HIGH_GOAL);     
+            Robot = new WedstrijdRobot2022(this); 
             AntiJerkTimer = new Timer();                   
         }
     //--------------------------------------------------------------------
@@ -96,7 +95,10 @@ public class DriverControlled2Players extends OpMode
                 if(StrafeSpeed > 1)
                     StrafeSpeed = 1;
                     
-                TurnSpeed = gamepad1.right_stick_x;             
+                TurnSpeed = gamepad1.right_stick_x;     
+                
+                Robot.Drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
+                Robot.Drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);     
             //--------------------------------------------------------------------
             //Getting inputs and calculating values for the drive system
             //--------------------------------------------------------------------
@@ -109,105 +111,18 @@ public class DriverControlled2Players extends OpMode
             //Other controller input:
             // * Player 1:
             // * - start: Will reset the angular orientation of the imu. 
-            // * - b: Will stop the shooter from shooting if the robot is currently shooting. 
             // * Player 2:
-            // * - dpad_up: Moves the lift up.
-            // * - dpad_down: Moves the lift down.
-            // * - left_stick_y: Controls the intake.
-            // * - right_stick_y: Controls the WobbleGoalgrabber.
-            // * - left_bumper: Grabs the wobble goal with the WobbleGoalgrabber.
-            // * - right_bumper: Lets go of the wobble goal.
-            // * - a: The robot will prepare for shooting: The lift will move up and the shooter will start (Do Note player 1 still has control over the robot)
-            // * - y: Shoots 3 rings in the high goal.
-            // * - x: Shoots the 3 power shots autonomously (With a timer-based system so no crashy)
-            // * - b: Will stop the shooter from shooting if the robot is currently shooting. 
+            // * to be added
             //--------------------------------------------------------------------
     
                 if(gamepad1.start) 
-                    Robot.imu.ResetAngularOrientation();
+                    Robot.imu.Reset();    //was: ResetAngularOrientation()
 
-                Robot.Shooter.Ringprocessor.updateColorSens();
-                telemetry.addData("HSV value", Robot.Shooter.Ringprocessor.TophsvValues[0]);
-            
-                if(gamepad2.dpad_up)
-                  Robot.Shooter.Ringprocessor.MoveLiftUp();
-                else if (gamepad2.dpad_down)
-                {
-                  Robot.Shooter.Ringprocessor.MoveLiftDown();
-                  //Robot.Shooter.Ringprocessor.LiftServoRight.setPower(1.0);  
-                  //Robot.Shooter.Ringprocessor.LiftServoLeft.setPower(-1.0); 
-                }
-                else 
-                { 
-                  Robot.Shooter.Ringprocessor.StopLift();
-                  //Robot.Shooter.Ringprocessor.LiftServoRight.setPower(0);  
-                  //Robot.Shooter.Ringprocessor.LiftServoLeft.setPower(0);     
-                }        
                 
-                if(gamepad2.dpad_left)
-                  Robot.Shooter.Ringprocessor.LoaderServo.setPosition(Robot.Shooter.Ringprocessor.PushedPosition);    
-                
-                if(gamepad2.dpad_right)
-                  Robot.Shooter.Ringprocessor.LoaderServo.setPosition(Robot.Shooter.Ringprocessor.DefaultPosition);    
-                
-                Robot.Intake.Slurp(-gamepad2.left_stick_y);
-                
-                if(gamepad2.right_stick_y < 0)
-                    Robot.WobbleGoalgrabber.Arm.setPower(0.85*gamepad2.right_stick_y);
-                else
-                    Robot.WobbleGoalgrabber.Arm.setPower(0.5*gamepad2.right_stick_y);
-                
-                
-                if(gamepad2.left_bumper)
-                    Robot.WobbleGoalgrabber.GrabWobbleGoal();
-                
-                if(gamepad2.right_bumper)
-                    Robot.WobbleGoalgrabber.DropWobbleGoal();                
-                
-                //--------------------------------------------------------------------
-                //Shooting
-                //--------------------------------------------------------------------
-                    if(!Robot.Shooter.isShooting)
-                    {
-                        if(gamepad2.a)
-                            Robot.Shooter.Prepare();
-                        else
-                            Robot.Shooter.StopPreparing();  //Stop motors from moving
-                            
-                        if(gamepad2.y)
-                        {
-                            Robot.Shooter.target.set(TARGET.HIGH_GOAL);
-                            Robot.Shooter.StartShooting();
-                            Robot.Drivetrain.setPower(0); //Prevents Robot from driving whilst shooting
-                        }
-                        else if(gamepad2.x)
-                        {
-                            Robot.Shooter.target.set(TARGET.POWER_SHOT);
-                            Robot.Shooter.StartShooting();
-                            Robot.Drivetrain.setPower(0); //Prevents Robot from driving whilst shooting
-                        }
-                    }
-                    else
-                    {
-                        Robot.Shooter.ShootRings();
-                        if(gamepad1.b || gamepad2.b)
-                            Robot.Shooter.Stop();
-                    }
-                    
-                    telemetry.addData("Ringshooter isShooting", Robot.Shooter.isShooting);
-                    telemetry.addData("RingProcessor State", Robot.Shooter.Ringprocessor.State);
-                    telemetry.addData("Shooter State", Robot.Shooter.shooter.State);
-                    
-                    telemetry.addData("Target", Robot.Shooter.target.get());
-                    
-                    telemetry.addData("ShooterSpeed", Robot.Shooter.getVelocity());
-                //--------------------------------------------------------------------
-                //Shooting
-                //--------------------------------------------------------------------
                 
                 telemetry.addData("X", Robot.Odometry.getX());
                 telemetry.addData("Y", Robot.Odometry.getY());      
-                
+                telemetry.addData("IMU", Robot.imu.getAngle());
             //--------------------------------------------------------------------
             //Other controller input
             //--------------------------------------------------------------------
@@ -224,19 +139,14 @@ public class DriverControlled2Players extends OpMode
             // * Slow mode.
             // * Sets power to the motors.
             //--------------------------------------------------------------------
-                if(!Robot.Shooter.isShooting)
-                {
-                    Robot.Drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
-                    Robot.Drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);            
-                    
-                    
+                
                     //--------------------------------------------------------------------
                     //Gyro correction
                     //--------------------------------------------------------------------
                         if(gamepad1.right_stick_x != 0) 
                             AntiJerkTimer.Reset();
                             
-                        if(AntiJerkTimer.getTime() < 0.25)
+                        if(AntiJerkTimer.getTime() < 0.5)
                             GyroCorrectionAngle = Robot.imu.getAngle();
                          
                         DeviationAngle = RobotAngle - GyroCorrectionAngle;             
@@ -244,8 +154,8 @@ public class DriverControlled2Players extends OpMode
                         //If there are no big jumps in angle, we are not standing still, not turning and 250 seconds has elapsed with no turning:   
                         if(Math.abs(DeviationAngle) < 90 && StrafeSpeed != 0 && gamepad1.right_stick_x == 0 && AntiJerkTimer.getTime() > 0.25)              
                         {
-                            if(DeviationAngle > -45 && DeviationAngle < 45){
-                                CorrectionFactor = DeviationAngle/45;
+                            if(DeviationAngle > -30 && DeviationAngle < 30){
+                                CorrectionFactor = DeviationAngle/30;
                             }
                             else{
                                 CorrectionFactor = Math.signum(DeviationAngle);
@@ -256,29 +166,35 @@ public class DriverControlled2Players extends OpMode
                     //--------------------------------------------------------------------
                     //Gyro correction
                     //--------------------------------------------------------------------
-            
-            
+                    
                     Robot.Drivetrain.FixMotorSpeedOverflow();
                     
+                    /*
                     if(gamepad1.left_bumper)
-                        Robot.Drivetrain.setSpeed(Robot.ColorSensors.getSpeedValues());
+                      //  Robot.Drivetrain.setSpeed(Robot.ColorSensors.getSpeedValues());
+                    */
                     
                     if(gamepad1.right_bumper)
                         Robot.Drivetrain.MultiplySpeed(0.25);
                     
+                    Robot.Drivetrain.MultiplySpeed(0.33);
+                    
                     Robot.Drivetrain.setPower();
+                    
+                    telemetry.addData("DeviationAngle", DeviationAngle);
+                    telemetry.addData("controllery", LeftJoyY);
+                    telemetry.addData("GyroCorrectionFactor",CorrectionFactor);
                     
                 }
                 
             //--------------------------------------------------------------------
             //Final calculations for the Drivetrain 
             //--------------------------------------------------------------------
-            
         }
         
     //--------------------------------------------------------------------
     //Loop
     //--------------------------------------------------------------------          
-}
+
 
 

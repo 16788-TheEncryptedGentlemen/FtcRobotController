@@ -3,17 +3,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.RobotParts.Drivetrains.MecanumDrivetrain;
-import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.Shooter;
-import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.RingProcessor;
+import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.ShooterOld;
+import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.RingProcessorOld;
 import org.firstinspires.ftc.OtherObjects.Timer;
 import org.firstinspires.ftc.OtherObjects.Targets.Target;
 import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
-import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.RingProcessor.PROCESSING_STATE;
-import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.Shooter.SHOOTER_STATE;
+import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.RingProcessorOld.PROCESSING_STATE;
+import org.firstinspires.ftc.RobotParts.Shooters.Ringshooter.ShooterOld.SHOOTER_STATE;
 
 
 
-public class RingShooter
+public class RingShooterOld
 {
     //------------------------------------------------------------------------
     //Used variables:
@@ -25,8 +25,8 @@ public class RingShooter
     // * isShooting: A boolean that is true if the robot is shooting rings
     //------------------------------------------------------------------------
         private MecanumDrivetrain Drivetrain;
-        public Shooter shooter;
-        public RingProcessor Ringprocessor;
+        public ShooterOld shooter;
+        public RingProcessorOld Ringprocessor;
         public Target target = new Target(TARGET.NONE);
         public Timer CommitTimer = new Timer();  
         public boolean isShooting = false; 
@@ -41,11 +41,11 @@ public class RingShooter
     //------------------------------------------------------------------------
     //Constructor 
     //------------------------------------------------------------------------
-        public RingShooter(HardwareMap hardwareMap, MecanumDrivetrain _Drivetrain)
+        public RingShooterOld(HardwareMap hardwareMap, MecanumDrivetrain _Drivetrain)
         {
             Drivetrain = _Drivetrain;
-            shooter = new Shooter(hardwareMap, target);
-            Ringprocessor = new RingProcessor(hardwareMap, target);
+            shooter = new ShooterOld(hardwareMap, target);
+            Ringprocessor = new RingProcessorOld(hardwareMap, target);
         }
     //------------------------------------------------------------------------
     //Constructor
@@ -65,13 +65,13 @@ public class RingShooter
     //------------------------------------------------------------------ 
         public void Prepare()
         {
-            //Ringprocessor.MoveLiftUp();
+            Ringprocessor.MoveLiftUp();
             shooter.PrepareForShooting();
         }
         
         public void StopPreparing()
         {
-            //Ringprocessor.StopLift();
+            Ringprocessor.StopLift();
             shooter.Stop();
         }
         
@@ -130,28 +130,34 @@ public class RingShooter
         }
         
         
-        
+        private boolean LeftPowerShotReached = false; //Messy solution. 
         public void ShootPowerShots()
         {
             Prepare();
             
-            if(Ringprocessor.State == PROCESSING_STATE.IDLE)
-                Drivetrain.TurnRobotNoLoop(-5);
+            if(Drivetrain.imu.getAngle() < -7)
+                LeftPowerShotReached = true;
             
-            if((shooter.State == SHOOTER_STATE.READY && Ringprocessor.isLiftAtTop()) || CommitTimer.getTime() > shooter.WarmupTimePowerShot)
+            if(Ringprocessor.State == PROCESSING_STATE.IDLE)
+                Drivetrain.TurnRobotNoLoop(-8);
+            
+            if((shooter.State == SHOOTER_STATE.READY && Ringprocessor.isLiftAtTop() && LeftPowerShotReached) || CommitTimer.getTime() > shooter.WarmupTimePowerShot)
             {
                 Ringprocessor.PushRingsInShooter();        
                 
-                if(Ringprocessor.PushServoTimer.isBetween(0.3, 1.1))
-                    Drivetrain.TurnRobotNoLoop(0);
-                else if(Ringprocessor.PushServoTimer.isBetween(1.1, 1.9))
+                if(Ringprocessor.PushServoTimer.isBetween(0.8, 1.5))
+                    Drivetrain.TurnRobotNoLoop(-1);
+                else if(Ringprocessor.PushServoTimer.isBetween(2.3, 3.0))
                     Drivetrain.TurnRobotNoLoop(5);
                 else
                     Drivetrain.setPower(new double[] {0,0,0,0});
             }
             
             if(Ringprocessor.State == PROCESSING_STATE.FINISHED) //If the sequence is done, stop the shooter
+            {
+                LeftPowerShotReached = false;
                 this.Stop();
+            }
         }    
     //------------------------------------------------------------------
     //Shoot rings methods

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
 
 
-public class RingProcessor
+public class RingProcessorOld
 {
     //-----------------------------------------------------------------
     //Used variables:
@@ -33,16 +33,13 @@ public class RingProcessor
         public CRServo LiftServoRight;
         public CRServo LiftServoLeft;
         public Servo LoaderServo;
-        public ColorSensor TopColorSensor;
-            public float[] TophsvValues = {0F, 0F, 0F};   
-            public final float[] Topvalues = TophsvValues;
-            public final double SCALE_FACTOR = 255;
         
         public DigitalChannel PushButtonBottom;
+        public DigitalChannel PushButtonTop;
         
         public Timer PushServoTimer = new Timer();
         public final double PushedPosition = 0;
-        public final double DefaultPosition = 0.8;
+        public final double DefaultPosition = 0.72;
         
         public enum PROCESSING_STATE
         {
@@ -62,17 +59,18 @@ public class RingProcessor
     //-----------------------------------------------------------------
     //Constructor   
     //-----------------------------------------------------------------
-        public RingProcessor(HardwareMap hardwaremap, Target _target)
+        public RingProcessorOld(HardwareMap hardwaremap, Target _target)
         {
             target = _target;
             LiftServoRight = hardwaremap.get(CRServo.class, "RightLiftCRServo");
             LiftServoLeft = hardwaremap.get(CRServo.class, "LeftLiftCRServo");
             LoaderServo = hardwaremap.get(Servo.class, "Loader");
             
-            TopColorSensor = hardwaremap.get(ColorSensor.class, "TopColorSensor"); 
             
             PushButtonBottom = hardwaremap.get(DigitalChannel.class, "PushSensorBottom");
             PushButtonBottom.setMode(DigitalChannel.Mode.INPUT);
+            PushButtonTop = hardwaremap.get(DigitalChannel.class, "PushSensorTop");
+            PushButtonTop.setMode(DigitalChannel.Mode.INPUT);
         }
     //-----------------------------------------------------------------
     //Constructor   
@@ -90,14 +88,6 @@ public class RingProcessor
     // * StopLift(): Stops the lift from moving
     // * isLiftAtTop: Returns true if the lift is at the top
     //------------------------------------------------------
-        public void updateColorSens()
-        {
-            Color.RGBToHSV((int) (TopColorSensor.red() * SCALE_FACTOR),
-                            (int) (TopColorSensor.green() * SCALE_FACTOR),
-                            (int) (TopColorSensor.blue() * SCALE_FACTOR),
-                            TophsvValues);
-        }
-        
         public void PowerLift(double Power)
         {
             LiftServoRight.setPower(-Power);
@@ -111,9 +101,7 @@ public class RingProcessor
         
         public void MoveLiftUp()
         {
-            updateColorSens();
-            
-            if(!isLiftAtTop())
+           if(PushButtonTop.getState())
                 PowerLift(1.0);
             else
                 StopLift();
@@ -129,7 +117,11 @@ public class RingProcessor
         
         public boolean isLiftAtTop()
         {
-            return TophsvValues[0] < 50;
+            return !PushButtonTop.getState();
+        }
+        public boolean isLiftAtBottom()
+        {
+            return !PushButtonBottom.getState();
         }
     //------------------------------------------------------
     //Lift system
@@ -144,6 +136,8 @@ public class RingProcessor
     // * This method is called as soon as we are ready to shoot. This method pushes
     // * each ring into the shooter in a timed sequence
     //------------------------------------------------------ 
+        public boolean Autonomous1RingStop = false;         //VERY MESSY SOLUTION
+        
         public void PushRingsInShooter()
         {
             if(State == PROCESSING_STATE.IDLE)
@@ -152,20 +146,32 @@ public class RingProcessor
                 State = PROCESSING_STATE.MOVING;
             }
                 
-            if(PushServoTimer.isBetween(0, 1.0))
+            if(PushServoTimer.isBetween(0, 0.7))
                 LoaderServo.setPosition(PushedPosition);           //Push first ring
-            else if(PushServoTimer.isBetween(1.0, 2.0))  
+                
+            else if(PushServoTimer.isBetween(0.7, 1.5))  
                 LoaderServo.setPosition(DefaultPosition);           //Set servo back 
-            else if(PushServoTimer.isBetween(2.0, 3.0))  
+                
+            else if(PushServoTimer.isBetween(1.5, 2.2))  
+            {
                 LoaderServo.setPosition(PushedPosition);           //Push second ring
-            else if(PushServoTimer.isBetween(3.0, 4.0))  
+                Autonomous1RingStop = true;
+            }
+                
+            else if(PushServoTimer.isBetween(2.2, 3.0))  
                 LoaderServo.setPosition(DefaultPosition);           //Set servo back 
-            else if(PushServoTimer.isBetween(4.0, 5.0))  
+                
+            else if(PushServoTimer.isBetween(3.0, 3.7))  
                 LoaderServo.setPosition(PushedPosition);           //Push third ring 
-            else if(PushServoTimer.isBetween(5.0, 6.0))  
+                
+            else if(PushServoTimer.isBetween(3.7, 4.5))  
                 LoaderServo.setPosition(DefaultPosition);           //Set servo back 
-            else if(PushServoTimer.getTime() > 6.0)
+                
+            else if(PushServoTimer.getTime() > 4.5)
+            {
+                Autonomous1RingStop = false;
                 State = PROCESSING_STATE.FINISHED;
+            }
         }
     //------------------------------------------------------
     //Pushing rings in the shooter
