@@ -26,7 +26,7 @@ public class Lift {
         Lift.setPower(-0.5);
     }
 
-    public void stopLift (){
+    public void StopLift (){
         Lift.setPower(0.0);
     }
 

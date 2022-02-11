@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.Robots.WedstrijdRobot;
 import org.firstinspires.ftc.OtherObjects.Timer;
 import org.firstinspires.ftc.RobotParts.Spinner;
-import org.firstinspires.ftc.RobotParts.Grabbers.GrabberIntake;
+import org.firstinspires.ftc.RobotParts.Grabbers.Grabber;
+import org.firstinspires.ftc.RobotParts.Other.Lift;
 import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
 @TeleOp
@@ -102,12 +103,7 @@ public class DriverControlled2Players extends OpMode
                 Robot.Drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
                 Robot.Drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
 
-            if(gamepad1.right_trigger > 0)
-                Robot.spinner.DuckWheelMotor.setPower(-1.00*gamepad1.right_trigger);
-            else if (gamepad1.left_trigger>0)
-                Robot.spinner.DuckWheelMotor.setPower(1.00*gamepad1.left_trigger);
-            else
-                Robot.spinner.DuckWheelMotor.setPower(0.0);
+
             //--------------------------------------------------------------------
             //Getting inputs and calculating values for the drive system
             //--------------------------------------------------------------------
@@ -143,26 +139,27 @@ public class DriverControlled2Players extends OpMode
                     Robot.spinner.DuckWheelMotor.setPower(0.0);
 
 
-            //    if(gamepad2.dpad_up)
-                   // Robot.Lift.SlideUp();
-             //   else if(gamepad2.dpad_down)
-                 //   Robot.Lift.SlideDown();
-             //   else
-                 //   Robot.grabber.stopLift();
+               if(gamepad2.dpad_up)
+                   Robot.lift.SlideUp();
+               else if(gamepad2.dpad_down)
+                   Robot.lift.SlideDown();
+               else
+                   Robot.lift.StopLift();
 
 
-             //   if(gamepad2.right_stick_y > 0)
-                //    Robot.grabber.moveArmToFront();
+          //     if(gamepad2.right_stick_y > 0)
+               //    Robot.grabber.moveArmToFront();
              //   else if(gamepad2.right_stick_y < 0)
                   //  Robot.grabber.moveArmToBack();
                 //else
-//                    Robot.grabber.stopArm();
+            //    Robot.grabber.stopArm();
 
-              //  if(gamepad2.a)
-                  //  Robot.grabber.grab();
-          //      else if(gamepad2.y)
-                  //  Robot.grabber.drop();
-
+            if(gamepad2.a)
+                Robot.grabber.Grab();
+            else if(gamepad2.y)
+                Robot.grabber.Drop();
+            else
+                Robot.grabber.StopGrabber();
 
             //--------------------------------------------------------------------
             //Other controller input
