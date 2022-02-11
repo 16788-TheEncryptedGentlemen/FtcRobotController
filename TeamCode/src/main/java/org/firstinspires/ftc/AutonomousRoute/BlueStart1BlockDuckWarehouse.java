@@ -59,11 +59,11 @@ public class BlueStart1BlockDuckWarehouse extends LinearOpMode {
 
         BlueBlockDuck.ExecuteWithPointSkip();
         Robot.spinner.Turn();
-        sleep(1000);
+        sleep(2500);
         Robot.spinner.Stop();
         Robot.Drivetrain.DriveStraight(120.0, 0.4);
         Robot.Drivetrain.powerStrafeValues(-90.0, 0.3);
-        sleep(5000);
+        sleep(3000);
         Robot.Drivetrain.DriveStraight(90.0, 0.2);
 
     }
