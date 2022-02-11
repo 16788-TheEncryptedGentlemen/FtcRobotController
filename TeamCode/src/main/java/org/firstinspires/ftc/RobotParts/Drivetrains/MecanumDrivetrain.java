@@ -208,9 +208,12 @@ public class MecanumDrivetrain
     //---------------------------------------------------------
     //Set, add and power speed methods
     //---------------------------------------------------------
-    
-    
-    
+
+
+    /** Drives the robot forward a certain amount of cm with a given Speed
+     * @param Distance The distance in cm
+     * @param Power Power value in range [0..1]
+     */
     //---------------------------------------------------------
     //Simple drive methods:
     // * DriveStraight(): Drives the robot forward a certain amount of cm with a given Speed
@@ -256,7 +259,7 @@ public class MecanumDrivetrain
         {
             while(Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested())
             {
-                double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 70);
+                double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20);
                 setPower(SpeedValues);
             }
             Stop();

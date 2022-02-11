@@ -27,58 +27,49 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.RobotParts.Webcam;
+package org.firstinspires.ftc.teamcode;
 
-import android.annotation.SuppressLint;
-
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
-
-import java.util.List;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
 /**
  * This 2020-2021 OpMode illustrates the basics of using the TensorFlow Object Detection API to
  * determine the position of the Freight Frenzy game elements.
- * <p>
+ *
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- * <p>
+ *
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
 
-
-public class Webcam {
-    /** The leftmost position from the robot's point of view. */
-    public static final int LEFT = 1;
-
-    /** The center position from the robot's point of view. */
-    public static final int MIDDLE = 2;
-
-    /** The rightmost position from the robot's point of view. */
-    public static final int RIGHT = 3;
-    /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
-     * the following 4 detectable objects
-     *  0: Ball,
-     *  1: Cube,
-     *  2: Duck,
-     *  3: Marker (duck location tape marker)
-     *
-     *  Two additional model assets are available which only contain a subset of the objects:
-     *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
-     *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
-     */
+@Autonomous
+public class CamTest extends LinearOpMode {
+  /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
+   * the following 4 detectable objects
+   *  0: Ball,
+   *  1: Cube,
+   *  2: Duck,
+   *  3: Marker (duck location tape marker)
+   *
+   *  Two additional model assets are available which only contain a subset of the objects:
+   *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
+   *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
+   */
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
-            "Ball",
-            "Cube",
-            "Duck",
-            "Marker"
+      "Ball",
+      "Cube",
+      "Duck",
+      "Marker"
     };
 
     /*
@@ -97,29 +88,25 @@ public class Webcam {
             "Af0sQ/P/////AAABmSprYhUhTk3Hvd/qyN5NLnFTqbhgMeGaD+U7EkqjNSo8m2ELIKGIq7NI4oNlzRRlo5cXW5le82Mgfe12LydsjtLI/QcJi9DC+BuQZzFUgPS7eqWfpgI3F3mltaParpQDqxUgB9sbK2i6eenDx4L/bNTf7HsndGsxJXnXFkN1lo5aez4RU8yvuqxRTilQhGlTXVe2Vl9k2WpIUXbbM+L6It2Waj017xujNuixYEukWyh4ejCnmGpqXvKaIkHmAuOSoU9ri4xyDKTKfmmgy8uFBINtVkrmyqcrhncWllQkfMX/475SnJwMGYEmno//gHr3+INt852C/EyWaO57/krQ8ftW4sj1E410mKxJtORYSnvt ";
 
     /**
-     * Our instance of the Vuforia localization engine.
+     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
+     * localization engine.
      */
     private VuforiaLocalizer vuforia;
 
     /**
-     * Our instance of the TensorFlow Object Detection engine.
+     * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
+     * Detection engine.
      */
     private TFObjectDetector tfod;
-    private final LinearOpMode runningOpMode;
 
-    /**
-     * Constructor of the webcam and image recognition
-     * @param _runningOpMode the opmode which will be using this webcam
-     */
-    public Webcam(LinearOpMode _runningOpMode) {
-        //set up things
-        runningOpMode = _runningOpMode;
+    @Override
+    public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
         initTfod();
 
-        /*
+        /**
          * Activate TensorFlow Object Detection before we wait for the start command.
          * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
          **/
@@ -132,7 +119,36 @@ public class Webcam {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(1.5, 16.0 / 9.0);
+            tfod.setZoom(1.5, 16.0/9.0);
+        }
+
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start op mode");
+        telemetry.update();
+        waitForStart();
+
+        if (opModeIsActive()) {
+            while (opModeIsActive()) {
+                if (tfod != null) {
+                    // getUpdatedRecognitions() will return null if no new information is available since
+                    // the last time that call was made.
+                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions != null) {
+                      telemetry.addData("# Object Detected", updatedRecognitions.size());
+                      // step through the list of recognitions and display boundary info.
+                      int i = 0;
+                      for (Recognition recognition : updatedRecognitions) {
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                        i++;
+                      }
+                      telemetry.update();
+                    }
+                }
+            }
         }
     }
 
@@ -146,7 +162,7 @@ public class Webcam {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = runningOpMode.hardwareMap.get(WebcamName.class, "Webcam 1");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -158,57 +174,13 @@ public class Webcam {
      * Initialize the TensorFlow Object Detection engine.
      */
     private void initTfod() {
-        int tfodMonitorViewId = runningOpMode.hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", runningOpMode.hardwareMap.appContext.getPackageName());
+        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+            "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minResultConfidence = 0.6f;
-        tfodParameters.isModelTensorFlow2 = true;
-        tfodParameters.inputSize = 320;
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
+       tfodParameters.minResultConfidence = 0.6f;
+       tfodParameters.isModelTensorFlow2 = true;
+       tfodParameters.inputSize = 320; 
+       tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+       tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
-
-    /**
-     * Gets the position of the duck.
-     * If the position is unknown, the method returns middle.
-     *
-     * @return If position is {@link #LEFT}, {@link #MIDDLE}, {@link #RIGHT}.
-     */
-    @SuppressLint("DefaultLocale")
-    public int getPositionOfDuck() {
-
-        // do things
-        /* Wait for the game to begin */
-        runningOpMode.telemetry.addData(">", "Press Play to start op mode");
-        runningOpMode.telemetry.update();
-
-
-        while (runningOpMode.opModeIsActive()) {
-            if (tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    runningOpMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
-                    // step through the list of recognitions and display boundary info.
-                    int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        runningOpMode.telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        runningOpMode.telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        runningOpMode.telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                        i++;
-                        // TODO: Sanne moet zorgen dat dit werkt.
-                        // als het een eend of marker is:
-                        // vind de L/M/R positie
-                    }
-                    runningOpMode.telemetry.update();
-                }
-            }
-        }
-        return MIDDLE;
-    }
-
-
 }

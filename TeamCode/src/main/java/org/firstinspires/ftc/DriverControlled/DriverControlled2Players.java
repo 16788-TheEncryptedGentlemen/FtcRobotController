@@ -2,8 +2,10 @@ package org.firstinspires.ftc.DriverControlled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.Robots.WedstrijdRobot2022;
+import org.firstinspires.ftc.Robots.WedstrijdRobot;
 import org.firstinspires.ftc.OtherObjects.Timer;
+import org.firstinspires.ftc.RobotParts.Spinner;
+import org.firstinspires.ftc.RobotParts.Grabbers.GrabberIntake;
 import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
 @TeleOp
@@ -24,7 +26,7 @@ public class DriverControlled2Players extends OpMode
     // * CorrectionFactor: The correction factor for the motors whilst strafing with gyro correction.
     // * AntiJerkTimer: The timer used to counter any jerk that may be caused by the gyro correction. 
     //--------------------------------------------------------------------
-        WedstrijdRobot2022 Robot;
+        WedstrijdRobot Robot;
     
         private double LeftJoyX = 0;
         private double LeftJoyY = 0;
@@ -55,7 +57,7 @@ public class DriverControlled2Players extends OpMode
         @Override
         public void init() 
         {
-            Robot = new WedstrijdRobot2022(this); 
+            Robot = new WedstrijdRobot(this); 
             AntiJerkTimer = new Timer();                   
         }
     //--------------------------------------------------------------------
@@ -98,7 +100,14 @@ public class DriverControlled2Players extends OpMode
                 TurnSpeed = gamepad1.right_stick_x;     
                 
                 Robot.Drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
-                Robot.Drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);     
+                Robot.Drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
+
+            if(gamepad1.right_trigger > 0)
+                Robot.spinner.DuckWheelMotor.setPower(-1.00*gamepad1.right_trigger);
+            else if (gamepad1.left_trigger>0)
+                Robot.spinner.DuckWheelMotor.setPower(1.00*gamepad1.left_trigger);
+            else
+                Robot.spinner.DuckWheelMotor.setPower(0.0);
             //--------------------------------------------------------------------
             //Getting inputs and calculating values for the drive system
             //--------------------------------------------------------------------
@@ -123,6 +132,38 @@ public class DriverControlled2Players extends OpMode
                 telemetry.addData("X", Robot.Odometry.getX());
                 telemetry.addData("Y", Robot.Odometry.getY());      
                 telemetry.addData("IMU", Robot.imu.getAngle());
+                
+                //Robot.spinner.Turn(-gamepad2.left_stick_y);
+                
+                if(gamepad2.right_trigger > 0)
+                    Robot.spinner.DuckWheelMotor.setPower(-gamepad2.right_trigger);
+                else if (gamepad2.left_trigger > 0)
+                    Robot.spinner.DuckWheelMotor.setPower(gamepad2.left_trigger);
+                else
+                    Robot.spinner.DuckWheelMotor.setPower(0.0);
+
+
+            //    if(gamepad2.dpad_up)
+                   // Robot.Lift.SlideUp();
+             //   else if(gamepad2.dpad_down)
+                 //   Robot.Lift.SlideDown();
+             //   else
+                 //   Robot.grabber.stopLift();
+
+
+             //   if(gamepad2.right_stick_y > 0)
+                //    Robot.grabber.moveArmToFront();
+             //   else if(gamepad2.right_stick_y < 0)
+                  //  Robot.grabber.moveArmToBack();
+                //else
+//                    Robot.grabber.stopArm();
+
+              //  if(gamepad2.a)
+                  //  Robot.grabber.grab();
+          //      else if(gamepad2.y)
+                  //  Robot.grabber.drop();
+
+
             //--------------------------------------------------------------------
             //Other controller input
             //--------------------------------------------------------------------
@@ -175,9 +216,11 @@ public class DriverControlled2Players extends OpMode
                     */
                     
                     if(gamepad1.right_bumper)
-                        Robot.Drivetrain.MultiplySpeed(0.25);
-                    
-                    Robot.Drivetrain.MultiplySpeed(0.33);
+                        Robot.Drivetrain.MultiplySpeed(1.0);
+                   else if(gamepad1.left_bumper)
+                        Robot.Drivetrain.MultiplySpeed(0.2);
+                   else
+                       Robot.Drivetrain.MultiplySpeed(0.7);
                     
                     Robot.Drivetrain.setPower();
                     

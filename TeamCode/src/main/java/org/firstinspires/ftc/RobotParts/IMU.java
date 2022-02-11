@@ -82,16 +82,17 @@ public class IMU
             double CorrectionValue = 0;
             double DeviationAngle = getDeviation(DesiredAngle);
             
-            if(Math.abs(DeviationAngle) <= P) 
+            if(Math.abs(DeviationAngle) <= P)  {
                 CorrectionValue = DeviationAngle/P;
-            else
-            { 
-                if(DeviationAngle > 0)
-                    CorrectionValue = 1;
-                else
+                
+            } else { 
+                if(DeviationAngle > 0) {
+                    CorrectionValue = 1; 
+                } else {
                     CorrectionValue = -1;
+                }
             }
-            
+            CorrectionValue *= 0.3;
             return new double[] {CorrectionValue, CorrectionValue, -CorrectionValue, -CorrectionValue};
         }
     //-----------------------------------------------------------
