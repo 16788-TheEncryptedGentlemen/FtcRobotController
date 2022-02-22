@@ -41,7 +41,7 @@ public class Spinner {
     // * - One double argument: The motor is powered at a specific speed to spit out rings
     //---------------------------------------------------------------------------    
         public void Turn(){
-            DuckWheelMotor.setPower(-30.0);
+            DuckWheelMotor.setPower(-29.0);
         }
         public void Stop()
         {
