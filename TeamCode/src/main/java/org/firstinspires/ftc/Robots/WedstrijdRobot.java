@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.RobotParts.Drivetrains.MecanumDrivetrain;
 import org.firstinspires.ftc.RobotParts.Grabbers.Grabber;
 import org.firstinspires.ftc.RobotParts.Other.Lift;
+import org.firstinspires.ftc.RobotParts.Other.Arm;
 import org.firstinspires.ftc.RobotParts.IMU;
 import org.firstinspires.ftc.RobotParts.Intakes.TestIntake;
 import org.firstinspires.ftc.RobotParts.Odometry.OdometryOmniWheels;
@@ -38,6 +39,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public Spinner spinner;
     public Grabber grabber;
     public Lift lift;
+    public Arm arm;
     //---------------------------------------------------------------------
     //Used variabels:
     //---------------------------------------------------------------------
@@ -88,7 +90,10 @@ public class WedstrijdRobot extends LoaderDisplay {
         grabber = new Grabber(hardwaremap);
         ShowLoading("Lift");
         lift = new Lift(hardwaremap);
+        ShowLoading("Arm");
+        arm = new Arm(hardwaremap);
         ShowLoading("Done initializing! Press start to play");
+
     }
     //---------------------------------------------------------------------
     //Constructors
