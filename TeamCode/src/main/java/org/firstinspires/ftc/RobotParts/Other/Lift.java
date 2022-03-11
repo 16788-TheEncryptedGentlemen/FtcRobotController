@@ -12,7 +12,7 @@ public class Lift {
     public Lift (HardwareMap hardwareMap)
     {
         Lift = hardwareMap.get(DcMotor.class, "EncoderX"); //Yep, we linken een odometry encoder aan een arm omdat we geen porten over hadden. Too bad!
-        Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODERS);
+        Lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         Lift = hardwareMap.get(DcMotor.class, "Lift");
     }
 
