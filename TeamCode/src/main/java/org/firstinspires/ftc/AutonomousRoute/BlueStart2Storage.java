@@ -20,7 +20,7 @@ public class BlueStart2Storage extends LinearOpMode
                 new double[] {20.9124999999999, -476.804999999999, 4998.0875, -13593.125, 16161.18, -8912.9075, 1878.54}, //The x-coefficients
                 new double[] {-953.61, 2760.45, -3617.8625, 3722.425, -6349.035, 6717.095, -2448.555}, //The y-coefficients
                 Robot,
-                0.2,
+                0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );

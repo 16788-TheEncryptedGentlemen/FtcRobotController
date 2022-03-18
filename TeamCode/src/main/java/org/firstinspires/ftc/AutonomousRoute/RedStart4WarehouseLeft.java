@@ -23,7 +23,7 @@ public class RedStart4WarehouseLeft extends LinearOpMode
         //Run program------------------------------------
 
 
-        Robot.Drivetrain.DriveStraight(60.0, 0.2);
+        Robot.Drivetrain.DriveStraight(60.0, 0.6);
         Robot.Drivetrain.powerStrafeValues(-90.0, 0.5);
         sleep(1500);
 

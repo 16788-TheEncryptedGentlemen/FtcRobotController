@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -51,7 +51,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * is explained below.
  */
 
-@Autonomous
+/*@Autonomous
 public class CamTest extends LinearOpMode {
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains
    * the following 4 detectable objects
@@ -64,7 +64,7 @@ public class CamTest extends LinearOpMode {
    *  FreightFrenzy_BC.tflite  0: Ball,  1: Cube
    *  FreightFrenzy_DM.tflite  0: Duck,  1: Marker
    */
-    private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
+    /*private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
       "Ball",
       "Cube",
@@ -84,20 +84,20 @@ public class CamTest extends LinearOpMode {
      * Once you've obtained a license key, copy the string from the Vuforia web site
      * and paste it in to your code on the next line, between the double quotes.
      */
-    private static final String VUFORIA_KEY =
+  /*  private static final String VUFORIA_KEY =
             "Af0sQ/P/////AAABmSprYhUhTk3Hvd/qyN5NLnFTqbhgMeGaD+U7EkqjNSo8m2ELIKGIq7NI4oNlzRRlo5cXW5le82Mgfe12LydsjtLI/QcJi9DC+BuQZzFUgPS7eqWfpgI3F3mltaParpQDqxUgB9sbK2i6eenDx4L/bNTf7HsndGsxJXnXFkN1lo5aez4RU8yvuqxRTilQhGlTXVe2Vl9k2WpIUXbbM+L6It2Waj017xujNuixYEukWyh4ejCnmGpqXvKaIkHmAuOSoU9ri4xyDKTKfmmgy8uFBINtVkrmyqcrhncWllQkfMX/475SnJwMGYEmno//gHr3+INt852C/EyWaO57/krQ8ftW4sj1E410mKxJtORYSnvt ";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
      * localization engine.
      */
-    private VuforiaLocalizer vuforia;
+    /*private VuforiaLocalizer vuforia;
 
     /**
      * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
      * Detection engine.
      */
-    private TFObjectDetector tfod;
+    /*private TFObjectDetector tfod;
 
     @Override
     public void runOpMode() {
@@ -110,7 +110,7 @@ public class CamTest extends LinearOpMode {
          * Activate TensorFlow Object Detection before we wait for the start command.
          * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
          **/
-        if (tfod != null) {
+        /*if (tfod != null) {
             tfod.activate();
 
             // The TensorFlow software will scale the input images from the camera to a lower resolution.
@@ -123,7 +123,7 @@ public class CamTest extends LinearOpMode {
         }
 
         /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start op mode");
+        /*telemetry.addData(">", "Press Play to start op mode");
         telemetry.update();
         waitForStart();
 
@@ -155,11 +155,11 @@ public class CamTest extends LinearOpMode {
     /**
      * Initialize the Vuforia localization engine.
      */
-    private void initVuforia() {
+   /* private void initVuforia() {
         /*
          * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
          */
-        VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
+      /*  VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
@@ -173,7 +173,7 @@ public class CamTest extends LinearOpMode {
     /**
      * Initialize the TensorFlow Object Detection engine.
      */
-    private void initTfod() {
+  /*  private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
@@ -184,3 +184,4 @@ public class CamTest extends LinearOpMode {
        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
     }
 }
+*/

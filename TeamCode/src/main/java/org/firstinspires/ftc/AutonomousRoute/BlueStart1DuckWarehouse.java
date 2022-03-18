@@ -9,7 +9,7 @@ import org.firstinspires.ftc.Robots.WedstrijdRobot;
 
 //Uncomment @Autonomous to show up on the DC controller app
 @Autonomous
-public class BlueStart1DuckWarehouse extends LinearOpMode
+public class  BlueStart1DuckWarehouse extends LinearOpMode
 {
     public void runOpMode()
     {
@@ -20,7 +20,7 @@ public class BlueStart1DuckWarehouse extends LinearOpMode
                 new double[] {23.9000000000002, 107.55, -113.524999999999, -5.97500000000082, 13.7425000000002}, //The x-coefficients
                 new double[] {-149.375, 233.025000000001, -149.375000000001, -83.649999999999, 93.8074999999994}, //The y-coefficients
                 Robot,
-                0.2,
+                0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );

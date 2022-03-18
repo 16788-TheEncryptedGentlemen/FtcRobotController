@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.AutonomousRoute;
+/*package org.firstinspires.ftc.AutonomousRoute;
 
 import static org.firstinspires.ftc.RobotParts.Webcam.Webcam.LEFT;
 import static org.firstinspires.ftc.RobotParts.Webcam.Webcam.MIDDLE;
@@ -69,3 +69,4 @@ public class BlueStart1BlockDuckWarehouse extends LinearOpMode {
     }
 
 }
+*/

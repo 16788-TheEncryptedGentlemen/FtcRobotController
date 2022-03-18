@@ -25,7 +25,7 @@ public class RedStart3Warehouse extends LinearOpMode
         //Run program------------------------------------
         //Run program------------------------------------
 
-        Robot.Drivetrain.DriveStraight(185.0, 0.2);
+        Robot.Drivetrain.DriveStraight(185.0, 0.6);
         Robot.Drivetrain.Stop();
 
     }
