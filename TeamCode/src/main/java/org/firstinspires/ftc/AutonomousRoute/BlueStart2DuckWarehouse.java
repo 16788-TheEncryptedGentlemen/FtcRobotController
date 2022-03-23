@@ -37,7 +37,7 @@ public class BlueStart2DuckWarehouse extends LinearOpMode
         //Run program------------------------------------
 
         BlueStart2Duck.ExecuteWithPointSkip();
-        Robot.spinner.Turn();
+        Robot.spinner.TurnRight();
         sleep(4000);
         Robot.spinner.Stop();
         Robot.Drivetrain.DriveStraight(120.0, 0.6);

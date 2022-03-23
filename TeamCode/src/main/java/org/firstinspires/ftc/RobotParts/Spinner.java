@@ -40,9 +40,12 @@ public class Spinner {
     // * - No arguments: The intake motor turns at maximum speed to spit out rings
     // * - One double argument: The motor is powered at a specific speed to spit out rings
     //---------------------------------------------------------------------------    
-        public void Turn(){
+        public void TurnRight(){
             DuckWheelMotor.setPower(29.0);
         }
+        public void TurnLeft(){
+        DuckWheelMotor.setPower(-29.0);
+    }
         public void Stop()
         {
             DuckWheelMotor.setPower(0.0);
