@@ -10,8 +10,8 @@ public class Grabber {
 
     public Grabber(HardwareMap hardwareMap)
     {
-        Left = hardwareMap.get(CRServo.class, "Left");
-        Right = hardwareMap.get(CRServo.class, "Right");
+        Left = hardwareMap.get(CRServo.class, "LeftGrabber");
+        Right = hardwareMap.get(CRServo.class, "RightGrabber");
     }
 
     public void Grab()
