@@ -16,13 +16,13 @@ public class Grabber {
 
     public void Grab()
     {
-        Left.setPower(0.5);
-        Right.setPower(-0.5);
+        Left.setPower(1);
+        Right.setPower(-1);
     }
     public void Drop()
     {
-        Left.setPower(-0.5);
-        Right.setPower(0.5);
+        Left.setPower(-1);
+        Right.setPower(1);
     }
     public void StopGrabber()
     {

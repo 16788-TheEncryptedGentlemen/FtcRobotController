@@ -41,9 +41,11 @@ public class BlueStart2DuckWarehouse extends LinearOpMode
         sleep(4000);
         Robot.spinner.Stop();
         Robot.Drivetrain.DriveStraight(120.0, 0.6);
-        Robot.Drivetrain.powerStrafeValues(-90.0, 0.5);
-        sleep(2000);
-        Robot.Drivetrain.DriveStraight(110.0, 0.6);
+        Robot.Drivetrain.TurnRobotAO(0);
+        sleep(500);
+        Robot.Drivetrain.powerStrafeValues(-90.0, 0.5, 0);
+        sleep(1000);
+        Robot.Drivetrain.DriveStraight(125.0, 0.6);
 
 
     }

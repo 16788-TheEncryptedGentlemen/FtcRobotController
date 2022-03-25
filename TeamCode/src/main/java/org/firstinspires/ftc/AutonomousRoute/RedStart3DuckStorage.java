@@ -17,20 +17,19 @@ public class RedStart3DuckStorage extends LinearOpMode
         WedstrijdRobot Robot = new WedstrijdRobot(this);
 
         //Initialisation------------------------------------
+        BezierCurveRoute Test = new BezierCurveRoute(
+                new double[] {258.12, -953.609999999999, 3613.68, 7779.44999999999, -39917.78, 54221.93, -31433.28, 6501.39749999999}, //The x-coefficients
+                new double[] {-564.04, 819.77, -635.739999999999, -2425.85000000001, 9502.64000000002, -6240.29000000003, -3867.01999999999, 3424.2725}, //The y-coefficients
+                Robot,
+                0.5,
+                DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
+                this
+        );
 
         waitForStart();
 
-        //Run program------------------------------------
+        Test.ExecuteWithPointSkip();
 
-
-        while(Math.abs(Robot.imu.getAngle() - 90) > 0 && !isStopRequested()) {
-            Robot.Drivetrain.TurnRobotNoLoop(90);
-            telemetry.addData("Angle", Robot.imu.getAngle());
-        }
-        Robot.Drivetrain.Stop();
-
-        //Robot.Drivetrain.TurnRobotAO(90);
-        //sleep(3000);
     }
 
 }

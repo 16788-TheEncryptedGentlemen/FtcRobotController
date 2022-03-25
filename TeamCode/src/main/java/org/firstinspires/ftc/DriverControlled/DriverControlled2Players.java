@@ -132,10 +132,10 @@ public class DriverControlled2Players extends OpMode
 
                 //Robot.spinner.Turn(-gamepad2.left_stick_y);
 
-                if(gamepad2.right_trigger > 0)
-                    Robot.spinner.DuckWheelMotor.setPower(-gamepad2.right_trigger);
-                else if (gamepad2.left_trigger > 0)
-                    Robot.spinner.DuckWheelMotor.setPower(gamepad2.left_trigger);
+                if(gamepad2.right_trigger > 0.2)
+                    Robot.spinner.DuckWheelMotor.setPower(-1);
+                else if (gamepad2.left_trigger > 0.2)
+                    Robot.spinner.DuckWheelMotor.setPower(1);
                 else
                     Robot.spinner.DuckWheelMotor.setPower(0.0);
 
@@ -237,6 +237,7 @@ public class DriverControlled2Players extends OpMode
                     telemetry.addData("DeviationAngle", DeviationAngle);
                     telemetry.addData("controllery", LeftJoyY);
                     telemetry.addData("GyroCorrectionFactor",CorrectionFactor);
+                    telemetry.addData("Heading",Robot.Drivetrain.imu.getAngle());
 
                 }
 
