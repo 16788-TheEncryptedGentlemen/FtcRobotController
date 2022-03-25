@@ -24,8 +24,9 @@ public class BlueStart1Warehouse extends LinearOpMode
 
         //Run program------------------------------------
         //Run program------------------------------------
-
-        Robot.Drivetrain.DriveStraight(185.0, 0.6);
+        Robot.Drivetrain.TurnRobotAO(0);
+        sleep(500);
+        Robot.Drivetrain.DriveStraight(190.0, 0.6);
         Robot.Drivetrain.Stop();
 
     }

@@ -17,8 +17,8 @@ public class BlueStart2Storage extends LinearOpMode
         WedstrijdRobot Robot = new WedstrijdRobot(this);
 
         BezierCurveRoute BlueStart2Storage = new BezierCurveRoute(
-                new double[] {20.9124999999999, -476.804999999999, 4998.0875, -13593.125, 16161.18, -8912.9075, 1878.54}, //The x-coefficients
-                new double[] {-953.61, 2760.45, -3617.8625, 3722.425, -6349.035, 6717.095, -2448.555}, //The y-coefficients
+                new double[] {20.9124999999981, -476.804999999994, 4998.08749999999, -13593.125, 16161.18, -8921.27249999999, 1881.52749999999}, //The x-coefficients
+                new double[] {-953.609999999998, 2760.44999999998, -3617.86249999995, 3722.42499999994, -6349.03499999997, 6666.905, -2405.535}, //The y-coefficients
                 Robot,
                 0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW

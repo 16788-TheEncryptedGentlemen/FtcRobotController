@@ -17,13 +17,14 @@ public class BlueStart2DuckWarehouse extends LinearOpMode
         WedstrijdRobot Robot = new WedstrijdRobot(this);
 
         BezierCurveRoute BlueStart2Duck = new BezierCurveRoute(
-                new double[] {-3.58500000000015, 80.6625000000013, 107.549999999997, -250.949999999997, 93.2099999999976, -5.97499999999965}, //The x-coefficients
-                new double[] {-770.775, 1478.8125, -1505.7, 905.212499999998, -462.464999999997, 167.897499999999}, //The y-coefficients
+                new double[] {-2.98750000000007, -23.8999999999996, 406.299999999999, -603.475, 247.9625}, //The x-coefficients
+                new double[] {-705.05, 1081.475, -346.550000000001, -418.25, 215.1}, //The y-coefficients
                 Robot,
                 0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
 
 
 
@@ -45,7 +46,7 @@ public class BlueStart2DuckWarehouse extends LinearOpMode
         sleep(500);
         Robot.Drivetrain.powerStrafeValues(-90.0, 0.5, 0);
         sleep(1000);
-        Robot.Drivetrain.DriveStraight(125.0, 0.6);
+        Robot.Drivetrain.DriveStraight(135.0, 0.6);
 
 
     }
