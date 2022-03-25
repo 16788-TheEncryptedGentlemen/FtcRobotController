@@ -239,7 +239,7 @@ public class BezierCurveRoute
         private void PowerRobot()
         {
             if(DriveMethod == DRIVE_METHOD.STRAFE)
-                Robot.Drivetrain.powerStrafeValues(DriveAngle, Speed);
+                Robot.Drivetrain.powerStrafeValues(DriveAngle, Speed, 0.0);
             else if(DriveMethod == DRIVE_METHOD.FOLLOW)
                 Robot.Drivetrain.Follow(DriveAngle, Speed);
         }
