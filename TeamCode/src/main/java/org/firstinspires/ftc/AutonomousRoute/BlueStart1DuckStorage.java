@@ -17,7 +17,7 @@ public class BlueStart1DuckStorage extends LinearOpMode
         WedstrijdRobot Robot = new WedstrijdRobot(this);
 
         BezierCurveRoute BlueStart1Duck = new BezierCurveRoute(
-                new double[] {23.8999999999986, 107.550000000008, -113.52500000002, -5.97499999998126, 12.5474999999944}, //The x-coefficients
+                new double[] {23.8999999999986, 107.550000000008, -113.52500000002, -5.97499999998126, 10.7549999999944}, //The x-coefficients
                 new double[] {-149.374999999998, 233.025, -149.375000000003, -83.6499999999967, 93.8074999999988}, //The y-coefficients
                 Robot,
                 0.6,
@@ -27,15 +27,16 @@ public class BlueStart1DuckStorage extends LinearOpMode
 
 
 
+
+
         BezierCurveRoute BlueDuckStorage = new BezierCurveRoute(
                 new double[] {-11.9500000000002, 71.7000000000005, 328.624999999999, -600.4875, 258.7175}, //The x-coefficients
-                new double[] {140.4125, -304.725000000001, 286.800000000002, -113.525000000002, -8.36499999999961}, //The y-coefficients
+                new double[] {140.4125, -304.725000000001, 286.800000000002, -113.525000000002, -6.57249999999959}, //The y-coefficients
                 Robot,
                 0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
-
 
 
         //Initialisation------------------------------------

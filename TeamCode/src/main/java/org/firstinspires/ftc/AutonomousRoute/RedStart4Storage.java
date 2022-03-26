@@ -17,8 +17,8 @@ public class RedStart4Storage extends LinearOpMode
         WedstrijdRobot Robot = new WedstrijdRobot(this);
 
         BezierCurveRoute RedStart4Storage = new BezierCurveRoute(
-                new double[] {-66.9199999999998, 752.849999999998, -5621.27999999999, 14095.025, -14923.16, 6123.17999999997, -262.899999999992, -164.312500000001}, //The x-coefficients
-                new double[] {-1300.16, 4650.94, -5119.38, -6901.12500000001, 22685.88, -22836.45, 10750.22, -2093.0425}, //The y-coefficients
+                new double[] {-75.2850000000053, 967.950000000032, -8431.92000000007, 25371.045, -33577.1099999998, 18369.5399999997, -817.37999999977, -2269.30500000005, 391.959999999998}, //The x-coefficients
+                new double[] {-1462.68, 5979.78, -7679.07, -12422.025, 51043.2300000001, -68509.3500000001, 48311.4600000002, -18573.8850000001, 3138.66750000003}, //The y-coefficients
                 Robot,
                 0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
