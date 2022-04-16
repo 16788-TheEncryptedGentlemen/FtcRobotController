@@ -33,7 +33,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public OdometryOmniWheels Odometry;
     public IMU imu;
     public MecanumDrivetrain Drivetrain;
-   // public Webcam webcam;
+    public Webcam webcam;
     //  public ShootPositionColorSensors ColorSensors;
     public TestIntake Intake;
     public Spinner spinner;
@@ -62,12 +62,12 @@ public class WedstrijdRobot extends LoaderDisplay {
         Drivetrain = new MecanumDrivetrain(runningLinearOpMode, Odometry, imu);
         //    ShowLoading("ColorSensors");
         // ColorSensors = new ShootPositionColorSensors(runningLinearOpMode, Drivetrain);
-        //ShowLoading("webcam");
-       // webcam = new Webcam(runningLinearOpMode);
-        //  ShowLoading("Intake");
-        //    Intake = new TestIntake (hardwaremap);
-        ShowLoading("Wheel");
-        spinner = new Spinner(hardwaremap);
+        ShowLoading("webcam");
+        webcam = new Webcam(runningLinearOpMode);
+       // ShowLoading("Intake");
+       // Intake = new TestIntake (hardwaremap);
+ //       ShowLoading("Wheel");
+   //     spinner = new Spinner(hardwaremap);
         ShowLoading("Done initializing! Press start to play");
     }
 

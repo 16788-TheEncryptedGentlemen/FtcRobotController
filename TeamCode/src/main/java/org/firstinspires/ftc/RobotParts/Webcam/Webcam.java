@@ -177,12 +177,6 @@ public class Webcam {
     @SuppressLint("DefaultLocale")
     public int getPositionOfDuck() {
 
-        // do things
-        /* Wait for the game to begin */
-        runningOpMode.telemetry.addData(">", "Press Play to start op mode");
-        runningOpMode.telemetry.update();
-
-
         while (runningOpMode.opModeIsActive()) {
             if (tfod != null) {
                 // getUpdatedRecognitions() will return null if no new information is available since
