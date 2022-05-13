@@ -39,7 +39,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public DuckWheel DuckWheel;
     public Grabber Grabber;
     public Lift Lift;
-    public Arm arm;
+    public Arm Arm;
     //---------------------------------------------------------------------
     //Used variabels:
     //---------------------------------------------------------------------
@@ -91,7 +91,7 @@ public class WedstrijdRobot extends LoaderDisplay {
         ShowLoading("Lift");
         Lift = new Lift(hardwaremap);
         ShowLoading("Arm");
-        arm = new Arm(hardwaremap);
+        Arm = new Arm(hardwaremap);
         ShowLoading("Done initializing! Press start to play");
 
     }

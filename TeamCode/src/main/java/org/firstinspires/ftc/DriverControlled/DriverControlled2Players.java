@@ -167,11 +167,11 @@ public class DriverControlled2Players extends OpMode
             }
 
             if (gamepad2.right_stick_y > 0)
-                    Robot.arm.MoveArmFront();
+                    Robot.Arm.MoveArmFront();
             else if (gamepad2.right_stick_y < 0)
-                    Robot.arm.MoveArmBack();
+                    Robot.Arm.MoveArmBack();
             else
-                    Robot.arm.StopArm();
+                    Robot.Arm.StopArm();
 
 
             //--------------------------------------------------------------------
