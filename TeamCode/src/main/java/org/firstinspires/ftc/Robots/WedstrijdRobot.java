@@ -37,8 +37,8 @@ public class WedstrijdRobot extends LoaderDisplay {
     //  public ShootPositionColorSensors ColorSensors;
     public TestIntake Intake;
     public DuckWheel DuckWheel;
-    public Grabber grabber;
-    public Lift lift;
+    public Grabber Grabber;
+    public Lift Lift;
     public Arm arm;
     //---------------------------------------------------------------------
     //Used variabels:
@@ -87,9 +87,9 @@ public class WedstrijdRobot extends LoaderDisplay {
         ShowLoading("Wheel");
         DuckWheel = new DuckWheel(hardwaremap);
         ShowLoading("Grabber");
-        grabber = new Grabber(hardwaremap);
+        Grabber = new Grabber(hardwaremap);
         ShowLoading("Lift");
-        lift = new Lift(hardwaremap);
+        Lift = new Lift(hardwaremap);
         ShowLoading("Arm");
         arm = new Arm(hardwaremap);
         ShowLoading("Done initializing! Press start to play");

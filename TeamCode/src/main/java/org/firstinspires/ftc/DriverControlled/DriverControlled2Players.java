@@ -141,29 +141,29 @@ public class DriverControlled2Players extends OpMode
 
 
                if(gamepad2.dpad_up)
-                   Robot.lift.SlideUp();
+                   Robot.Lift.SlideUp();
                else if(gamepad2.dpad_down)
-                   Robot.lift.SlideDown();
+                   Robot.Lift.SlideDown();
                else
-                   Robot.lift.StopLift();
+                   Robot.Lift.StopLift();
 
 
           //     if(gamepad2.right_stick_y > 0)
-               //    Robot.grabber.moveArmToFront();
+               //    Robot.Grabber.moveArmToFront();
              //   else if(gamepad2.right_stick_y < 0)
-                  //  Robot.grabber.moveArmToBack();
+                  //  Robot.Grabber.moveArmToBack();
                 //else
-            //    Robot.grabber.stopArm();
+            //    Robot.Grabber.stopArm();
 
             if (gamepad2.a) {
                 telemetry.addLine("BeweegVoor");
-                Robot.grabber.Grab();
+                Robot.Grabber.Grab();
             } else if (gamepad2.y) {
                 telemetry.addLine("BeweegAchter");
-                Robot.grabber.Drop();
+                Robot.Grabber.Drop();
             } else {
                 telemetry.addLine("Niks");
-                Robot.grabber.StopGrabber();
+                Robot.Grabber.StopGrabber();
             }
 
             if (gamepad2.right_stick_y > 0)
