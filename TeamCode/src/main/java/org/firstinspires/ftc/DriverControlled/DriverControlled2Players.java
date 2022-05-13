@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.Robots.WedstrijdRobot;
 import org.firstinspires.ftc.OtherObjects.Timer;
-import org.firstinspires.ftc.RobotParts.Spinner;
+import org.firstinspires.ftc.RobotParts.DuckWheel;
 import org.firstinspires.ftc.RobotParts.Grabbers.Grabber;
 import org.firstinspires.ftc.RobotParts.Other.Lift;
 import org.firstinspires.ftc.RobotParts.Other.Arm;
@@ -130,14 +130,14 @@ public class DriverControlled2Players extends OpMode
                 telemetry.addData("Y", Robot.Odometry.getY());
                 telemetry.addData("IMU", Robot.imu.getAngle());
 
-                //Robot.spinner.Turn(-gamepad2.left_stick_y);
+                //Robot.DuckWheel.Turn(-gamepad2.left_stick_y);
 
                 if(gamepad2.right_trigger > 0.2)
-                    Robot.spinner.DuckWheelMotor.setPower(-1);
+                    Robot.DuckWheel.DuckWheelMotor.setPower(-1);
                 else if (gamepad2.left_trigger > 0.2)
-                    Robot.spinner.DuckWheelMotor.setPower(1);
+                    Robot.DuckWheel.DuckWheelMotor.setPower(1);
                 else
-                    Robot.spinner.DuckWheelMotor.setPower(0.0);
+                    Robot.DuckWheel.DuckWheelMotor.setPower(0.0);
 
 
                if(gamepad2.dpad_up)

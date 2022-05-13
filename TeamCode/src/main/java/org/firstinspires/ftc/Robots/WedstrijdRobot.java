@@ -11,7 +11,7 @@ import org.firstinspires.ftc.RobotParts.Other.Arm;
 import org.firstinspires.ftc.RobotParts.IMU;
 import org.firstinspires.ftc.RobotParts.Intakes.TestIntake;
 import org.firstinspires.ftc.RobotParts.Odometry.OdometryOmniWheels;
-import org.firstinspires.ftc.RobotParts.Spinner;
+import org.firstinspires.ftc.RobotParts.DuckWheel;
 import org.firstinspires.ftc.RobotParts.Webcam.Webcam;
 
 
@@ -36,7 +36,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public Webcam webcam;
     //  public ShootPositionColorSensors ColorSensors;
     public TestIntake Intake;
-    public Spinner spinner;
+    public DuckWheel DuckWheel;
     public Grabber grabber;
     public Lift lift;
     public Arm arm;
@@ -67,7 +67,7 @@ public class WedstrijdRobot extends LoaderDisplay {
        // ShowLoading("Intake");
        // Intake = new TestIntake (hardwaremap);
  //       ShowLoading("Wheel");
-   //     spinner = new Spinner(hardwaremap);
+   //     DuckWheel = new DuckWheel(hardwaremap);
         ShowLoading("Done initializing! Press start to play");
     }
 
@@ -85,7 +85,7 @@ public class WedstrijdRobot extends LoaderDisplay {
         //ShowLoading("ColorSensors");
         // ColorSensors = new ShootPositionColorSensors(hardwaremap, Drivetrain);
         ShowLoading("Wheel");
-        spinner = new Spinner(hardwaremap);
+        DuckWheel = new DuckWheel(hardwaremap);
         ShowLoading("Grabber");
         grabber = new Grabber(hardwaremap);
         ShowLoading("Lift");

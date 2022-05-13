@@ -47,9 +47,9 @@ public class BlueStart2DuckStorage extends LinearOpMode
         Robot.Drivetrain.powerStrafeValues(-90.0, 0.2);
         sleep(1000);
         Robot.Drivetrain.powerStrafeValues(-90.0, 0.0);
-        Robot.spinner.TurnRight();
+        Robot.DuckWheel.TurnRight();
         sleep(4000);
-        Robot.spinner.Stop();
+        Robot.DuckWheel.Stop();
         BlueDuckStorage.ExecuteWithPointSkip();
 
     }

@@ -48,9 +48,9 @@ public class BlueStart1DuckStorage extends LinearOpMode
         //Run program------------------------------------
 
         BlueStart1Duck.ExecuteWithPointSkip();
-        Robot.spinner.TurnRight();
+        Robot.DuckWheel.TurnRight();
         sleep(4000);
-        Robot.spinner.Stop();
+        Robot.DuckWheel.Stop();
         Robot.Drivetrain.DriveStraight(5.0, 0.2);
         BlueDuckStorage.ExecuteWithPointSkip();
         Robot.Drivetrain.DriveStraight(-20.0, 0.2);
