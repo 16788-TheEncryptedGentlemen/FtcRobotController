@@ -33,7 +33,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public OdometryOmniWheels Odometry;
     public IMU imu;
     public MecanumDrivetrain Drivetrain;
-    public Webcam webcam;
+    public Webcam Webcam;
     //  public ShootPositionColorSensors ColorSensors;
     public TestIntake Intake;
     public DuckWheel DuckWheel;
@@ -63,7 +63,7 @@ public class WedstrijdRobot extends LoaderDisplay {
         //    ShowLoading("ColorSensors");
         // ColorSensors = new ShootPositionColorSensors(runningLinearOpMode, Drivetrain);
         ShowLoading("webcam");
-        webcam = new Webcam(runningLinearOpMode);
+        Webcam = new Webcam(runningLinearOpMode);
        // ShowLoading("Intake");
        // Intake = new TestIntake (hardwaremap);
  //       ShowLoading("Wheel");
