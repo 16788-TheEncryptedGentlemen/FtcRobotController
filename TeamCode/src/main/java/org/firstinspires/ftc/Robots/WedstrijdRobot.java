@@ -9,7 +9,7 @@ import org.firstinspires.ftc.RobotParts.Grabbers.Grabber;
 import org.firstinspires.ftc.RobotParts.Other.Lift;
 import org.firstinspires.ftc.RobotParts.Other.Arm;
 import org.firstinspires.ftc.RobotParts.IMU;
-import org.firstinspires.ftc.RobotParts.Intakes.TestIntake;
+import org.firstinspires.ftc.RobotParts.Intakes.IntakeTest;
 import org.firstinspires.ftc.RobotParts.Odometry.OdometryOmniWheels;
 import org.firstinspires.ftc.RobotParts.DuckWheel;
 import org.firstinspires.ftc.RobotParts.Webcam.Webcam;
@@ -35,7 +35,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public MecanumDrivetrain Drivetrain;
     public Webcam Webcam;
     //  public ShootPositionColorSensors ColorSensors;
-    public TestIntake Intake;
+    public IntakeTest IntakeTest;
     public DuckWheel DuckWheel;
     public Grabber Grabber;
     public Lift Lift;
@@ -92,8 +92,9 @@ public class WedstrijdRobot extends LoaderDisplay {
         Lift = new Lift(hardwaremap);
         ShowLoading("Arm");
         Arm = new Arm(hardwaremap);
+        ShowLoading("IntakeTest");
+        IntakeTest = new IntakeTest (hardwaremap);
         ShowLoading("Done initializing! Press start to play");
-
     }
     //---------------------------------------------------------------------
     //Constructors

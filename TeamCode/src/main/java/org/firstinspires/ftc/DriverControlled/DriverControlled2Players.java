@@ -8,6 +8,7 @@ import org.firstinspires.ftc.RobotParts.DuckWheel;
 import org.firstinspires.ftc.RobotParts.Grabbers.Grabber;
 import org.firstinspires.ftc.RobotParts.Other.Lift;
 import org.firstinspires.ftc.RobotParts.Other.Arm;
+import org.firstinspires.ftc.RobotParts.Intakes.IntakeTest;
 import org.firstinspires.ftc.OtherObjects.Targets.TARGET_ENUM_CLASS.TARGET;
 
 @TeleOp
@@ -173,6 +174,14 @@ public class DriverControlled2Players extends OpMode
             else
                     Robot.Arm.StopArm();
 
+            if (gamepad2.left_stick_y > 0)
+                Robot.IntakeTest.In();
+            else if (gamepad2.right_stick_y < 0)
+                Robot.IntakeTest.Out();
+            else
+                Robot.Arm.StopArm();
+
+            Robot.IntakeTest.In(-gamepad2.left_stick_y);
 
             //--------------------------------------------------------------------
             //Other controller input
