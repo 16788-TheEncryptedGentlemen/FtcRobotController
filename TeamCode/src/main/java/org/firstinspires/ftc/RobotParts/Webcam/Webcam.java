@@ -132,7 +132,7 @@ public class Webcam {
             // to artificially zoom in to the center of image.  For best results, the "aspectRatio" argument
             // should be set to the value of the images used to create the TensorFlow Object Detection model
             // (typically 16/9).
-            tfod.setZoom(1.5, 16.0 / 9.0);
+            tfod.setZoom(1.0, 20.0 / 9.0);
         }
     }
 
@@ -177,28 +177,41 @@ public class Webcam {
     @SuppressLint("DefaultLocale")
     public int getPositionOfDuck() {
 
-        while (runningOpMode.opModeIsActive()) {
-            if (tfod != null) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
-                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                if (updatedRecognitions != null) {
-                    runningOpMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
-                    // step through the list of recognitions and display boundary info.
-                    int i = 0;
-                    for (Recognition recognition : updatedRecognitions) {
-                        runningOpMode.telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        runningOpMode.telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        runningOpMode.telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                        i++;
-                        // TODO: Sanne moet zorgen dat dit werkt.
-                        // als het een eend of marker is:
-                        // vind de L/M/R positie
-                    }
-                    runningOpMode.telemetry.update();
+        // getUpdatedRecognitions() will return null if no new information is available since
+        // the last time that call was made.
+        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+        if (updatedRecognitions != null) {
+
+            //runningOpMode.telemetry.addData("# Object Detected", updatedRecognitions.size());
+
+            // step through the list of recognitions and display boundary info.
+            int i = 0;
+            for (Recognition recognition : updatedRecognitions) {
+                /*
+                runningOpMode.telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                runningOpMode.telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                        recognition.getLeft(), recognition.getTop());
+                runningOpMode.telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                        recognition.getRight(), recognition.getBottom());
+
+                */
+
+                i++;
+
+                // TODO: Sanne moet zorgen dat dit werkt.
+                // als het een eend of marker is:
+                // vind de L/M/R positie
+
+                if(recognition.getLeft() < 200) {
+                    return LEFT;
                 }
+                else if(recognition.getLeft() >= 200 && recognition.getLeft() < 400) {
+                    return MIDDLE;
+                }
+                else {
+                    return RIGHT;
+                }
+
             }
         }
         return MIDDLE;

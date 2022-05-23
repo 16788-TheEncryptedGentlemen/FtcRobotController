@@ -21,9 +21,12 @@ public class TestWebcam extends LinearOpMode
         telemetry.clearAll();
 
         int DuckPosition;
-        DuckPosition = Robot.webcam.getPositionOfDuck();
-        telemetry.addData("output", DuckPosition);
-        telemetry.update();
+
+        while(!isStarted() && !isStopRequested()) {
+            DuckPosition = Robot.Webcam.getPositionOfDuck();
+            telemetry.addData("output", DuckPosition);
+            telemetry.update();
+        }
 
         waitForStart();
 
