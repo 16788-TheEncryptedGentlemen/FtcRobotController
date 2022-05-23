@@ -39,8 +39,8 @@ public class OdometryOmniWheels
     //-----------------------------------------------------------
         public OdometryOmniWheels(HardwareMap hardwareMap)
         {
-            Ywheel = hardwareMap.get(DcMotorEx.class, "EncoderY");
             Xwheel = hardwareMap.get(DcMotorEx.class, "EncoderX");
+            Ywheel = hardwareMap.get(DcMotorEx.class, "EncoderY");
             
             //resets encoders
             Ywheel.setMode(DcMotorEx.RunMode.RESET_ENCODERS);

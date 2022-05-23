@@ -130,7 +130,7 @@ public class DriverControlled2Players extends OpMode
                 telemetry.addData("Y", Robot.Odometry.getY());
                 telemetry.addData("IMU", Robot.imu.getAngle());
 
-                //Robot.DuckWheel.Turn(-gamepad2.left_stick_y);
+                //Robot.spinner.Turn(-gamepad2.left_stick_y);
 
                 if(gamepad2.right_trigger > 0.2)
                     Robot.DuckWheel.DuckWheelMotor.setPower(-1);
@@ -149,11 +149,11 @@ public class DriverControlled2Players extends OpMode
 
 
           //     if(gamepad2.right_stick_y > 0)
-               //    Robot.Grabber.moveArmToFront();
+               //    Robot.grabber.moveArmToFront();
              //   else if(gamepad2.right_stick_y < 0)
-                  //  Robot.Grabber.moveArmToBack();
+                  //  Robot.grabber.moveArmToBack();
                 //else
-            //    Robot.Grabber.stopArm();
+            //    Robot.grabber.stopArm();
 
             if (gamepad2.a) {
                 telemetry.addLine("BeweegVoor");
