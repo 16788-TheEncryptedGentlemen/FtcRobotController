@@ -167,12 +167,13 @@ public class DriverControlled2Players extends OpMode
                 Robot.Grabber.StopGrabber();
             }
 
-            if (gamepad2.right_stick_y > 0)
-                    Robot.Arm.MoveArmFront();
-            else if (gamepad2.right_stick_y < 0)
-                    Robot.Arm.MoveArmBack();
-            else
-                    Robot.Arm.StopArm();
+            if (gamepad2.right_stick_y > 0) {
+                Robot.Arm.MoveArmFront();
+            } else if (gamepad2.right_stick_y < 0) {
+                Robot.Arm.MoveArmBack();
+            } else {
+                Robot.Arm.StopArm();
+            }
 
             if (gamepad2.left_stick_y > 0)
                 Robot.IntakeTest.In();
