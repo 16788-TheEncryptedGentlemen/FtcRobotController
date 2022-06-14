@@ -245,7 +245,7 @@ public class DriverControlled2Players extends OpMode
                     if(gamepad1.right_bumper)
                         Robot.Drivetrain.MultiplySpeed(1.0);
                    else if(gamepad1.left_bumper)
-                        Robot.Drivetrain.MultiplySpeed(0.1);
+                        Robot.Drivetrain.MultiplySpeed(0.2);
                    else
                        Robot.Drivetrain.MultiplySpeed(0.7);
 
