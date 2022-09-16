@@ -182,8 +182,6 @@ public class DriverControlled2Players extends OpMode
             else
                 Robot.Arm.StopArm();
 
-            Robot.IntakeTest.In(-gamepad2.left_stick_y);
-
             //--------------------------------------------------------------------
             //Other controller input
             //--------------------------------------------------------------------
