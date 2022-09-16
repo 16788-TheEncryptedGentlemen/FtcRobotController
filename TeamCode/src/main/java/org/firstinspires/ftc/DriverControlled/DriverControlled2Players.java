@@ -167,9 +167,17 @@ public class DriverControlled2Players extends OpMode
                 Robot.Grabber.StopGrabber();
             }
 
-            if (gamepad2.right_stick_y > 0) {
+           if (gamepad2.right_stick_y > 0) {
+               Robot.Arm.MoveArmFront();
+           } else if (gamepad2.right_stick_y < 0) {
+               Robot.Arm.MoveArmBack();
+           } else {
+               Robot.Arm.StopArm();
+           }
+
+          /*  if (gamepad2.x) {
                 Robot.Arm.MoveArmFront();
-            } else if (gamepad2.right_stick_y < 0) {
+            } else if (gamepad2.b) {
                 Robot.Arm.MoveArmBack();
             } else {
                 Robot.Arm.StopArm();
@@ -182,6 +190,7 @@ public class DriverControlled2Players extends OpMode
             else
                 Robot.Arm.StopArm();
 
+        */
             //--------------------------------------------------------------------
             //Other controller input
             //--------------------------------------------------------------------
@@ -236,7 +245,7 @@ public class DriverControlled2Players extends OpMode
                     if(gamepad1.right_bumper)
                         Robot.Drivetrain.MultiplySpeed(1.0);
                    else if(gamepad1.left_bumper)
-                        Robot.Drivetrain.MultiplySpeed(0.2);
+                        Robot.Drivetrain.MultiplySpeed(0.1);
                    else
                        Robot.Drivetrain.MultiplySpeed(0.7);
 
