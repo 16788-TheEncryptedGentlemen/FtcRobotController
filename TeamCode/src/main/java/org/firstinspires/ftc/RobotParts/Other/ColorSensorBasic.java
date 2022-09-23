@@ -20,8 +20,8 @@ public class ColorSensorBasic {
     //---------------------------------------------------------------------
     //Constructor
     //---------------------------------------------------------------------
-    public ColorSensorBasic(HardwareMap hardwaremap, String Name) {
-        colourSensor = hardwaremap.get(ColorSensor.class, Name);
+    public ColorSensorBasic(HardwareMap hardwaremap) {
+        colourSensor = hardwaremap.get(ColorSensor.class, "ColourSensor");
     }
 
     //---------------------------------------------------------------------
