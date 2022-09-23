@@ -13,6 +13,8 @@ import org.firstinspires.ftc.RobotParts.Intakes.IntakeTest;
 import org.firstinspires.ftc.RobotParts.Odometry.OdometryOmniWheels;
 import org.firstinspires.ftc.RobotParts.DuckWheel;
 import org.firstinspires.ftc.RobotParts.Webcam.Webcam;
+import org.firstinspires.ftc.RobotParts.Other.ColorSensorBasic;
+
 
 
 public class WedstrijdRobot extends LoaderDisplay {
@@ -40,6 +42,7 @@ public class WedstrijdRobot extends LoaderDisplay {
     public Grabber Grabber;
     public Lift Lift;
     public Arm Arm;
+    public ColorSensorBasic ColourSensorBasic;
     //---------------------------------------------------------------------
     //Used variabels:
     //---------------------------------------------------------------------
@@ -64,6 +67,8 @@ public class WedstrijdRobot extends LoaderDisplay {
         // ColorSensors = new ShootPositionColorSensors(runningLinearOpMode, Drivetrain);
         ShowLoading("webcam");
         Webcam = new Webcam(runningLinearOpMode);
+        //ShowLoading("ColourSensor");
+        //ColourSensor = new ColorSensorBasic()
        // ShowLoading("Intake");
        // Intake = new TestIntake (hardwaremap);
  //       ShowLoading("Wheel");
@@ -92,6 +97,8 @@ public class WedstrijdRobot extends LoaderDisplay {
         Lift = new Lift(hardwaremap);
         ShowLoading("Arm");
         Arm = new Arm(hardwaremap);
+        ShowLoading("ColourSensor");
+        ColourSensorBasic = new ColorSensorBasic(hardwaremap);
         ShowLoading("IntakeTest");
         IntakeTest = new IntakeTest (hardwaremap);
         ShowLoading("Done initializing! Press start to play");
