@@ -5,18 +5,22 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Display;
+import org.firstinspires.ftc.teamcode.robotparts.Grabber;
 import org.firstinspires.ftc.teamcode.robotparts.IMU;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 
-/** Contains all the robot parts. */
+/**
+ * Contains all the robot parts.
+ */
 public class CompetitionRobot {
     public MecanumDrivetrain drivetrain;
     public Odometry odometry;
     public IMU imu;
     public Display display;
     public Webcam webcam;
+    public Grabber grabber;
     //---------------------------------------------------------------------
     //Constructors:
     // * LinearOpMode: The constructor for a LinearOpMode program
@@ -49,6 +53,8 @@ public class CompetitionRobot {
         imu = new IMU(hardwaremap);
         display.showLoading("Drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        display.showLoading("Grabber");
+        grabber = new Grabber(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
     //---------------------------------------------------------------------
