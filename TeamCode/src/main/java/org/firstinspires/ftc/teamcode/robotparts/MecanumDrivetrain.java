@@ -5,13 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
-
+import org.firstinspires.ftc.teamcode.robotparts.IMU;
 
 public class MecanumDrivetrain {
-    public MecanumDrivetrain(HardwareMap hardwareMap, Odometry odometry, IMU imu) {
-
-        public class MecanumDrivetrain {
-            //-----------------------------------------------------------
+     //-----------------------------------------------------------
             //Used Variables:
             // * runningOpMode: The LinearOpMode to stop the robot
             // * MotorSpeed: An array to store the four different motor speeds
@@ -326,6 +323,5 @@ public class MecanumDrivetrain {
 //---------------------------------------------------------
 //Other methods
 //---------------------------------------------------------
-        }
+
     }
-}
