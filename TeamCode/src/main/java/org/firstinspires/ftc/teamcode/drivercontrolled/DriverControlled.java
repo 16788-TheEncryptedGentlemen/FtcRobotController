@@ -54,13 +54,13 @@ public class DriverControlled extends OpMode {
 
         if (gamepad2.a) {
             telemetry.addLine("Grab");
-            Robot.grabber.Grab();
+            Robot.grabber.grab();
         } else if (gamepad2.y) {
             telemetry.addLine("Drop");
-            Robot.grabber.Drop();
+            Robot.grabber.drop();
         } else {
             telemetry.addLine("StopGrabber");
-            Robot.grabber.StopGrabber();
+            Robot.grabber.stop();
         }
     }
 }

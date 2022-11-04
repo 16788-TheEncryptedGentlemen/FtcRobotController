@@ -6,30 +6,31 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
     public class Grabber {
 
-        public CRServo Left;
-        public CRServo Right;
+        public CRServo left;
+        public CRServo right;
 
         public Grabber(HardwareMap hardwareMap)
         {
-            Left = hardwareMap.get(CRServo.class, "LeftGrabber");
-            Right = hardwareMap.get(CRServo.class, "RightGrabber");
+            left = hardwareMap.get(CRServo.class, "LeftGrabber");
+            right = hardwareMap.get(CRServo.class, "RightGrabber");
         }
 
-        public void Grab()
+        public void grab()
         {
-            Left.setPower(1);
-            Right.setPower(-1);
+            left.setPower(1);
+            right.setPower(-1);
         }
-        public void Drop()
+        public void drop()
         {
-            Left.setPower(-1);
-            Right.setPower(1);
+            left.setPower(-1);
+            right.setPower(1);
         }
-        public void StopGrabber()
+        public void stop()
         {
-            Left.setPower(0.0);
-            Right.setPower(0.0);
+            left.setPower(0.0);
+            right.setPower(0.0);
         }
 
     }
 
+// TODO: Aditi: Add documemtation to this class
