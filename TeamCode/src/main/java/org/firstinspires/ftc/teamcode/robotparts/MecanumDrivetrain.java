@@ -18,11 +18,11 @@ public class MecanumDrivetrain {
     //-----------------------------------------------------------
     private LinearOpMode runningOpMode;
     public double[] MotorSpeed = new double[4];
-    public DcMotorEx RV;
-    public DcMotorEx RA;
-    public DcMotorEx LV;
-    public DcMotorEx LA;
-    private final Odometry Odometry;
+    public DcMotorEx rv;
+    public DcMotorEx ra;
+    public DcMotorEx lv;
+    public DcMotorEx la;
+    private final Odometry odometry;
     public IMU imu;
     //-----------------------------------------------------------
     //Used Variables
@@ -35,28 +35,28 @@ public class MecanumDrivetrain {
     // * The second constructor calls the first constructor with an added LinearOpMode for autonomous
     //-----------------------------------------------------------
     public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _Odometry, IMU _imu) {
-        Odometry = _Odometry;
+        odometry = _Odometry;
         imu = _imu;
-        RV = hardwareMap.get(DcMotorEx.class, "RV");
-        RA = hardwareMap.get(DcMotorEx.class, "RA");
-        LV = hardwareMap.get(DcMotorEx.class, "LV");
-        LA = hardwareMap.get(DcMotorEx.class, "LA");
+        rv = hardwareMap.get(DcMotorEx.class, "RV");
+        ra = hardwareMap.get(DcMotorEx.class, "RA");
+        lv = hardwareMap.get(DcMotorEx.class, "LV");
+        la = hardwareMap.get(DcMotorEx.class, "LA");
 
         //Reversing the left motors because they are mirrored
-        RV.setDirection(DcMotorEx.Direction.REVERSE);
-        RA.setDirection(DcMotorEx.Direction.REVERSE);
+        rv.setDirection(DcMotorEx.Direction.REVERSE);
+        ra.setDirection(DcMotorEx.Direction.REVERSE);
 
-        RV.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        RA.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        LV.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        LA.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        rv.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        ra.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        lv.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        la.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
 
         //Run all motors with encoders
-        RV.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        RA.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        LV.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        LA.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rv.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        ra.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        lv.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        la.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
 
@@ -135,31 +135,31 @@ public class MecanumDrivetrain {
 
 
     public void setPower() {
-        RV.setPower(MotorSpeed[0]);
-        RA.setPower(MotorSpeed[1]);
-        LV.setPower(MotorSpeed[2]);
-        LA.setPower(MotorSpeed[3]);
+        rv.setPower(MotorSpeed[0]);
+        ra.setPower(MotorSpeed[1]);
+        lv.setPower(MotorSpeed[2]);
+        la.setPower(MotorSpeed[3]);
     }
 
     public void setPower(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        RV.setPower(SpeedRV);
-        RA.setPower(SpeedRA);
-        LV.setPower(SpeedLV);
-        LA.setPower(SpeedLA);
+        rv.setPower(SpeedRV);
+        ra.setPower(SpeedRA);
+        lv.setPower(SpeedLV);
+        la.setPower(SpeedLA);
     }
 
     public void setPower(double Speed) {
-        RV.setPower(Speed);
-        RA.setPower(Speed);
-        LV.setPower(Speed);
-        LA.setPower(Speed);
+        rv.setPower(Speed);
+        ra.setPower(Speed);
+        lv.setPower(Speed);
+        la.setPower(Speed);
     }
 
     public void setPower(double[] Speedarr) {
-        RV.setPower(Speedarr[0]);
-        RA.setPower(Speedarr[1]);
-        LV.setPower(Speedarr[2]);
-        LA.setPower(Speedarr[3]);
+        rv.setPower(Speedarr[0]);
+        ra.setPower(Speedarr[1]);
+        lv.setPower(Speedarr[2]);
+        la.setPower(Speedarr[3]);
     }
 
 
@@ -175,11 +175,11 @@ public class MecanumDrivetrain {
     }
 
     public double[] getVelocities() {
-        return new double[]{RV.getVelocity(), RA.getVelocity(), LV.getVelocity(), LA.getVelocity()};
+        return new double[]{rv.getVelocity(), ra.getVelocity(), lv.getVelocity(), la.getVelocity()};
     }
 
     public double[] getPowers() {
-        return new double[]{RV.getPower(), RA.getPower(), LV.getPower(), LA.getPower()};
+        return new double[]{rv.getPower(), ra.getPower(), lv.getPower(), la.getPower()};
     }
     //---------------------------------------------------------
     //Set, add and power speed methods
@@ -201,12 +201,12 @@ public class MecanumDrivetrain {
     // * TurnRobotAO(): Turns the robot on the absolute orientation plane with a certain angle
     //---------------------------------------------------------
     public void DriveStraight(double Distance, double Power) {
-        Odometry.Reset();
+        odometry.Reset();
 
-        double OriginYPos = Odometry.getY();
+        double OriginYPos = odometry.getY();
         double endDistance = Math.abs(Distance + OriginYPos);
 
-        while (Math.abs(Odometry.getY()) < endDistance && !runningOpMode.isStopRequested())
+        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested())
             setPower(Power * Math.signum(Distance));
 
         setPower(0);
