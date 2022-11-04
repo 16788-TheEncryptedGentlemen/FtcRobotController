@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 
+// TODO: Sanne: Add documentation to this class
+
 public class LineSegment
 {
     //-------------------------------------------------------------------

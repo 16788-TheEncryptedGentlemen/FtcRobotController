@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 import java.util.ArrayList;
 
+// TODO: Sanne: Add documentation to this class
+
 public class CheckPoints {
 
     //----------------------------------------------------------------

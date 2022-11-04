@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.autonomousclasses;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
-
+// TODO: Sanne: Add documentation to this class
 
 public class BezierCurveRoute
 {
