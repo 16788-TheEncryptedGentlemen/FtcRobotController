@@ -20,7 +20,7 @@ public class IMU
     //-----------------------------------------------------------
     private BNO055IMU imu;
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-    private double AngularOffset = 0;
+    private double angularOffset = 0;
     //-----------------------------------------------------------
     //Used Variables
     //-----------------------------------------------------------
@@ -56,7 +56,7 @@ public class IMU
     public double getAngle()
     {
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        double Angle = -angles.firstAngle - AngularOffset;
+        double Angle = -angles.firstAngle - angularOffset;
 
         if(Angle > 180)
             Angle -= 360;
@@ -115,7 +115,7 @@ public class IMU
     }
     public void ResetAngularOrientation()
     {
-        AngularOffset = getAngle();
+        angularOffset = getAngle();
     }
     //-----------------------------------------------------------
     //Reset methods
