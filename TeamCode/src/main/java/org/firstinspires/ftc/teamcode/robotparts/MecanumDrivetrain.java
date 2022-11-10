@@ -5,35 +5,26 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class MecanumDrivetrain {
-    //-----------------------------------------------------------
-    //Used Variables:
-    // * runningOpMode: The LinearOpMode to stop the robot
-    // * MotorSpeed: An array to store the four different motor speeds
-    // * RV: Front right motor (RechtsVoor)
-    // * RA: Back right motor  (RechtsAchter)
-    // * LV: Front left motor (LinksVoor)
-    // * LA: Back left motor (LinksAchter)
-    // * Odometry: The odometry of the robot
-    // * IMU: The Integrated Measurement Unit of the robot
-    //-----------------------------------------------------------
+
+    /** The LinearOpMode to stop the robot. */
     private LinearOpMode runningOpMode;
+    /** An array to store the four different motor speeds. */
     public double[] MotorSpeed = new double[4];
+    /** Front right motor (RechtsVoor). */
     public DcMotorEx rv;
+    /** Back right motor (RechtsAchter). */
     public DcMotorEx ra;
+    /** Front left motor (LinksVoor). */
     public DcMotorEx lv;
+    /** Back left motor (LinksAchter). */
     public DcMotorEx la;
+    /** The odometry of the robot. */
     private final Odometry odometry;
+    /** The Integrated Measurement Unit of the robot. */
     public IMU imu;
-    //-----------------------------------------------------------
-    //Used Variables
-    //-----------------------------------------------------------
 
 
-    //-----------------------------------------------------------
-    //Constructors
-    // * The first constructor is the default MecanumDrivetrain constructor
-    // * The second constructor calls the first constructor with an added LinearOpMode for autonomous
-    //-----------------------------------------------------------
+    /** the default MecanumDrivetrain constructor. */
     public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _Odometry, IMU _imu) {
         odometry = _Odometry;
         imu = _imu;
@@ -42,7 +33,7 @@ public class MecanumDrivetrain {
         lv = hardwareMap.get(DcMotorEx.class, "LV");
         la = hardwareMap.get(DcMotorEx.class, "LA");
 
-        //Reversing the left motors because they are mirrored
+        /** Reversing the left motors because they are mirrored. */
         rv.setDirection(DcMotorEx.Direction.REVERSE);
         ra.setDirection(DcMotorEx.Direction.REVERSE);
 
@@ -51,8 +42,7 @@ public class MecanumDrivetrain {
         lv.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         la.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
-
-        //Run all motors with encoders
+        /** Run all motors with encoders. */
         rv.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         ra.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         lv.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -60,36 +50,15 @@ public class MecanumDrivetrain {
     }
 
 
-    //Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap
+    /** Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap. */
     public MecanumDrivetrain(LinearOpMode _runningOpMode, Odometry _Odometry, IMU _imu) {
         this(_runningOpMode.hardwareMap, _Odometry, _imu);
         runningOpMode = _runningOpMode;
     }
-    //-----------------------------------------------------------
-    //Constructors
-    //-----------------------------------------------------------
 
 
-    //---------------------------------------------------------
-    //Set, add, power and other speed methods:
-    // * setSpeed(): Sets speed values to the MotorSpeed array. The following arguments can be entered:
-    // * - 4 doubles
-    // * - 1 double
-    // * - 1 array
-    // * addSpeed(): Adds speed values to the MotorSpeed array. The following arguments can be entered:
-    // * - 4 doubles
-    // * - 1 double
-    // * - 1 array
-    // * setPower(): Sets power to the motors. The following arguments can be entered:
-    // * - No arguments. This will cause the motors to be powered with the values in the MotorSpeed array
-    // * - 4 doubles
-    // * - 1 double
-    // * - 1 array
-    // * Stop(): Stops the motors
-    // * MultiplySpeed(): Multiplies all speed values in the MotorSpeed array with a factor
-    // * GetVelocity(): Returns an array of the velocities of the motors
-    // * GetPower(): Returns an array of the power values of the motors
-    //---------------------------------------------------------
+    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
+     4 doubles, 1 double, 1 array. */
     public void setSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
         MotorSpeed[0] = SpeedRV;
         MotorSpeed[1] = SpeedRA;
@@ -97,6 +66,8 @@ public class MecanumDrivetrain {
         MotorSpeed[3] = SpeedLA;
     }
 
+    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
+     4 doubles, 1 double, 1 array. */
     public void setSpeed(double Speed) {
         MotorSpeed[0] = Speed;
         MotorSpeed[1] = Speed;
@@ -104,6 +75,8 @@ public class MecanumDrivetrain {
         MotorSpeed[3] = Speed;
     }
 
+    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
+     4 doubles, 1 double, 1 array. */
     public void setSpeed(double[] Speedarr) {
         MotorSpeed[0] = Speedarr[0];
         MotorSpeed[1] = Speedarr[1];
@@ -111,7 +84,8 @@ public class MecanumDrivetrain {
         MotorSpeed[3] = Speedarr[3];
     }
 
-
+    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
+    4 doubles, 1 double, 1 array. */
     public void addSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
         MotorSpeed[0] += SpeedRV;
         MotorSpeed[1] += SpeedRA;
@@ -119,6 +93,8 @@ public class MecanumDrivetrain {
         MotorSpeed[3] += SpeedLA;
     }
 
+    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
+     4 doubles, 1 double, 1 array. */
     public void addSpeed(double Speed) {
         MotorSpeed[0] += Speed;
         MotorSpeed[1] += Speed;
@@ -126,6 +102,8 @@ public class MecanumDrivetrain {
         MotorSpeed[3] += Speed;
     }
 
+    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
+     4 doubles, 1 double, 1 array. */
     public void addSpeed(double[] Speedarr) {
         MotorSpeed[0] += Speedarr[0];
         MotorSpeed[1] += Speedarr[1];
@@ -133,7 +111,9 @@ public class MecanumDrivetrain {
         MotorSpeed[3] += Speedarr[3];
     }
 
-
+    /** Sets power to the motors. The following arguments can be entered:
+    No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
+    1 double, 1 array. */
     public void setPower() {
         rv.setPower(MotorSpeed[0]);
         ra.setPower(MotorSpeed[1]);
@@ -141,6 +121,9 @@ public class MecanumDrivetrain {
         la.setPower(MotorSpeed[3]);
     }
 
+    /** Sets power to the motors. The following arguments can be entered:
+     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
+     1 double, 1 array. */
     public void setPower(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
         rv.setPower(SpeedRV);
         ra.setPower(SpeedRA);
@@ -148,6 +131,9 @@ public class MecanumDrivetrain {
         la.setPower(SpeedLA);
     }
 
+    /** Sets power to the motors. The following arguments can be entered:
+     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
+     1 double, 1 array. */
     public void setPower(double Speed) {
         rv.setPower(Speed);
         ra.setPower(Speed);
@@ -155,6 +141,9 @@ public class MecanumDrivetrain {
         la.setPower(Speed);
     }
 
+    /** Sets power to the motors. The following arguments can be entered:
+     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
+     1 double, 1 array. */
     public void setPower(double[] Speedarr) {
         rv.setPower(Speedarr[0]);
         ra.setPower(Speedarr[1]);
@@ -162,11 +151,12 @@ public class MecanumDrivetrain {
         la.setPower(Speedarr[3]);
     }
 
-
+    /** Stops the motors. */
     public void Stop() {
         setPower(0.0);
     }
 
+    /** Multiplies all speed values in the MotorSpeed array with a factor. */
     public void MultiplySpeed(double factor) {
         MotorSpeed[0] *= factor;
         MotorSpeed[1] *= factor;
@@ -174,32 +164,23 @@ public class MecanumDrivetrain {
         MotorSpeed[3] *= factor;
     }
 
+    /** Returns an array of the velocities of the motors. */
     public double[] getVelocities() {
         return new double[]{rv.getVelocity(), ra.getVelocity(), lv.getVelocity(), la.getVelocity()};
     }
 
+    /** Returns an array of the power values of the motors. */
     public double[] getPowers() {
         return new double[]{rv.getPower(), ra.getPower(), lv.getPower(), la.getPower()};
     }
-    //---------------------------------------------------------
-    //Set, add and power speed methods
-    //---------------------------------------------------------
 
-
-    /**
-     * Drives the robot forward a certain amount of cm with a given Speed
-     *
+    /** TODO: Figure out what this means.
      * @param Distance The distance in cm
      * @param Power    Power value in range [0..1]
      */
-    //---------------------------------------------------------
-    //Simple drive methods:
-    // * DriveStraight(): Drives the robot forward a certain amount of cm with a given Speed
-    // * setSpeedValuesTurnRobot(): Sets speed values to the robot for turning a certain amount of degrees in the absolute orientation plane
-    // * TurnRobotNoLoop(): Turns the robot to the robot a certain degrees without a while loop
-    // * Follow(): The robot will follow a theoretical line with a specific angle. Note that this method does not loop
-    // * TurnRobotAO(): Turns the robot on the absolute orientation plane with a certain angle
-    //---------------------------------------------------------
+
+
+    /** Drives the robot forward a certain amount of cm with a given Speed. */
     public void DriveStraight(double Distance, double Power) {
         odometry.Reset();
 
@@ -212,16 +193,19 @@ public class MecanumDrivetrain {
         setPower(0);
     }
 
+    /** Sets speed values to the robot for turning a certain amount of degrees in the absolute orientation plane. */
     public void setSpeedValuesTurnRobot(double NewAngle) {
         double[] SpeedValues = imu.getTurnCorrectionValues(NewAngle, 20);
         setSpeed(SpeedValues);
     }
 
+    /** Turns the robot to the robot a certain degrees without a while loop. */
     public void TurnRobotNoLoop(double NewAngle) {
         setSpeedValuesTurnRobot(NewAngle);
         setPower();
     }
 
+    /** The robot will follow a theoretical line with a specific angle. Note that this method does not loop. */
     public void Follow(double NewAngle, double Speed) {
         setSpeedValuesTurnRobot(NewAngle);
         addSpeed(Speed);
@@ -229,6 +213,7 @@ public class MecanumDrivetrain {
         setPower();
     }
 
+    /** Turns the robot on the absolute orientation plane with a certain angle. */
     public void TurnRobotAO(double Angle) {
         while (Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested()) {
             double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20);
@@ -237,21 +222,8 @@ public class MecanumDrivetrain {
         Stop();
     }
 
-    //---------------------------------------------------------
-    //Simple drive functions
-    //---------------------------------------------------------
 
-
-    //---------------------------------------------------------
-    //Strafing methods:
-    // * getStrafeValues(): Gets the strafe values of the motors for a certain Angle and speed value
-    // * setStrafeValues(): sets speed values to robot for strafing. This method has two isomorphic methods:
-    // * - Angle and speed value: Sets the MotorSpeed array values to associated values for strafing
-    // * - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane
-    // * powerStrafeValues(): powers robot to strafe in the desired direction. This method has two isomorphic methods:
-    // * - Angle and speed value: Powers the motors to associated values for strafing
-    // * - Angle, speed and Desired angle: Powers the motor values to associated values for strafing and corrects for a desired angle in the absolute orientation plane
-    //---------------------------------------------------------
+    /** Gets the strafe values of the motors for a certain Angle and speed value. */
     public double[] getStrafeValues(double StrafeAngle, double speed) {
         double MotorSpeedStrafe;
 
@@ -270,40 +242,41 @@ public class MecanumDrivetrain {
         }
     }
 
-
+    /** sets speed values to robot for strafing. This method has two isomorphic methods:
+     - Angle and speed value: Sets the MotorSpeed array values to associated values for strafing.
+     - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void setStrafeValues(double StrafeAngle, double Speed) {
         setSpeed(getStrafeValues(StrafeAngle, Speed));
     }
 
+    /** sets speed values to robot for strafing. This method has two isomorphic methods:
+     - Angle and speed value: Sets the MotorSpeed array values to associated values for strafing.
+     - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void setStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed);
         double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30);
         addSpeed(CorrectionFactors);
     }
 
-
+    /** powerStrafeValues(): powers robot to strafe in the desired direction. This method has two isomorphic methods:
+    - Angle and speed value: Powers the motors to associated values for strafing.
+    - Angle, speed and Desired angle: Powers the motor values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void powerStrafeValues(double StrafeAngle, double Speed) {
         setStrafeValues(StrafeAngle, Speed);
         setPower();
     }
 
+    /** powerStrafeValues(): powers robot to strafe in the desired direction. This method has two isomorphic methods:
+     - Angle and speed value: Powers the motors to associated values for strafing.
+     - Angle, speed and Desired angle: Powers the motor values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void powerStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed, DesiredAngle);
         FixMotorSpeedOverflow();
         setPower();
     }
 
-    //---------------------------------------------------------
-    //Strafing methods
-    //---------------------------------------------------------
 
-
-    //---------------------------------------------------------
-    //Other methods
-    // * FixMotorSpeedOverflow(): Decreases all values to be under a value of 1 if needed
-    // * EmptyValues(): Sets all values in MotorSpeed to 0
-    //---------------------------------------------------------
-
+    /** Decreases all values to be under a value of 1 if needed. */
     public void FixMotorSpeedOverflow() {
         double max = 1;
         for (int i = 0; i < 4; i++) {
@@ -313,12 +286,10 @@ public class MecanumDrivetrain {
         MultiplySpeed(1.0 / max);
     }
 
+    /** Sets all values in MotorSpeed to 0 */
     public void EmptyMotorSpeedValues() {
         MotorSpeed = new double[4];
     }
 
-//---------------------------------------------------------
-//Other methods
-//---------------------------------------------------------
 
 }
