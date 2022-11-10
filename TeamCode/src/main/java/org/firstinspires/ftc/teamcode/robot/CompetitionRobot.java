@@ -11,22 +11,23 @@ import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 
-/**
- * Contains all the robot parts.
- */
+/** Contains all the robot parts. */
 public class CompetitionRobot {
+    /** The drivetrain of the robot. */
     public MecanumDrivetrain drivetrain;
+    /** The odometry of the robot. */
     public Odometry odometry;
+    /** The imu of the robot. */
     public IMU imu;
+    /** The display of the robot. */
     public Display display;
+    /** The webcam of the robot. */
     public Webcam webcam;
+    /** The grabber of the robot. */
     public Grabber grabber;
-    //---------------------------------------------------------------------
-    //Constructors:
-    // * LinearOpMode: The constructor for a LinearOpMode program
-    // * OpMode: The constructor for an OpMode program
-    //---------------------------------------------------------------------
 
+
+    /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
         HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
         display = new Display(runningLinearOpMode.telemetry);
@@ -42,7 +43,7 @@ public class CompetitionRobot {
         display.showLoading("Done initializing! Press start to play");
     }
 
-
+    /** The constructor for an OpMode program. */
     public CompetitionRobot(OpMode opMode) {
         HardwareMap hardwaremap = opMode.hardwareMap;
         display = new Display(opMode.telemetry);
@@ -57,17 +58,5 @@ public class CompetitionRobot {
         grabber = new Grabber(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
-    //---------------------------------------------------------------------
-    //Constructors
-    //---------------------------------------------------------------------
 
-
-    //---------------------------------------------------------------------
-    //Other methods
-    //---------------------------------------------------------------------
-
-
-    //---------------------------------------------------------------------
-    //Other methods
-    //---------------------------------------------------------------------
 }
