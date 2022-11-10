@@ -33,15 +33,15 @@ public class Odometry {
         xWheel = hardwareMap.get(DcMotorEx.class, "EncoderX");
         yWheel = hardwareMap.get(DcMotorEx.class, "EncoderY");
 
-        // Resets encoders.
+        /** Resets encoders. */
         yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        // Runs encoders on both wheels.
+        /** Runs encoders on both wheels. */
         yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        //Reverses yWheel, because the encoder is mounted in reverse.
+        /** Reverses yWheel, because the encoder is mounted in reverse. */
         // TODO: Think about whether we need this.
         yWheel.setDirection(DcMotorEx.Direction.REVERSE);
     }
