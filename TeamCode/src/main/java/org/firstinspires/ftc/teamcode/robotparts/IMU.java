@@ -12,47 +12,24 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class IMU
 {
-    //-----------------------------------------------------------
-    //Used Variables:
-    // * Gyro: The actual IMU in this object
-    // * parameters: The parameters of the IMU
-    // * AngularOffset: The offset from the absolute orienation plane
-    //-----------------------------------------------------------
+    /** Gyro: The actual IMU in this object. */
     private BNO055IMU imu;
+    /** The parameters of the IMU. */
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    /** The offset from the absolute orienation plane. */
     private double angularOffset = 0;
-    //-----------------------------------------------------------
-    //Used Variables
-    //-----------------------------------------------------------
 
 
-
-
-
-    //-----------------------------------------------------------
-    //Constructor
-    //-----------------------------------------------------------
     public IMU(HardwareMap hardwareMap){
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.loggingTag = "IMU";  //Loggin tag and config name ARE NOT THE SAME (I think)
+        parameters.loggingTag = "IMU";  //Loggin tag and config name ARE NOT THE SAME (I think) TODO: Figure out if luc was correct
 
         imu = hardwareMap.get(BNO055IMU.class, "IMU");
         imu.initialize(parameters);
     }
-    //-----------------------------------------------------------
-    //Constructor
-    //-----------------------------------------------------------
 
 
-
-
-
-    //-----------------------------------------------------------
-    //Orientation methods:
-    // * getAngle(): Gets the angle of the robot on the absolute orientation plane from -180 to 180 degrees
-    // * getDeviation(): Gets the deviation from a given angle
-    // * getTurnCorrectionValues(): Returns an array with correction values for the motors to turn.
-    //-----------------------------------------------------------
+    /** Gets the angle of the robot on the absolute orientation plane from -180 to 180 degrees. */
     public double getAngle()
     {
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -66,6 +43,7 @@ public class IMU
         return Angle;
     }
 
+    /** Gets the deviation from a given angle. */
     public double getDeviation(double DesiredAngle)
     {
         double DeviationAngle = getAngle() - DesiredAngle;
@@ -78,6 +56,7 @@ public class IMU
         return DeviationAngle;
     }
 
+    /** Returns an array with correction values for the motors to turn. */
     public double[] getTurnCorrectionValues(double DesiredAngle, double P)
     {
         double CorrectionValue = 0;
@@ -96,29 +75,19 @@ public class IMU
         CorrectionValue *= 0.3;
         return new double[] {CorrectionValue, CorrectionValue, -CorrectionValue, -CorrectionValue};
     }
-    //-----------------------------------------------------------
-    //Orientation methods:
-    //-----------------------------------------------------------
 
 
-
-
-
-    //-----------------------------------------------------------
-    //Reset methods:
-    // * Reset(): Resets the entire IMU. This takes up a second
-    // * ResetAngularOrientation(): Sets AngularOffset, which will result in a resetted angular orientation
-    //-----------------------------------------------------------
+    /** Resets the entire IMU. This takes up a second. */
     public void Reset()
     {
         imu.initialize(parameters);
     }
+
+    /** Sets AngularOffset, which will result in a resetted angular orientation. */
     public void ResetAngularOrientation()
     {
         angularOffset = getAngle();
     }
-    //-----------------------------------------------------------
-    //Reset methods
-    //-----------------------------------------------------------
+
 
 }
