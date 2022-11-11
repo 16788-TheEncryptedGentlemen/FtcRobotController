@@ -32,14 +32,14 @@ public class CompetitionRobot {
         HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
         display = new Display(runningLinearOpMode.telemetry);
 
-        display.showLoading("Odometry");
+        display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
         imu = new IMU(hardwaremap);
-        display.showLoading("Drivetrain");
+        display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("webcam");
-        webcam = new Webcam(runningLinearOpMode);
+        webcam = new Webcam(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -48,13 +48,13 @@ public class CompetitionRobot {
         HardwareMap hardwaremap = opMode.hardwareMap;
         display = new Display(opMode.telemetry);
 
-        display.showLoading("Odometry");
+        display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
         imu = new IMU(hardwaremap);
-        display.showLoading("Drivetrain");
+        display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
-        display.showLoading("Grabber");
+        display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
