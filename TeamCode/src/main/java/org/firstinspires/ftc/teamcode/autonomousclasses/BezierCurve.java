@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 
-// TODO: Sanne: Add documentation to this class
 
 public class BezierCurve
 {
-    // The coefficients of the parametric curve in the form: a0*T + a1*T^2 + a2*T^3 ...
+    /** The coefficients of the parametric curve in the form: a0*T + a1*T^2 + a2*T^3 ... */
     public final double[] XCoefficients;
+    /** The coefficients of the parametric curve in the form: a0*T + a1*T^2 + a2*T^3 ... */
     public final double[] YCoefficients;
 
-    //Constructor of the BezierCurve class
+    /** Constructor of the BezierCurve class. */
     public BezierCurve(double[] _XCoefficients, double[] _YCoefficients)
     {
         XCoefficients = _XCoefficients;
@@ -16,17 +16,7 @@ public class BezierCurve
     }
 
 
-
-    //-------------------------------------------------------------------
-    //BezierCurve methods:
-    // * getX(): Returns x-coordinate of the bezier curve at a given T value
-    // * getY(): Returns y-coordinate of the bezier curve at a given T value
-    // * getXSlope(): Returns an estimate of the slope of the x-curve at a given T value
-    // * getYSlope(): Returns an estimate of the slope of the y-curve at a given T value
-    // * getSlope(): Returns the slope of the bezier curve at a given T value
-    // * getPosition(): Returns a point on the curve at a given T value
-    // * getCheckPointPosition(): Returns a checkpoint on the curve at a given T value
-    //-------------------------------------------------------------------
+    /** Returns x-coordinate of the bezier curve at a given T value. */
     public double getX(double T)
     {
         double X = 0;
@@ -36,6 +26,7 @@ public class BezierCurve
         return X;
     }
 
+    /** Returns y-coordinate of the bezier curve at a given T value. */
     public double getY(double T)
     {
         double Y = 0;
@@ -45,35 +36,34 @@ public class BezierCurve
         return Y;
     }
 
-
-
+    /** Returns an estimate of the slope of the x-curve at a given T value. */
     public double getXSlope(double T)
     {
         return ((getX(T + 0.01) - getX(T)))/0.01;
     }
 
+    /** Returns an estimate of the slope of the y-curve at a given T value. */
     public double getYSlope(double T)
     {
         return ((getY(T + 0.01) - getY(T)))/0.01;
     }
 
+    /** Returns the slope of the bezier curve at a given T value. */
     public double getSlope(double T)
     {
         return (getYSlope(T))/(getXSlope(T));
     }
 
-
-
+    /** Returns a point on the curve at a given T value. */
     public Point getPosition(double T)
     {
         return new Point(getX(T), getY(T));
     }
 
+    /** Returns a checkpoint on the curve at a given T value. */
     public CheckPoint getCheckPointPosition(double T)
     {
         return new CheckPoint(getX(T), getY(T), T);
     }
-    //-------------------------------------------------------------------
-    //BezierCurve methods
-    //-------------------------------------------------------------------
+
 }
