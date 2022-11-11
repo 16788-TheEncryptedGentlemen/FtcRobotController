@@ -28,7 +28,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
             left.setPower(-1);
             right.setPower(1);
         }
-        /** The robot grabber stops */
+        /** The robot grabber stops. */
         public void stop()
         {
             left.setPower(0.0);
