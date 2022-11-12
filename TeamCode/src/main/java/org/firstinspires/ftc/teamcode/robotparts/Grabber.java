@@ -3,13 +3,15 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
+    /** The object Grabber*/
     public class Grabber {
 
+        /** The Left CRservo of the Grabber */
         public CRServo left;
+        /** The right CRservo of the Grabber */
         public CRServo right;
 
-       /** The grabber has a right and left CRservo. */
+       /** The grabber has a right and left CRservo */
         public Grabber(HardwareMap hardwareMap)
         {
             left = hardwareMap.get(CRServo.class, "LeftGrabber");

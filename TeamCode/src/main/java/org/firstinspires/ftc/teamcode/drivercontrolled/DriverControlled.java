@@ -51,16 +51,16 @@ public class DriverControlled extends OpMode {
     //--------------------------------------------------------------------
 
     @Override
-    /** Loop */
+    /** Repeats program until program is stopped */
     public void loop() {
         //--------------------------------------------------------------------
         //Getting inputs and calculating values for the drive system
         // * Getting inputs from controller, imu and calculating variables:
         // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
         //--------------------------------------------------------------------
-       /** Right joystick of the gamepad */
+       /** Left joystick up and down on the gamepad */
         LeftJoyY = -gamepad1.left_stick_y;
-        /** Left joystick of the gamepad */
+        /** Left joystick left and right on the gamepad */
         LeftJoyX = gamepad1.left_stick_x;
 
 
@@ -85,7 +85,7 @@ public class DriverControlled extends OpMode {
         Robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
         //--------------------------------------------------------------------
         if(gamepad1.start)
-        Robot.imu.Reset();
+            Robot.imu.Reset();
 
 
         telemetry.addData("X", Robot.odometry.getX());
@@ -104,6 +104,16 @@ public class DriverControlled extends OpMode {
             Robot.grabber.stop();
         }
         //--------------------------------------------------------------------
+        if (gamepad2.left_stick_y > 0){
+            telemetry.addLine("Up");
+            Robot.lift.up();
+        } else if (gamepad2.left_stick_y < 0) {
+            telemetry.addLine("Down");
+            Robot.lift.down();
+        } else {
+            telemetry.addLine("StopLift");
+            Robot.lift.stop();
+        }
         //--------------------------------------------------------------------
         //Final calculations for the Drivetrain:
         // * GyroCorrection when strafing without turning.
