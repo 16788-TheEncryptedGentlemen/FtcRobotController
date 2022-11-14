@@ -27,7 +27,7 @@ public class CheckPoint
 
 
 
-    //Converts Checkpoint to Point and returns said Point
+    /** Converts Checkpoint to Point and returns said Point. */
     public Point toPoint()
     {
         return new Point(this.X,this.Y);
