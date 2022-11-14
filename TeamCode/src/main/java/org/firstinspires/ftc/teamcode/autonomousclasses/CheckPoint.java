@@ -1,16 +1,18 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 
-// TODO: Sanne: Add documentation to this class
 
 public class CheckPoint
 {
-    public double X; //X coordinate of the Checkpoint
-    public double Y; //Y coordinate of the Checkpoint
-    public double T; //T value on the Bezier Curve on the checkpoint
+    /** X coordinate of the Checkpoint. */
+    public double X;
+    /** Y coordinate of the Checkpoint. */
+    public double Y;
+    /** T value on the Bezier Curve on the checkpoint. */
+    public double T;
 
 
 
-    //CheckPoint constructor
+    /** CheckPoint constructor. */
     public CheckPoint(double _X, double _Y, double _T)
     {
         X = _X;
@@ -18,7 +20,7 @@ public class CheckPoint
         T = _T;
     }
 
-    //Empty CheckPoint constructor
+    /** Empty CheckPoint constructor. */
     public CheckPoint() {}
 
 
