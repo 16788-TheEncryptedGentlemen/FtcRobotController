@@ -83,7 +83,7 @@ public class BezierCurveRoute
         }
 
         /** After all checkpoints have been visited, stop moving. */
-        robot.drivetrain.Stop();
+        robot.drivetrain.stop();
         /** Reset odometry. */
         robot.odometry.reset();
     }
@@ -146,7 +146,7 @@ public class BezierCurveRoute
         }
 
         /** After all checkpoints have been visited, stop moving. */
-        robot.drivetrain.Stop();
+        robot.drivetrain.stop();
         /** Reset odometry. */
         robot.odometry.reset();
     }
@@ -161,7 +161,7 @@ public class BezierCurveRoute
             double YslopeStart = bezierCurve.getYSlope(0);
             double HypotSlope = Math.hypot(XslopeStart,YslopeStart);
             double StartAngle = Math.signum(XslopeStart)*Math.toDegrees(Math.acos(YslopeStart/HypotSlope));
-            robot.drivetrain.TurnRobotAO(StartAngle);
+            robot.drivetrain.turnRobotAO(StartAngle);
         }
     }
 
@@ -202,7 +202,7 @@ public class BezierCurveRoute
         if(DriveMethod == DRIVE_METHOD.STRAFE)
             robot.drivetrain.powerStrafeValues(DriveAngle, speed, 0.0);
         else if(DriveMethod == DRIVE_METHOD.FOLLOW)
-            robot.drivetrain.Follow(DriveAngle, speed);
+            robot.drivetrain.follow(DriveAngle, speed);
     }
 
 

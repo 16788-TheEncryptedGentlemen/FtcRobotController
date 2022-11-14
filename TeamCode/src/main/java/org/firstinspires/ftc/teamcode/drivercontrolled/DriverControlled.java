@@ -152,16 +152,16 @@ public class DriverControlled extends OpMode {
         //Gyro correction
         //--------------------------------------------------------------------
 
-        Robot.drivetrain.FixMotorSpeedOverflow();
+        Robot.drivetrain.fixMotorSpeedOverflow();
 
 
 
         if(gamepad1.right_bumper)
-            Robot.drivetrain.MultiplySpeed(1.0);
+            Robot.drivetrain.multiplySpeed(1.0);
         else if(gamepad1.left_bumper)
-            Robot.drivetrain.MultiplySpeed(0.2);
+            Robot.drivetrain.multiplySpeed(0.2);
         else
-            Robot.drivetrain.MultiplySpeed(0.4);
+            Robot.drivetrain.multiplySpeed(0.4);
 
         Robot.drivetrain.setPower();
 
