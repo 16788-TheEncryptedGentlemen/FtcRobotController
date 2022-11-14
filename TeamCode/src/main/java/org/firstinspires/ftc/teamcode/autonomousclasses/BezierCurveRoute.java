@@ -69,14 +69,14 @@ public class BezierCurveRoute
             LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
 
             /** While the robot is not within 3 cm of the assigned checkpoint and the robot is not stopped: */
-            while(LineSegmentToNearestCheckPoint.Length > 3 && !runningOpMode.isStopRequested())
+            while(LineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested())
             {
                 /** Update the robot position. */
                 updateRobotPosition();
                 /** Recalculate the line segments towards the assigned checkpoint. */
                 LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
                 /** Calculate the angle of movement for the robot. */
-                DriveAngle = LineSegmentToNearestCheckPoint.Angle;
+                DriveAngle = LineSegmentToNearestCheckPoint.angle;
                 /** Power the robot accordingly. */
                 PowerRobot();
             }
@@ -133,19 +133,19 @@ public class BezierCurveRoute
             RobotSkipValue = getSkipPointValue(CheckpointLine, RobotPosition);
 
             /** The loop will also break if the SkipPointValue is equal to RobotSkipValue. */
-            while(LineSegmentToNearestCheckPoint.Length > 3 && !runningOpMode.isStopRequested() && RobotSkipValue != SkipPointValue)
+            while(LineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested() && RobotSkipValue != SkipPointValue)
             {
                 /** RobotSkipValue is updated every cycle. */
                 updateRobotPosition();
                 RobotSkipValue = getSkipPointValue(CheckpointLine, RobotPosition);
                 LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
-                DriveAngle = LineSegmentToNearestCheckPoint.Angle;
+                DriveAngle = LineSegmentToNearestCheckPoint.angle;
                 PowerRobot();
             }
 
         }
 
-        /**  /** After all checkpoints have been visited, stop moving. */
+        /** After all checkpoints have been visited, stop moving. */
         robot.drivetrain.Stop();
         /** Reset odometry. */
         robot.odometry.Reset();
