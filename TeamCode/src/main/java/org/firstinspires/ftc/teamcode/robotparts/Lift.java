@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+// TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
+
 public class Lift {
 
     /** The left DCMotor of the lift */
