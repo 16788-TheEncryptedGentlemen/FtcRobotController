@@ -46,7 +46,7 @@ public class CheckPoints {
                 point2 = bezierCurve.getPosition(CurrentTValue);
 
                 /** Add the small distance to the current distance to checkpoint. */
-                CurrentDistanceToCheckpoint += Math.hypot(point2.X - point1.X, point2.Y - point1.Y);
+                CurrentDistanceToCheckpoint += Math.hypot(point2.x - point1.x, point2.y - point1.y);
 
                 point1 = point2;
 

@@ -1,21 +1,22 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 
-// TODO: Sanne: Add documentation to this class
 
 public class Point {
 
-    public double X; //The X-coordinate of the point
-    public double Y; //The Y-coordinate of the point
+    /** The X-coordinate of the point. */
+    public double x;
+    /** The Y-coordinate of the point. */
+    public double y;
 
-    //Constructor of the Point
+    /** Constructor of the point. */
     public Point(double x, double y)
     {
-        X = x;
-        Y = y;
+        this.x = x;
+        this.y = y;
     }
 
-    //Converts Point to CheckPoint and returns said Point.
+    /** Converts point to checkPoint and returns said point. */
     public CheckPoint ConvertToCheckPoint(double T) {
-        return new CheckPoint(this.X, this.Y, T);
+        return new CheckPoint(this.x, this.y, T);
     }
 }
