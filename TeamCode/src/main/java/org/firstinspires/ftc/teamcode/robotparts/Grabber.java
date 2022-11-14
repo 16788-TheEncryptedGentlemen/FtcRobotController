@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+// TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
+
     /** The object Grabber*/
     public class Grabber {
 
