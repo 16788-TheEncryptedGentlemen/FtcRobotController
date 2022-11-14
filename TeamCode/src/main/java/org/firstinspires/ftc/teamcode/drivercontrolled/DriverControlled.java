@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.Timer;
 @TeleOp
 public class DriverControlled extends OpMode {
 
+    // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
+    // TODO: Aditi : Make sure errors are fixed and make sure you write "!Does not work!" on top of your commits.
 
     //--------------------------------------------------------------------
     /** The robot */
