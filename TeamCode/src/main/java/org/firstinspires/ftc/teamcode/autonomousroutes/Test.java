@@ -3,9 +3,15 @@ package org.firstinspires.ftc.teamcode.autonomousroutes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute.DRIVE_METHOD;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robotparts.Webcam;
+import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineTes;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 //Uncomment @Autonomous to show up on the DC controller app
 @Autonomous
@@ -13,6 +19,12 @@ public class Test extends LinearOpMode
 {
     public void runOpMode()
     {
+
+        OpenCvWebcam webcam ;
+        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
+        camera.setPipeline(new PipelineTes());
+
+
         //Variables------------------------------------
         CompetitionRobot robot = new CompetitionRobot(this);
 
