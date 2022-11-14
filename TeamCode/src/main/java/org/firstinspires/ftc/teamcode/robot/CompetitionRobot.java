@@ -23,7 +23,7 @@ public class CompetitionRobot {
     /** The display of the robot. */
     public Display display;
     /** The webcam of the robot. */
-    public Webcam   webcam;
+    public Webcam webcam;
     /** The grabber of the robot. */
     public Grabber grabber;
     /** The lift of the robot */
