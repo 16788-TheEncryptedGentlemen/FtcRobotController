@@ -53,38 +53,38 @@ public class BezierCurveRoute
     /** The array of checkpoints. The robot is done driving once the robot has driven all checkpoints in sequence. */
     public CheckPoint[] CheckpointArray;
 
-    /** How does the method work: TODO: figure out if we need this and if so, where to put it.
-    - First, the robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading.
-    - Next, we reset the odometry.
-    - The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists.
-    -  For each Checkpoint in the list, we do the following:
-       - We calculate a line segment towards the currently assigned checkpoint
-       - While the robot is not within 3 cm of the assigned checkpoint and the robot is not stopped, do the following:
-         - Update the robot position.
-         - Recalculate the line segments towards the assigned checkpoint.
-         - Calculate the angle of movement for the robot.
-         - Power the robot accordingly.
-    -  After all checkpoints have been visited, stop moving and reset odometry. */
+
     public void Execute()
     {
+        /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
         TurnRobotAtStart();
+        /** Reset the odometry. */
         robot.odometry.Reset();
+        /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
         CheckpointArray = checkPoints.toArray();
 
         for(CheckPoint NextCheckpoint : CheckpointArray)
         {
+            /** We calculate a line segment towards the currently assigned checkpoint. */
             LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
 
+            /** While the robot is not within 3 cm of the assigned checkpoint and the robot is not stopped: */
             while(LineSegmentToNearestCheckPoint.Length > 3 && !runningOpMode.isStopRequested())
             {
+                /** Update the robot position. */
                 updateRobotPosition();
+                /** Recalculate the line segments towards the assigned checkpoint. */
                 LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
+                /** Calculate the angle of movement for the robot. */
                 DriveAngle = LineSegmentToNearestCheckPoint.Angle;
+                /** Power the robot accordingly. */
                 PowerRobot();
             }
         }
 
+        /** After all checkpoints have been visited, stop moving. */
         robot.drivetrain.Stop();
+        /** Reset odometry. */
         robot.odometry.Reset();
     }
 
@@ -108,8 +108,11 @@ public class BezierCurveRoute
     /** This method has the same goal as Execute(), but it accounts of missing points (Overshooting). */
     public void ExecuteWithPointSkip()
     {
+        /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
         TurnRobotAtStart();
+        /** Reset the odometry. */
         robot.odometry.Reset();
+        /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
         CheckpointArray = checkPoints.toArray();
 
         for(CheckPoint NextCheckpoint : CheckpointArray)
@@ -142,7 +145,9 @@ public class BezierCurveRoute
 
         }
 
+        /**  /** After all checkpoints have been visited, stop moving. */ */
         robot.drivetrain.Stop();
+        /** Reset odometry. */
         robot.odometry.Reset();
     }
 
