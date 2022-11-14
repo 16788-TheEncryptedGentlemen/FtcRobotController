@@ -1,100 +1,82 @@
 package org.firstinspires.ftc.teamcode.autonomousclasses;
 import java.util.ArrayList;
 
-// TODO: Sanne: Add documentation to this class
 
 public class CheckPoints {
 
-    //----------------------------------------------------------------
-    //Used Variables:
-    // * CheckPoints: A List of checkpoints.
-    // * CurrentPointIndex: The index of the point that the robot is driving to.
-    // * BezierCurve: The bezier curve to calculate the checkpoints.
-    // * DistanceBetweenCheckpoints: The distance between the checkpoints on the curve.
-    // * Steplength: The steps in T to calculate the new Checkpoint.
-    // *
-    //----------------------------------------------------------------
-    private ArrayList<CheckPoint> CheckPoints = new ArrayList<CheckPoint>();
-    public int CurrentPointIndex;
-    public final BezierCurve Beziercurve;
-    double DistanceBetweenCheckpoints;
-    double Steplength;
-    //----------------------------------------------------------------
-    //Used Variables
-    //----------------------------------------------------------------
+    /** A List of checkpoints. */
+    private ArrayList<CheckPoint> checkPoints = new ArrayList<CheckPoint>();
+    /** The index of the point that the robot is driving to. */
+    public int currentPointIndex;
+    /** The bezier curve to calculate the checkpoints. */
+    public final BezierCurve bezierCurve;
+    /** The distance between the checkpoints on the curve. */
+    double distanceBetweenCheckpoints;
+    /** The steps in T to calculate the new Checkpoint. */
+    double steplength;
 
 
-
-    //Constructor of CheckPoints class
+    /** Constructor of CheckPoints class. */
     public CheckPoints(BezierCurve _Beziercurve, double _DistanceBetweenCheckpoints, double _Steplength)
     {
-        Beziercurve = _Beziercurve;
-        Steplength = _Steplength;
-        DistanceBetweenCheckpoints = _DistanceBetweenCheckpoints;
+        bezierCurve = _Beziercurve;
+        steplength = _Steplength;
+        distanceBetweenCheckpoints = _DistanceBetweenCheckpoints;
 
         CalculateCheckpoints();
     }
 
 
-
-
-
-    //----------------------------------------------------------------
-    //Methods:
-    // * CalculateCheckpoints(): Calculates all checkpoints and adds them to the CheckPoints list
-    // * toArray(): Converts CheckPoints list to an Array and returns said array.
-    //----------------------------------------------------------------
+    /** Calculates all checkpoints and adds them to the CheckPoints list. */
     private void CalculateCheckpoints()
     {
-        //Sets initialized values
+        /** Sets initialized values. */
         Point point1 = new Point(0,0);
         Point point2;
 
         double CurrentDistanceToCheckpoint = 0;
         double CurrentTValue = 0;
 
-        //While the T value is less than one:
+        /** While the T value is less than one: */
         while(CurrentTValue < 1)
         {
-            //While the current distance between checkpoints is less than the wanted distance between checkpoints:
-            while(DistanceBetweenCheckpoints > CurrentDistanceToCheckpoint && CurrentTValue < 1)
+            /** While the current distance between checkpoints is less than the wanted distance between checkpoints: */
+            while(distanceBetweenCheckpoints > CurrentDistanceToCheckpoint && CurrentTValue < 1)
             {
-                point2 = Beziercurve.getPosition(CurrentTValue);
+                point2 = bezierCurve.getPosition(CurrentTValue);
 
-                //Add the small distance to the current distance to checkpoint
+                /** Add the small distance to the current distance to checkpoint. */
                 CurrentDistanceToCheckpoint += Math.hypot(point2.X - point1.X, point2.Y - point1.Y);
 
                 point1 = point2;
 
-                if(DistanceBetweenCheckpoints > CurrentDistanceToCheckpoint)
-                    CurrentTValue += Steplength;
+                if(distanceBetweenCheckpoints > CurrentDistanceToCheckpoint)
+                    CurrentTValue += steplength;
             }
             if(CurrentTValue < 1) {
-                CheckPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
+                checkPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
                 CurrentDistanceToCheckpoint = 0;
             }
             else {
-                point1 = Beziercurve.getPosition(1);
-                CheckPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
+                point1 = bezierCurve.getPosition(1);
+                checkPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
             }
         }
     }
 
 
-
+    /** Converts CheckPoints list to an Array and returns said array. */
     public CheckPoint[] toArray()
     {
-        int AmountOfCheckPoints = CheckPoints.size();
+        int AmountOfCheckPoints = checkPoints.size();
         CheckPoint[] Checkpoints = new CheckPoint[AmountOfCheckPoints];
 
         for(int i = 0; i < AmountOfCheckPoints; i++){
-            Checkpoints[i] = CheckPoints.get(i);
+            Checkpoints[i] = checkPoints.get(i);
         }
 
         return Checkpoints;
     }
-    //----------------------------------------------------------------
-    //Methods
-    //----------------------------------------------------------------
+
 
 }
