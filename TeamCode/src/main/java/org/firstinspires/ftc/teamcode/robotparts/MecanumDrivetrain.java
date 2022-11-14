@@ -9,7 +9,7 @@ public class MecanumDrivetrain {
     /** The LinearOpMode to stop the robot. */
     private LinearOpMode runningOpMode;
     /** An array to store the four different motor speeds. */
-    public double[] MotorSpeed = new double[4];
+    public double[] motorSpeed = new double[4];
     /** Front right motor (RechtsVoor). */
     public DcMotorEx rv;
     /** Back right motor (RechtsAchter). */
@@ -60,65 +60,65 @@ public class MecanumDrivetrain {
     /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
     public void setSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        MotorSpeed[0] = SpeedRV;
-        MotorSpeed[1] = SpeedRA;
-        MotorSpeed[2] = SpeedLV;
-        MotorSpeed[3] = SpeedLA;
+        motorSpeed[0] = SpeedRV;
+        motorSpeed[1] = SpeedRA;
+        motorSpeed[2] = SpeedLV;
+        motorSpeed[3] = SpeedLA;
     }
 
     /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
     public void setSpeed(double Speed) {
-        MotorSpeed[0] = Speed;
-        MotorSpeed[1] = Speed;
-        MotorSpeed[2] = Speed;
-        MotorSpeed[3] = Speed;
+        motorSpeed[0] = Speed;
+        motorSpeed[1] = Speed;
+        motorSpeed[2] = Speed;
+        motorSpeed[3] = Speed;
     }
 
     /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
     public void setSpeed(double[] Speedarr) {
-        MotorSpeed[0] = Speedarr[0];
-        MotorSpeed[1] = Speedarr[1];
-        MotorSpeed[2] = Speedarr[2];
-        MotorSpeed[3] = Speedarr[3];
+        motorSpeed[0] = Speedarr[0];
+        motorSpeed[1] = Speedarr[1];
+        motorSpeed[2] = Speedarr[2];
+        motorSpeed[3] = Speedarr[3];
     }
 
     /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
     4 doubles, 1 double, 1 array. */
     public void addSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        MotorSpeed[0] += SpeedRV;
-        MotorSpeed[1] += SpeedRA;
-        MotorSpeed[2] += SpeedLV;
-        MotorSpeed[3] += SpeedLA;
+        motorSpeed[0] += SpeedRV;
+        motorSpeed[1] += SpeedRA;
+        motorSpeed[2] += SpeedLV;
+        motorSpeed[3] += SpeedLA;
     }
 
     /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
     public void addSpeed(double Speed) {
-        MotorSpeed[0] += Speed;
-        MotorSpeed[1] += Speed;
-        MotorSpeed[2] += Speed;
-        MotorSpeed[3] += Speed;
+        motorSpeed[0] += Speed;
+        motorSpeed[1] += Speed;
+        motorSpeed[2] += Speed;
+        motorSpeed[3] += Speed;
     }
 
     /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
     public void addSpeed(double[] Speedarr) {
-        MotorSpeed[0] += Speedarr[0];
-        MotorSpeed[1] += Speedarr[1];
-        MotorSpeed[2] += Speedarr[2];
-        MotorSpeed[3] += Speedarr[3];
+        motorSpeed[0] += Speedarr[0];
+        motorSpeed[1] += Speedarr[1];
+        motorSpeed[2] += Speedarr[2];
+        motorSpeed[3] += Speedarr[3];
     }
 
     /** Sets power to the motors. The following arguments can be entered:
     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
     1 double, 1 array. */
     public void setPower() {
-        rv.setPower(MotorSpeed[0]);
-        ra.setPower(MotorSpeed[1]);
-        lv.setPower(MotorSpeed[2]);
-        la.setPower(MotorSpeed[3]);
+        rv.setPower(motorSpeed[0]);
+        ra.setPower(motorSpeed[1]);
+        lv.setPower(motorSpeed[2]);
+        la.setPower(motorSpeed[3]);
     }
 
     /** Sets power to the motors. The following arguments can be entered:
@@ -158,10 +158,10 @@ public class MecanumDrivetrain {
 
     /** Multiplies all speed values in the MotorSpeed array with a factor. */
     public void MultiplySpeed(double factor) {
-        MotorSpeed[0] *= factor;
-        MotorSpeed[1] *= factor;
-        MotorSpeed[2] *= factor;
-        MotorSpeed[3] *= factor;
+        motorSpeed[0] *= factor;
+        motorSpeed[1] *= factor;
+        motorSpeed[2] *= factor;
+        motorSpeed[3] *= factor;
     }
 
     /** Returns an array of the velocities of the motors. */
@@ -280,15 +280,15 @@ public class MecanumDrivetrain {
     public void FixMotorSpeedOverflow() {
         double max = 1;
         for (int i = 0; i < 4; i++) {
-            if (Math.abs(MotorSpeed[i]) > max)
-                max = Math.abs(MotorSpeed[i]);
+            if (Math.abs(motorSpeed[i]) > max)
+                max = Math.abs(motorSpeed[i]);
         }
         MultiplySpeed(1.0 / max);
     }
 
     /** Sets all values in MotorSpeed to 0 */
     public void EmptyMotorSpeedValues() {
-        MotorSpeed = new double[4];
+        motorSpeed = new double[4];
     }
 
 
