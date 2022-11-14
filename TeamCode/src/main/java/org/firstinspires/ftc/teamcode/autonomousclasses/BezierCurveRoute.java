@@ -59,7 +59,7 @@ public class BezierCurveRoute
         /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
         TurnRobotAtStart();
         /** Reset the odometry. */
-        robot.odometry.Reset();
+        robot.odometry.reset();
         /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
         CheckpointArray = checkPoints.toArray();
 
@@ -85,7 +85,7 @@ public class BezierCurveRoute
         /** After all checkpoints have been visited, stop moving. */
         robot.drivetrain.Stop();
         /** Reset odometry. */
-        robot.odometry.Reset();
+        robot.odometry.reset();
     }
 
 
@@ -111,7 +111,7 @@ public class BezierCurveRoute
         /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
         TurnRobotAtStart();
         /** Reset the odometry. */
-        robot.odometry.Reset();
+        robot.odometry.reset();
         /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
         CheckpointArray = checkPoints.toArray();
 
@@ -148,7 +148,7 @@ public class BezierCurveRoute
         /** After all checkpoints have been visited, stop moving. */
         robot.drivetrain.Stop();
         /** Reset odometry. */
-        robot.odometry.Reset();
+        robot.odometry.reset();
     }
 
 

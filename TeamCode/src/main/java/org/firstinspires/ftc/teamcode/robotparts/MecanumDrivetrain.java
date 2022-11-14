@@ -182,7 +182,7 @@ public class MecanumDrivetrain {
 
     /** Drives the robot forward a certain amount of cm with a given Speed. */
     public void DriveStraight(double Distance, double Power) {
-        odometry.Reset();
+        odometry.reset();
 
         double OriginYPos = odometry.getY();
         double endDistance = Math.abs(Distance + OriginYPos);
