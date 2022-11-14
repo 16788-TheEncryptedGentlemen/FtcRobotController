@@ -87,7 +87,7 @@ public class DriverControlled extends OpMode {
         Robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
         //--------------------------------------------------------------------
         if(gamepad1.start)
-            Robot.imu.Reset();
+            Robot.imu.reset();
 
 
         telemetry.addData("X", Robot.odometry.getX());
