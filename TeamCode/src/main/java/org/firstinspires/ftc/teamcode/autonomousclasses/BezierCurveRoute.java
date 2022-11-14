@@ -145,7 +145,7 @@ public class BezierCurveRoute
 
         }
 
-        /**  /** After all checkpoints have been visited, stop moving. */ */
+        /**  /** After all checkpoints have been visited, stop moving. */
         robot.drivetrain.Stop();
         /** Reset odometry. */
         robot.odometry.Reset();
