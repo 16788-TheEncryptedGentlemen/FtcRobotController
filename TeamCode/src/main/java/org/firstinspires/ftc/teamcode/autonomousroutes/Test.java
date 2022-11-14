@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvWebcam;
 
-//Uncomment @Autonomous to show up on the DC controller app
+/** Uncomment @Autonomous to show up on the DC controller app */
 @Autonomous
 public class Test extends LinearOpMode
 {
