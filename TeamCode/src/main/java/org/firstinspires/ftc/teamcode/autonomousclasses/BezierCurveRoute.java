@@ -120,13 +120,13 @@ public class BezierCurveRoute
             LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
 
             /** dydt, dxdt and Slope are calculated using the Beziercurve. */
-            dydt = bezierCurve.getYSlope(NextCheckpoint.T);
-            dxdt = bezierCurve.getXSlope(NextCheckpoint.T);
+            dydt = bezierCurve.getYSlope(NextCheckpoint.t);
+            dxdt = bezierCurve.getXSlope(NextCheckpoint.t);
             Slope = dydt/dxdt;
 
             /** The CheckpointLine and ExamplePointOnSkipSide are calculated using dydt, dxdt and Slope. */
             CheckpointLine = new LineSegment(NextCheckpoint.toPoint(), -1/Slope);
-            ExamplePointOnSkipSide = new Point(NextCheckpoint.X + dxdt, NextCheckpoint.Y + dydt);
+            ExamplePointOnSkipSide = new Point(NextCheckpoint.x + dxdt, NextCheckpoint.y + dydt);
 
             /** SkipPointValue and RobotSkipValue are calculated using CheckpointLine and RobotSkipValue. */
             SkipPointValue = getSkipPointValue(CheckpointLine, ExamplePointOnSkipSide);
