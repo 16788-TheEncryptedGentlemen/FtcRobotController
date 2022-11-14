@@ -180,8 +180,8 @@ public class BezierCurveRoute
     {
         if(DriveMethod == DRIVE_METHOD.STRAFE)
         {
-            RobotPosition.X = robot.odometry.getX();
-            RobotPosition.Y = robot.odometry.getY();
+            RobotPosition.x = robot.odometry.getX();
+            RobotPosition.y = robot.odometry.getY();
         }
         else if(DriveMethod == DRIVE_METHOD.FOLLOW)
         {
@@ -190,8 +190,8 @@ public class BezierCurveRoute
 
             dy = ds*Math.cos(Math.toRadians(DriveAngle));
             dx = ds*Math.sin(Math.toRadians(DriveAngle));
-            RobotPosition.X += dx;
-            RobotPosition.Y += dy;
+            RobotPosition.x += dx;
+            RobotPosition.y += dy;
         }
     }
 
@@ -209,7 +209,7 @@ public class BezierCurveRoute
     /** Gets the value of the side on which the point lies compared to a checkpointline. */
     private int getSkipPointValue(LineSegment line, Point Robotpoint)
     {
-        return (int)(Math.signum((line.point2.X - line.point1.X)*(Robotpoint.Y - line.point1.Y) - (line.point2.Y - line.point1.Y)*(Robotpoint.X - line.point1.X)));
+        return (int)(Math.signum((line.point2.x - line.point1.x)*(Robotpoint.y - line.point1.y) - (line.point2.y - line.point1.y)*(Robotpoint.x - line.point1.x)));
     }
 
 }
