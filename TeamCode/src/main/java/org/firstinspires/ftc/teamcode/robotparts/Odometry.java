@@ -15,10 +15,10 @@ public class Odometry {
     /** A correction value for the horizontal odometry wheel. */
     public final double horizontalCorrection = 1.02967;
 
-    /** The odometry wheel in the vertical direction. */
-    private final DcMotorEx yWheel;
     /** The odometry wheel in the horizontal direction. */
     private final DcMotorEx xWheel;
+    /** The odometry wheel in the vertical direction. */
+    private final DcMotorEx yWheel;
 
 
     /**
@@ -31,12 +31,12 @@ public class Odometry {
         yWheel = hardwareMap.get(DcMotorEx.class, "EncoderY");
 
         /** Resets encoders. */
-        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         /** Runs encoders on both wheels. */
-        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         /** Reverses yWheel, because the encoder is mounted in reverse. */
         yWheel.setDirection(DcMotorEx.Direction.REVERSE);
@@ -61,10 +61,10 @@ public class Odometry {
 
     /** Resets the encoders. */
     public void reset() {
-        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 }
