@@ -2,10 +2,7 @@ package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-
 public class Odometry {
-
     /** Counts per rotation of the encoder. */
     public final static int countsPerRotation = 8192;
     /** Diameter of the odometry wheels in cm. */
@@ -42,7 +39,6 @@ public class Odometry {
         xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         /** Reverses yWheel, because the encoder is mounted in reverse. */
-        // TODO: Think about whether we need this.
         yWheel.setDirection(DcMotorEx.Direction.REVERSE);
     }
 
@@ -59,12 +55,12 @@ public class Odometry {
 
     /** Gets distance from the original starting position. */
     public double getDistanceFromStart() {
-        // Use Pythagoras
+        /** Use Pythagoras */
         return Math.hypot(getY(), getX());
     }
 
     /** Resets the encoders. */
-    public void Reset() {
+    public void reset() {
         yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
