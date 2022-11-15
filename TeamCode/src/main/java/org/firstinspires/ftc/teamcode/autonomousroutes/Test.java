@@ -19,7 +19,7 @@ public class Test extends LinearOpMode
 {
     public void runOpMode()
     {
-
+    // TODO: Sanne: "!Does not work!" Comment these two lines to build
         OpenCvWebcam webcam ;
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
         camera.setPipeline(new PipelineTes());
