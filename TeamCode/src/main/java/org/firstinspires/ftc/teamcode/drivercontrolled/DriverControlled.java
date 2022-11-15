@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
-import org.firstinspires.ftc.teamcode.Timer;
+
 
 
 @TeleOp
@@ -39,9 +39,8 @@ public class DriverControlled extends OpMode {
     private double DeviationAngle = 0;
     /** The correction factor for the motors whilst strafing with gyro correction */
     private double CorrectionFactor = 0;
+    // Place AntiJerkTimer object here, if there is an error.
 
-    /** The timer used to counter any jerk that may be caused by the gyro correction */
-    private Timer AntiJerkTimer;
 
     //--------------------------------------------------------------------
     @Override
@@ -125,20 +124,12 @@ public class DriverControlled extends OpMode {
         // * Sets power to the motors.
         //--------------------------------------------------------------------
 
-        //--------------------------------------------------------------------
-        //Gyro correction
-        //--------------------------------------------------------------------
-        if(gamepad1.right_stick_x != 0)
-            AntiJerkTimer.Reset();
 
-        if(AntiJerkTimer.getTime() < 0.5)
-            GyroCorrectionAngle = Robot.imu.getAngle();
+        // Place AntiJerkTimer and GyroCorrection here, if there is an error.
 
         DeviationAngle = RobotAngle - GyroCorrectionAngle;
+        // Place DeviationAngle code here, if there is an error.
 
-        //If there are no big jumps in angle, we are not standing still, not turning and 250 seconds has elapsed with no turning:
-        if(Math.abs(DeviationAngle) < 90 && StrafeSpeed != 0 && gamepad1.right_stick_x == 0 && AntiJerkTimer.getTime() > 0.25)
-        {
             if(DeviationAngle > -30 && DeviationAngle < 30){
                 CorrectionFactor = DeviationAngle/30;
             }
@@ -147,7 +138,7 @@ public class DriverControlled extends OpMode {
             }
 
             Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
-        }
+
         //--------------------------------------------------------------------
         //Gyro correction
         //--------------------------------------------------------------------
