@@ -54,7 +54,7 @@ public class DriverControlled extends OpMode {
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
-        //--------------------------------------------------------------------
+        //---------------------------------------------------------------------
         //Getting inputs and calculating values for the drive system
         // * Getting inputs from controller, imu and calculating variables:
         // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
