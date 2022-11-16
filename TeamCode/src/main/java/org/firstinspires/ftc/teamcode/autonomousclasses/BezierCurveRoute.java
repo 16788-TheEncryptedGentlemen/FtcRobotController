@@ -9,9 +9,9 @@ public class BezierCurveRoute
 {
 
     /** The distance between checkpoints on the curve. */
-    private final double DistanceBetweenCheckPoints = 5;
+    private final double distanceBetweenCheckPoints = 5;
     /** The steps in t when calculating checkpoints. The lower the value, the higher the precision of the checkpoints, but the longer it takes to calculate. */
-    private final double Steplength = 0.01;
+    private final double steplength = 0.01;
 
     /** The beziercurve the robot has to drive. */
     public BezierCurve bezierCurve;
@@ -30,55 +30,55 @@ public class BezierCurveRoute
         STRAFE,
         FOLLOW
     }
-    private DRIVE_METHOD DriveMethod;
+    private DRIVE_METHOD driveMethod;
 
     /** Constructor of the BezierCurveRoute class. The Checkpoint list is also generated here.*/
     public BezierCurveRoute(double[] XCoefficients, double[] YCoefficients, CompetitionRobot _Robot, double _Speed, DRIVE_METHOD _DriveMethod, LinearOpMode _runningOpMode)
     {
         bezierCurve = new BezierCurve(XCoefficients, YCoefficients);
-        checkPoints = new CheckPoints(bezierCurve, DistanceBetweenCheckPoints, Steplength);
+        checkPoints = new CheckPoints(bezierCurve, distanceBetweenCheckPoints, steplength);
         robot = _Robot;
         speed = _Speed;
-        DriveMethod = _DriveMethod;
+        driveMethod = _DriveMethod;
         runningOpMode = _runningOpMode;
     }
 
 
     /** The position of the robot on the field compared to the starting position. */
-    public Point RobotPosition = new Point(0,0);
+    public Point robotPosition = new Point(0,0);
     /** The line segment to the currently assigned checkpoint. */
-    public LineSegment LineSegmentToNearestCheckPoint;
+    public LineSegment lineSegmentToNearestCheckPoint;
     /** The angle of direction compared to the starting position. The angle is measured from -180 to 180 degrees. */
-    public double DriveAngle;
+    public double driveAngle;
     /** The array of checkpoints. The robot is done driving once the robot has driven all checkpoints in sequence. */
-    public CheckPoint[] CheckpointArray;
+    public CheckPoint[] checkpointArray;
 
 
-    public void Execute()
+    public void execute()
     {
         /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
-        TurnRobotAtStart();
+        turnRobotAtStart();
         /** Reset the odometry. */
         robot.odometry.reset();
         /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
-        CheckpointArray = checkPoints.toArray();
+        checkpointArray = checkPoints.toArray();
 
-        for(CheckPoint NextCheckpoint : CheckpointArray)
+        for(CheckPoint NextCheckpoint : checkpointArray)
         {
             /** We calculate a line segment towards the currently assigned checkpoint. */
-            LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
+            lineSegmentToNearestCheckPoint = new LineSegment(robotPosition, NextCheckpoint.toPoint());
 
             /** While the robot is not within 3 cm of the assigned checkpoint and the robot is not stopped: */
-            while(LineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested())
+            while(lineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested())
             {
                 /** Update the robot position. */
                 updateRobotPosition();
                 /** Recalculate the line segments towards the assigned checkpoint. */
-                LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
+                lineSegmentToNearestCheckPoint = new LineSegment(robotPosition, NextCheckpoint.toPoint());
                 /** Calculate the angle of movement for the robot. */
-                DriveAngle = LineSegmentToNearestCheckPoint.angle;
+                driveAngle = lineSegmentToNearestCheckPoint.angle;
                 /** Power the robot accordingly. */
-                PowerRobot();
+                powerRobot();
             }
         }
 
@@ -90,57 +90,57 @@ public class BezierCurveRoute
 
 
     /** The integer value that is associated with skipping the associated checkpoint. */
-    public int SkipPointValue;
+    public int skipPointValue;
     /** The integer value of the robot that is associated with skipping. */
-    public int RobotSkipValue;
+    public int robotSkipValue;
     /** The line perpendicular to the Beziercurve on an Checkpoint. */
-    LineSegment CheckpointLine;
+    LineSegment checkpointLine;
     /** The slope of the y-curve at an assigned checkpoint. */
     private double dydt;
     /** The slope of the x-curve at an assigned checkpoint. */
     private double dxdt;
     /** The slope of the bezier curve at a checkpoint. */
-    private double Slope;
+    private double slope;
     /** The point on the skip side of the checkpoint to calculate SkipPointvalue. */
-    private Point ExamplePointOnSkipSide;
+    private Point examplePointOnSkipSide;
 
 
     /** This method has the same goal as Execute(), but it accounts of missing points (Overshooting). */
-    public void ExecuteWithPointSkip()
+    public void executeWithPointSkip()
     {
         /** The robot checks if the DriveMethod is Follow. If it is, it will turn towards the direction of heading. */
-        TurnRobotAtStart();
+        turnRobotAtStart();
         /** Reset the odometry. */
         robot.odometry.reset();
         /** The Checkpoint List is converted to an array, because for some reason java won't do for each loops with lists. */
-        CheckpointArray = checkPoints.toArray();
+        checkpointArray = checkPoints.toArray();
 
-        for(CheckPoint NextCheckpoint : CheckpointArray)
+        for(CheckPoint NextCheckpoint : checkpointArray)
         {
-            LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
+            lineSegmentToNearestCheckPoint = new LineSegment(robotPosition, NextCheckpoint.toPoint());
 
             /** dydt, dxdt and Slope are calculated using the Beziercurve. */
             dydt = bezierCurve.getYSlope(NextCheckpoint.t);
             dxdt = bezierCurve.getXSlope(NextCheckpoint.t);
-            Slope = dydt/dxdt;
+            slope = dydt/dxdt;
 
             /** The CheckpointLine and ExamplePointOnSkipSide are calculated using dydt, dxdt and Slope. */
-            CheckpointLine = new LineSegment(NextCheckpoint.toPoint(), -1/Slope);
-            ExamplePointOnSkipSide = new Point(NextCheckpoint.x + dxdt, NextCheckpoint.y + dydt);
+            checkpointLine = new LineSegment(NextCheckpoint.toPoint(), -1/ slope);
+            examplePointOnSkipSide = new Point(NextCheckpoint.x + dxdt, NextCheckpoint.y + dydt);
 
             /** SkipPointValue and RobotSkipValue are calculated using CheckpointLine and RobotSkipValue. */
-            SkipPointValue = getSkipPointValue(CheckpointLine, ExamplePointOnSkipSide);
-            RobotSkipValue = getSkipPointValue(CheckpointLine, RobotPosition);
+            skipPointValue = getSkipPointValue(checkpointLine, examplePointOnSkipSide);
+            robotSkipValue = getSkipPointValue(checkpointLine, robotPosition);
 
             /** The loop will also break if the SkipPointValue is equal to RobotSkipValue. */
-            while(LineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested() && RobotSkipValue != SkipPointValue)
+            while(lineSegmentToNearestCheckPoint.length > 3 && !runningOpMode.isStopRequested() && robotSkipValue != skipPointValue)
             {
                 /** RobotSkipValue is updated every cycle. */
                 updateRobotPosition();
-                RobotSkipValue = getSkipPointValue(CheckpointLine, RobotPosition);
-                LineSegmentToNearestCheckPoint = new LineSegment(RobotPosition, NextCheckpoint.toPoint());
-                DriveAngle = LineSegmentToNearestCheckPoint.angle;
-                PowerRobot();
+                robotSkipValue = getSkipPointValue(checkpointLine, robotPosition);
+                lineSegmentToNearestCheckPoint = new LineSegment(robotPosition, NextCheckpoint.toPoint());
+                driveAngle = lineSegmentToNearestCheckPoint.angle;
+                powerRobot();
             }
 
         }
@@ -153,9 +153,9 @@ public class BezierCurveRoute
 
 
     /** Turn the robot to face the direction of the Bezier Curve. */
-    public void TurnRobotAtStart()
+    public void turnRobotAtStart()
     {
-        if(DriveMethod == DRIVE_METHOD.FOLLOW)
+        if(driveMethod == DRIVE_METHOD.FOLLOW)
         {
             double XslopeStart = bezierCurve.getXSlope(0);
             double YslopeStart = bezierCurve.getYSlope(0);
@@ -178,31 +178,31 @@ public class BezierCurveRoute
     /** Updates the robot position to the RobotPosition (Point) Object. */
     private void updateRobotPosition()
     {
-        if(DriveMethod == DRIVE_METHOD.STRAFE)
+        if(driveMethod == DRIVE_METHOD.STRAFE)
         {
-            RobotPosition.x = robot.odometry.getX();
-            RobotPosition.y = robot.odometry.getY();
+            robotPosition.x = robot.odometry.getX();
+            robotPosition.y = robot.odometry.getY();
         }
-        else if(DriveMethod == DRIVE_METHOD.FOLLOW)
+        else if(driveMethod == DRIVE_METHOD.FOLLOW)
         {
             ds = robot.odometry.getY() - DistanceDrivenLastCheck;
             DistanceDrivenLastCheck = robot.odometry.getY();
 
-            dy = ds*Math.cos(Math.toRadians(DriveAngle));
-            dx = ds*Math.sin(Math.toRadians(DriveAngle));
-            RobotPosition.x += dx;
-            RobotPosition.y += dy;
+            dy = ds*Math.cos(Math.toRadians(driveAngle));
+            dx = ds*Math.sin(Math.toRadians(driveAngle));
+            robotPosition.x += dx;
+            robotPosition.y += dy;
         }
     }
 
 
     /** Powers the robot accordingly. */
-    private void PowerRobot()
+    private void powerRobot()
     {
-        if(DriveMethod == DRIVE_METHOD.STRAFE)
-            robot.drivetrain.powerStrafeValues(DriveAngle, speed, 0.0);
-        else if(DriveMethod == DRIVE_METHOD.FOLLOW)
-            robot.drivetrain.follow(DriveAngle, speed);
+        if(driveMethod == DRIVE_METHOD.STRAFE)
+            robot.drivetrain.powerStrafeValues(driveAngle, speed, 0.0);
+        else if(driveMethod == DRIVE_METHOD.FOLLOW)
+            robot.drivetrain.follow(driveAngle, speed);
     }
 
 

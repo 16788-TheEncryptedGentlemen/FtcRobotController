@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.autonomousroutes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute.DRIVE_METHOD;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
-import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineTes;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -19,7 +17,7 @@ public class Test extends LinearOpMode
 {
     public void runOpMode()
     {
-    // TODO: Sanne: "!Does not work!" Comment these two lines to build
+
         OpenCvWebcam webcam ;
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
         camera.setPipeline(new PipelineTes());
@@ -50,7 +48,7 @@ public class Test extends LinearOpMode
         //Run program------------------------------------
         //Run program------------------------------------
 
-        RedStart1Park1.ExecuteWithPointSkip();
+        RedStart1Park1.executeWithPointSkip();
 
     }
 
