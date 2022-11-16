@@ -23,12 +23,12 @@ public class CheckPoints {
         steplength = _Steplength;
         distanceBetweenCheckpoints = _DistanceBetweenCheckpoints;
 
-        CalculateCheckpoints();
+        calculateCheckpoints();
     }
 
 
     /** Calculates all checkpoints and adds them to the CheckPoints list. */
-    private void CalculateCheckpoints()
+    private void calculateCheckpoints()
     {
         /** Sets initialized values. */
         Point point1 = new Point(0,0);
