@@ -16,7 +16,7 @@ public class Point {
     }
 
     /** Converts point to checkPoint and returns said point. */
-    public CheckPoint ConvertToCheckPoint(double T) {
+    public CheckPoint convertToCheckPoint(double T) {
         return new CheckPoint(this.x, this.y, T);
     }
 }

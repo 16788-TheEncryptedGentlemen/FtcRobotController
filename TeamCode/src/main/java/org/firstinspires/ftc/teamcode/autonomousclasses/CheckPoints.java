@@ -54,12 +54,12 @@ public class CheckPoints {
                     CurrentTValue += steplength;
             }
             if(CurrentTValue < 1) {
-                checkPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
+                checkPoints.add(point1.convertToCheckPoint(CurrentTValue));
                 CurrentDistanceToCheckpoint = 0;
             }
             else {
                 point1 = bezierCurve.getPosition(1);
-                checkPoints.add(point1.ConvertToCheckPoint(CurrentTValue));
+                checkPoints.add(point1.convertToCheckPoint(CurrentTValue));
             }
         }
     }
