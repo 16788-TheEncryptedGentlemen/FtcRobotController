@@ -34,7 +34,7 @@ public class LineSegment
         a = (point2.x - point1.x)/(point2.y - point1.y);
         b = point1.y - a*point1.x;
 
-        angle = GetAngle();
+        angle = getAngle();
     }
 
     /** Two arguments: point1 and the slope. */
@@ -50,12 +50,12 @@ public class LineSegment
         deltaY = point2.y - point1.y;
         length = Math.hypot(deltaX, deltaY);
 
-        angle = GetAngle();
+        angle = getAngle();
     }
 
 
     /** Gets the angle of the line from point1 to point2. */
-    private double GetAngle() {
+    private double getAngle() {
         double Angle;
 
         Angle = Math.signum(deltaX)*Math.toDegrees(Math.acos(deltaY / length));
