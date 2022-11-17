@@ -13,6 +13,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
         /** The right CRservo of the Grabber */
         public CRServo right;
 
+
+        //TODO: Aditi: change names for conficureration so that the first letter is a lowercase letter.
+
        /** The grabber has a right and left CRservo */
         public Grabber(HardwareMap hardwareMap)
         {

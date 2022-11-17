@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
-public class imu
+public class Imu
 {
     /** The actual IMU in this object. */
     private BNO055IMU imu;
@@ -19,7 +19,7 @@ public class imu
     private double angularOffset = 0;
 
 
-    public imu(HardwareMap hardwareMap){
+    public Imu(HardwareMap hardwareMap){
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.loggingTag = "IMU";  //Loggin tag and config name ARE NOT THE SAME (I think) TODO: Figure out if luc was correct
 

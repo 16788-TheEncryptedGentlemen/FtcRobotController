@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Display;
 import org.firstinspires.ftc.teamcode.robotparts.Grabber;
-import org.firstinspires.ftc.teamcode.robotparts.imu;
+import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.Lift;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
@@ -19,7 +19,7 @@ public class CompetitionRobot {
     /** The odometry of the robot. */
     public Odometry odometry;
     /** The imu of the robot. */
-    public org.firstinspires.ftc.teamcode.robotparts.imu imu;
+    public Imu imu;
     /** The display of the robot. */
     public Display display;
     /** The webcam of the robot. */
@@ -37,7 +37,7 @@ public class CompetitionRobot {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
-        imu = new imu(hardwaremap);
+        imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("webcam");
@@ -53,7 +53,7 @@ public class CompetitionRobot {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
-        imu = new imu(hardwaremap);
+        imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("grabber");
