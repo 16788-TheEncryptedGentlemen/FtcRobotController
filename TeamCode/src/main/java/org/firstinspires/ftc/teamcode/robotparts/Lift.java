@@ -12,6 +12,8 @@ public class Lift {
     /** The right DCMotor of the lift */
     public DcMotorEx right;
 
+    //TODO: Aditi: change names for conficureration so that the first letter is a lowercase letter.
+
     /** The lift has a right and left DCMotor */
     public Lift(HardwareMap hardwareMap)
     {

@@ -21,11 +21,11 @@ public class MecanumDrivetrain {
     /** The odometry of the robot. */
     private final Odometry odometry;
     /** The Integrated Measurement Unit of the robot. */
-    public org.firstinspires.ftc.teamcode.robotparts.imu imu;
+    public Imu imu;
 
 
     /** The default MecanumDrivetrain constructor. */ //TODO: Figure out how to simplify this constructor.
-    public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, org.firstinspires.ftc.teamcode.robotparts.imu _imu) {
+    public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
         odometry = _odometry;
         imu = _imu;
         frontRight = hardwareMap.get(DcMotorEx.class, "RV");
@@ -52,7 +52,7 @@ public class MecanumDrivetrain {
 
 
     /** Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap. */
-    public MecanumDrivetrain(LinearOpMode _runningOpMode, Odometry _Odometry, org.firstinspires.ftc.teamcode.robotparts.imu _imu) {
+    public MecanumDrivetrain(LinearOpMode _runningOpMode, Odometry _Odometry, Imu _imu) {
         this(_runningOpMode.hardwareMap, _Odometry, _imu);
         runningOpMode = _runningOpMode;
     }
