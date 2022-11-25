@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+// TODO: Make sure this program works!!!! Make different height for the different junctions.
 // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
 
 public class Lift {
