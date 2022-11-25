@@ -9,14 +9,14 @@ import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
 
 @Autonomous
-public class RedStart1Park2 extends LinearOpMode {
+public class RedStart1Park3 extends LinearOpMode {
     public void runOpMode() {
 
         CompetitionRobot Robot = new CompetitionRobot(this);
 
-        BezierCurveRoute RedStart1Park2 = new BezierCurveRoute(
-                new double[] {370.45, -856.416666666667, 884.3, -254.933333333333, -143.001666666667}, //The x-coefficients
-                new double[] {-3.9833333333338, -51.7833333333265, 1422.04999999998, -2039.46666666665, 799.853333333328}, //The y-coefficients
+        BezierCurveRoute RedStart1Park3 = new BezierCurveRoute(
+                new double[] {152.96, -139.815, 43.8166666666667}, //The x-coefficients
+                new double[] {8.36500000000046, -65.7250000000004, 121.093333333333}, //The y-coefficients
                 Robot,
                 0.6,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -25,6 +25,6 @@ public class RedStart1Park2 extends LinearOpMode {
 
         waitForStart();
 
-        RedStart1Park2.executeWithPointSkip();
+        RedStart1Park3.executeWithPointSkip();
     }
 }
