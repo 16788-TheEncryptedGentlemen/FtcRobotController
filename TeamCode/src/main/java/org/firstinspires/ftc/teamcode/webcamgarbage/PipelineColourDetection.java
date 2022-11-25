@@ -37,7 +37,7 @@ public class PipelineColourDetection extends OpenCvPipeline {
             100,
             100);
 
-    // Volatile since accessed by OpMode thread w/o synchronization DEFAULT = BLUE
+    /** Volatile since accessed by OpMode thread w/o synchronization DEFAULT = BLUE */
     private volatile OutputColour colourOut = OutputColour.YELLOW;
 
     /** Use half of the degrees. */
@@ -76,9 +76,9 @@ public class PipelineColourDetection extends OpenCvPipeline {
 
         // check which color is most common and set output to this value
 //        if (redCount > blueCount && redCount > yellowCount) {
-            colourOut = OutputColour.RED;
-            Imgproc.putText(redMat, "redA", pointA,  font, scale, YELLOW, thickness);
-            return redMat;
+        colourOut = OutputColour.RED;
+        Imgproc.putText(redMat, "redA", pointA,  font, scale, YELLOW, thickness);
+        return redMat;
 //        }
 //        else if (yellowCount > blueCount && yellowCount > redCount) {
 //            colourOut = OutputColour.YELLOW;
