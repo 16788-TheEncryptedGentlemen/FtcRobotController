@@ -17,27 +17,27 @@ public class DriverControlled extends OpMode {
     /** The robot */
     CompetitionRobot Robot;
 
-    /** The float value of the left joystick of player 1 */
+    /** The float value of the left joystick of player 1. */
     private double LeftJoyX = 0;
-    /** The float value of the right joystick of player 1 */
+    /** The float value of the right joystick of player 1. */
     private double LeftJoyY = 0;
 
     /** The speed of strafing (between 0 en 1) */
     private double StrafeSpeed = 0;
-    /** The angle at which the robot needs to strafe between -180 and 180 degrees */
+    /** The angle at which the robot needs to strafe between -180 and 180 degrees. */
     private double StrafeAngle = 0;
 
-    /** The angle of the robot in the absolute orientation field */
+    /** The angle of the robot in the absolute orientation field. */
     private double RobotAngle = 0;
 
-    /** The speed of turning between -1 (left) and 1 (right) */
+    /** The speed of turning between -1 (left) and 1 (right). */
     private double TurnSpeed = 0;
 
-    /** The angle that the robot needs to correct to whilst strafing with gyro correction */
+    /** The angle that the robot needs to correct to whilst strafing with gyro correction. */
     private double GyroCorrectionAngle = 0;
-    /** The deviation of the robot whilst strafing with gyro correction */
+    /** The deviation of the robot whilst strafing with gyro correction. */
     private double DeviationAngle = 0;
-    /** The correction factor for the motors whilst strafing with gyro correction */
+    /** The correction factor for the motors whilst strafing with gyro correction. */
     private double CorrectionFactor = 0;
     // Place AntiJerkTimer object here, if there is an error.
 
@@ -64,9 +64,10 @@ public class DriverControlled extends OpMode {
         /** Left joystick left and right on the gamepad */
         LeftJoyX = gamepad1.left_stick_x;
 
-
+        /** The angle the robot is in with help of the IMU.*/
         RobotAngle = Robot.imu.getAngle();
 
+        /** The speed of strafing.*/
         StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX,2) + Math.pow(LeftJoyY,2));
 
         if(StrafeSpeed != 0 && LeftJoyX != 0)
@@ -80,6 +81,7 @@ public class DriverControlled extends OpMode {
         if(StrafeSpeed > 1)
             StrafeSpeed = 1;
 
+        /** The speed of turning is controlled by moving the right joystick horizontally. */
         TurnSpeed = gamepad1.right_stick_x;
 
         Robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
@@ -94,6 +96,7 @@ public class DriverControlled extends OpMode {
         telemetry.addData("IMU", Robot.imu.getAngle());
 
         //--------------------------------------------------------------------
+        /** Controls of the grabber on the robot. */
         if (gamepad2.a) {
             telemetry.addLine("Grab");
             Robot.grabber.grab();
@@ -105,6 +108,7 @@ public class DriverControlled extends OpMode {
             Robot.grabber.stop();
         }
         //--------------------------------------------------------------------
+        /** Controls of the lift on the robot. */
         if (gamepad2.left_stick_y > 0){
             telemetry.addLine("Up");
             Robot.lift.up();
