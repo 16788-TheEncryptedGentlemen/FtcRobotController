@@ -42,35 +42,7 @@ public class PipelineColourDetection extends OpenCvPipeline {
     // Volatile since accessed by OpMode thread w/o synchronization DEFAULT = BLUE
     private volatile OutputColour colourOut = OutputColour.YELLOW;
 
-//    //making scalars, TODO: check this
-//    Scalar redMin = new Scalar(5,47,56);
-//    Scalar redMax = new Scalar(25,87,96);
-//    Scalar blueMin = new Scalar(232,30,39);
-//    Scalar blueMax = new Scalar(242,53,62);
-//    Scalar yellowMin = new Scalar(47,51,66);
-//    Scalar yellowMax = new Scalar(67,91,106);
-
-
-        //not blue and white
-//    Scalar redMin = new Scalar(40,40,40);
-//    Scalar redMax = new Scalar(255,255,255);
-
-    //only red but shiny
-//Scalar redMin = new Scalar(120,120,120);
-//    Scalar redMax = new Scalar(255, 255, 255);
-//
-//    //groen rood geel, geen blauw
-//    Scalar redMin = new Scalar(40,40,40);
-//    Scalar redMax = new Scalar(180, 180, 180);
-
-    //vooral alleen zwart?
-//    Scalar redMin = new Scalar(150,0,0);
-//    Scalar redMax = new Scalar(250, 255, 255);
-
-//      geel en rood en groen
-//    Scalar redMin = new Scalar(38, 25, 170);
-//    Scalar redMax = new Scalar(255, 255, 270);
-
+    /** Use half of the degrees. */
     Scalar redMin = new Scalar(38, 25, 0);
     Scalar redMax = new Scalar(255, 255, 60);
     Scalar blueMin = new Scalar(100,0,0);

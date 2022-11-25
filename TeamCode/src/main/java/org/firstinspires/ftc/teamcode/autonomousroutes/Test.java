@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
-import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineTes;
+import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -17,8 +17,9 @@ public class Test extends LinearOpMode
 {
 
     OpenCvWebcam webcam;
-    PipelineTes pipeline;
-    int[] output;
+    PipelineColourDetection pipeline;
+    PipelineColourDetection.OutputColour snapshotAnalysis = PipelineColourDetection.OutputColour.BLUE; // default
+
 
     @Override
     public void runOpMode()
@@ -30,7 +31,7 @@ public class Test extends LinearOpMode
 
         WebcamName webcam = hardwareMap.get(WebcamName.class, "webcam");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
-        pipeline = new PipelineTes();
+        pipeline = new PipelineColourDetection();
 
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
@@ -53,10 +54,7 @@ public class Test extends LinearOpMode
 
         while (!isStarted() && !isStopRequested())
         {
-            output = pipeline.getAnalysis();
-            telemetry.addData("R", output[0]);
-            telemetry.addData("G", output[1]);
-            telemetry.addData("B", output[2]);
+            telemetry.addData("Realtime analysis", pipeline.getAnalysis());
             telemetry.update();
 
         }
@@ -66,13 +64,34 @@ public class Test extends LinearOpMode
          * for later use. We must do this because the analysis will continue
          * to change as the camera view changes once the robot starts moving!
          */
+        snapshotAnalysis = pipeline.getAnalysis();
 
         /*
          * Show that snapshot on the telemetry
          */
-        telemetry.addData("Snapshot post-START analysis", output);
+        telemetry.addData("Snapshot post-START analysis", snapshotAnalysis);
         telemetry.update();
 
+        switch (snapshotAnalysis)
+        {
+            case RED:
+            {
+                /* Your autonomous code */
+                break;
+            }
+
+            case BLUE:
+            {
+                /* Your autonomous code */
+                break;
+            }
+
+            case YELLOW:
+            {
+                /* Your autonomous code*/
+                break;
+            }
+        }
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */
         while (opModeIsActive())
