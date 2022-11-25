@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
@@ -9,37 +9,36 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
     public class Grabber {
 
         /** The Left CRservo of the Grabber */
-        public CRServo left;
+        public Servo left;
         /** The right CRservo of the Grabber */
-        public CRServo right;
+        public Servo right;
 
+//TODO: Aditi: change names for conficureration so that the first letter is a lowercase letter.
 
-        //TODO: Aditi: change names for conficureration so that the first letter is a lowercase letter.
-
-       /** The grabber has a right and left CRservo */
+       /** The grabber has a right and left Servo */
         public Grabber(HardwareMap hardwareMap)
         {
-            left = hardwareMap.get(CRServo.class, "LeftGrabber");
-            right = hardwareMap.get(CRServo.class, "RightGrabber");
+            left = hardwareMap.get(Servo.class, "leftGrabber");
+            right = hardwareMap.get(Servo.class, "rightGrabber");
         }
 
         /** The robot grabber closes */
         public void grab()
         {
-            left.setPower(1);
-            right.setPower(-1);
+            left.setPosition(0.6);
+            right.setPosition(0.5);
         }
         /** The robot grabber open */
         public void drop()
         {
-            left.setPower(-1);
-            right.setPower(1);
+            left.setPosition(0.5);
+            right.setPosition(0.6);
         }
         /** The robot grabber stops. */
         public void stop()
         {
-            left.setPower(0.0);
-            right.setPower(0.0);
+            left.setPosition(0.0);
+            right.setPosition(0.0);
         }
 
     }
