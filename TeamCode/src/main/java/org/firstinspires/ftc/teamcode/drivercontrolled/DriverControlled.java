@@ -12,6 +12,7 @@ public class DriverControlled extends OpMode {
 
     // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
     // TODO: Aditi : Make sure errors are fixed and make sure you write "!Does not work!" on top of your commits.
+    // TODO: Still need to test it!
 
     //--------------------------------------------------------------------
     /** The robot */
@@ -96,17 +97,18 @@ public class DriverControlled extends OpMode {
         telemetry.addData("IMU", Robot.imu.getAngle());
 
         //--------------------------------------------------------------------
-        /** Controls of the grabber on the robot. */
-        if (gamepad2.a) {
+        /** Controls of the grabber on the robot for the beacon. */
+        if (gamepad2.x) {
             telemetry.addLine("Grab");
             Robot.grabber.grab();
-        } else if (gamepad2.y) {
+        } else if (gamepad2.b) {
             telemetry.addLine("Drop");
             Robot.grabber.drop();
         } else {
             telemetry.addLine("StopGrabber");
             Robot.grabber.stop();
         }
+
         //--------------------------------------------------------------------
         /** Controls of the lift on the robot. */
         if (gamepad2.left_stick_y > 0){
