@@ -19,9 +19,7 @@ public class PipelineColourDetection extends OpenCvPipeline {
         YELLOW
     }
 
-    /*
-     * Working variables
-     */
+    /** Working variables. */
     Mat rgbImage = new Mat();
     Mat redMat = new Mat();
     Mat blueMat = new Mat();
@@ -68,8 +66,8 @@ public class PipelineColourDetection extends OpenCvPipeline {
 
         // check frame colors within color min max values, store those pixels in colorMat
         Core.inRange(rgbImage, redMin, redMax, redMat);
-//        Core.inRange(rgbImage, blueMin, blueMax, blueMat);
-//        Core.inRange(rgbImage, yellowMin, yellowMax, yellowMat);
+        Core.inRange(rgbImage, blueMin, blueMax, blueMat);
+        Core.inRange(rgbImage, yellowMin, yellowMax, yellowMat);
 
         // count non empty pixels in colorMats, so count number of pixels of each color and store amount
         redCount = Core.countNonZero(redMat);
