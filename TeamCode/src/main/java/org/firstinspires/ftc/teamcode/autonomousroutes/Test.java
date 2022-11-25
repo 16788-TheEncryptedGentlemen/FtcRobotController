@@ -18,7 +18,7 @@ public class Test extends LinearOpMode
 
     OpenCvWebcam webcam;
     PipelineColourDetection pipeline;
-    PipelineColourDetection.SkystonePosition snapshotAnalysis = PipelineColourDetection.SkystonePosition.LEFT; // default
+    PipelineColourDetection.OutputColour snapshotAnalysis = PipelineColourDetection.OutputColour.BLUE; // default
 
 
     @Override
@@ -57,8 +57,6 @@ public class Test extends LinearOpMode
             telemetry.addData("Realtime analysis", pipeline.getAnalysis());
             telemetry.update();
 
-            // Don't burn CPU cycles busy-looping in this sample
-            sleep(50);
         }
 
         /*
@@ -76,19 +74,19 @@ public class Test extends LinearOpMode
 
         switch (snapshotAnalysis)
         {
-            case LEFT:
+            case RED:
             {
                 /* Your autonomous code */
                 break;
             }
 
-            case RIGHT:
+            case BLUE:
             {
                 /* Your autonomous code */
                 break;
             }
 
-            case CENTER:
+            case YELLOW:
             {
                 /* Your autonomous code*/
                 break;
