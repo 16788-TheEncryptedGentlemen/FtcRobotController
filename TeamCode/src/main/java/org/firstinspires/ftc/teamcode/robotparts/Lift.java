@@ -21,9 +21,13 @@ public class Lift {
     public Lift(HardwareMap hardwareMap)
     {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
-        left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left.setTargetPosition(0);
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
-        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setTargetPosition(0);
     }
 
     /** The robot lift goes up */
@@ -33,12 +37,6 @@ public class Lift {
         right.setPower(-1);
     }
 
-    public void autonomousliftup()
-    {
-        left.setTargetPosition(5);
-        right.setTargetPosition(5);
-    }
-
     /** The robot lift down */
     public void down()
     {
@@ -46,19 +44,38 @@ public class Lift {
         right.setPower(1);
     }
 
-    public void autonomousliftdown()
-    {
-        left.setTargetPosition(5);
-        right.setTargetPosition(5);
-    }
-
-    /** The robot lift stops. */
+   /** The robot lift stops. */
     public void stop()
     {
         left.setPower(0.0);
         right.setPower(0.0);
     }
 
+    public void autonomousliftlevelground () {
+        left.setTargetPosition(10); //not zero because we would overshoot and break something
+        right.setTargetPosition(-10);
+    }
+    public void autonomousliftlevellow () {
+        left.setTargetPosition(200);
+        right.setTargetPosition(-200);
+    }
+    public void autonomousliftlevellowpole () {
+        left.setTargetPosition(400);
+        right.setTargetPosition(-400);
+    }
+    public void autonomousliftlevelmidpole () {
+        left.setTargetPosition(600);
+        right.setTargetPosition(-600);
+    }
+
+    public void autonomousliftlevelhighpole () {
+        left.setTargetPosition(800);
+        right.setTargetPosition(-800);
+    }
 }
+
+
+
+
 
 // TODO: Aditi: Add documentation to this class
