@@ -51,6 +51,7 @@ public class Lift {
         right.setPower(0.0);
     }
 
+    //TODO: ADITI: Make sure all the words except for first word in the function name start with capitals!!!
     public void autonomousliftlevelground () {
         left.setTargetPosition(10); //not zero because we would overshoot and break something
         right.setTargetPosition(-10);
