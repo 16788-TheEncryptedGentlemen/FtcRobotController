@@ -21,13 +21,14 @@ public class Lift {
     public Lift(HardwareMap hardwareMap)
     {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
+        left.setTargetPosition(0);
         left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left.setTargetPosition(0);
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
+        right.setTargetPosition(0);
         right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right.setTargetPosition(0);
+
     }
 
     /** The robot lift goes up */
