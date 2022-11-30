@@ -53,24 +53,24 @@ public class Lift {
     }
 
     //TODO: ADITI: Make sure all the words except for first word in the function name start with capitals!!!
-    public void autonomousliftlevelground () {
+    public void autonomousLiftLevelGround () {
         left.setTargetPosition(10); //not zero because we would overshoot and break something
         right.setTargetPosition(-10);
     }
-    public void autonomousliftlevellow () {
+    public void autonomousLiftLevelLow () {
         left.setTargetPosition(200);
         right.setTargetPosition(-200);
     }
-    public void autonomousliftlevellowpole () {
+    public void autonomousLiftLevelLowPole () {
         left.setTargetPosition(400);
         right.setTargetPosition(-400);
     }
-    public void autonomousliftlevelmidpole () {
+    public void autonomousLiftLevelMidPole () {
         left.setTargetPosition(600);
         right.setTargetPosition(-600);
     }
 
-    public void autonomousliftlevelhighpole () {
+    public void autonomousLiftLevelHighPole () {
         left.setTargetPosition(800);
         right.setTargetPosition(-800);
     }
