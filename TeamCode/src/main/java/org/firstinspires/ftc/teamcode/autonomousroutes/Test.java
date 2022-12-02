@@ -3,22 +3,14 @@ package org.firstinspires.ftc.teamcode.autonomousroutes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
-import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
 
 /** Uncomment @Autonomous to show up on the DC controller app */
 @Autonomous
 public class Test extends LinearOpMode
 {
 
-    OpenCvWebcam webcam;
-    PipelineColourDetection pipeline;
     int[] output;
     int result;
 
@@ -29,39 +21,17 @@ public class Test extends LinearOpMode
         //Variables------------------------------------
         CompetitionRobot robot = new CompetitionRobot(this);
 
-        WebcamName webcam = hardwareMap.get(WebcamName.class, "webcam");
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
-        pipeline = new PipelineColourDetection();
-
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                camera.setPipeline(pipeline);
-
-            }
-
-            @Override
-            public void onError(int errorCode)
-            {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
-            }
-        });
 
         while (!isStarted() && !isStopRequested())
         {
             // debugging
-            output = pipeline.getAnalysis();
+            output = robot.webcam.getAnalysis();
             telemetry.addData("R", output[0]);
             telemetry.addData("G", output[1]);
             telemetry.addData("B", output[2]);
 
             // result
-            result = pipeline.getResult();
+            result = robot.webcam.getResult();
             telemetry.addData("Result", result);
             telemetry.update();
 
