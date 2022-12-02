@@ -18,17 +18,22 @@ public class Lift {
     //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
 
     /** The lift has a right and left DCMotor */
-    public Lift(HardwareMap hardwareMap)
+    public Lift(HardwareMap hardwareMap, boolean autonomous)
     {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
-        left.setTargetPosition(0);
-        left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
-        right.setTargetPosition(0);
-        right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        if (autonomous) {
+            left.setTargetPosition(0);
+            left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right.setTargetPosition(0);
+            right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        } else {
+            left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
 
     /** The robot lift goes up */
