@@ -25,14 +25,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
         /** The robot grabber closes */
         public void grab()
         {
-            left.setPosition(0.6);
-            right.setPosition(0.5);
+            left.setPosition(0);
+            right.setPosition(1);
         }
         /** The robot grabber open */
         public void drop()
         {
-            left.setPosition(0.5);
-            right.setPosition(0.6);
+            left.setPosition(1);
+            right.setPosition(0);
         }
         /** The robot grabber stops. */
         public void stop()
