@@ -12,23 +12,21 @@ public class Webcam {
 
     public PipelineColourDetection pipeline;
 
-    public Webcam(HardwareMap hardwareMap){
+    public Webcam(HardwareMap hardwareMap) {
         WebcamName webcam = hardwareMap.get(WebcamName.class, "webcam");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
 
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
+        pipeline = new PipelineColourDetection();
+
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
-            public void onOpened()
-            {
+            public void onOpened() {
                 camera.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
                 camera.setPipeline(pipeline);
-
             }
 
             @Override
-            public void onError(int errorCode)
-            {
+            public void onError(int errorCode) {
                 /*
                  * This will be called if the camera could not be opened
                  */
@@ -36,7 +34,13 @@ public class Webcam {
         });
     }
 
+    public int[] getAnalysis(){
+        return pipeline.getAnalysis();
+    }
 
+    public int getResult(){
+        return pipeline.getResult();
+    }
 
 
 
