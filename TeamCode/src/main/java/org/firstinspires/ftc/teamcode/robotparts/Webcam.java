@@ -7,11 +7,9 @@ import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
 
 public class Webcam {
 
-    public OpenCvWebcam webcam;
     public PipelineColourDetection pipeline;
 
     public Webcam(HardwareMap hardwareMap){

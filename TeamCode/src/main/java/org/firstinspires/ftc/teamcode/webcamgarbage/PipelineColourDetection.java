@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.webcamgarbage;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
@@ -10,95 +10,78 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class PipelineColourDetection extends OpenCvPipeline {
 
     /*
-     * An enum to define the possible colours
+     * Working variables
      */
-    public enum OutputColour
-    {
-        RED,
-        BLUE,
-        YELLOW
-    }
-
-    /** Working variables. */
-    Mat rgbImage = new Mat();
+    Mat hsvImage = new Mat();
+    Mat crop = new Mat();
     Mat redMat = new Mat();
     Mat blueMat = new Mat();
     Mat yellowMat = new Mat();
+
+    Rect frame = new Rect(300,100,400,600);
 
     int redCount = 0;
     int blueCount = 0;
     int yellowCount = 0;
 
+    int result = 1;
 
-    Point pointA = new Point(
-            150,
-            150);
-    Point pointB = new Point(
-            100,
-            100);
 
-    /** Volatile since accessed by OpMode thread w/o synchronization DEFAULT = BLUE */
-    private volatile OutputColour colourOut = OutputColour.YELLOW;
+    //making scalars, TODO: check this
+    Scalar yellowMin = new Scalar(20,100,100);
+    Scalar yellowMax = new Scalar(30,255,255);
+    Scalar blueMin = new Scalar(75,100,100);
+    Scalar blueMax = new Scalar(135,255,255);
+    Scalar redMin = new Scalar(170,100,100);
+    Scalar redMax = new Scalar(180,255,255);
 
-    /** Use half of the degrees. */
-    Scalar redMin = new Scalar(38, 25, 0);
-    Scalar redMax = new Scalar(255, 255, 60);
-    Scalar blueMin = new Scalar(100,0,0);
-    Scalar blueMax = new Scalar(255,0,0);
-    Scalar yellowMin = new Scalar(0,100,0);
-    Scalar yellowMax = new Scalar(0,255,0);
-
-    Scalar RED = new Scalar(6, 60, 60);
-    Scalar BLUE = new Scalar(193, 60, 60);
-    Scalar YELLOW = new Scalar(200, 200, 200);
-
-    int font = Imgproc.FONT_HERSHEY_SIMPLEX;
-    int scale = 10;
-    int thickness = 4;
+    int[] out = {0,0,0};
 
 
     // the running funtcion
     @Override
     public Mat processFrame(Mat input) {
 
-        // convert input frame to hsv color format standard BGR
-        Imgproc.cvtColor(input, rgbImage, Imgproc.COLOR_BGR2HSV);
+        crop = new Mat(input, frame);
+        Imgproc.cvtColor(crop, hsvImage, Imgproc.COLOR_RGB2HSV);
+
 
         // check frame colors within color min max values, store those pixels in colorMat
-        Core.inRange(rgbImage, redMin, redMax, redMat);
-        Core.inRange(rgbImage, blueMin, blueMax, blueMat);
-        Core.inRange(rgbImage, yellowMin, yellowMax, yellowMat);
+        Core.inRange(crop, redMin, redMax, redMat);
+        Core.inRange(crop, blueMin, blueMax, blueMat);
+        Core.inRange(crop, yellowMin, yellowMax, yellowMat);
 
         // count non empty pixels in colorMats, so count number of pixels of each color and store amount
         redCount = Core.countNonZero(redMat);
         blueCount = Core.countNonZero(blueMat);
         yellowCount = Core.countNonZero(yellowMat);
 
-        // check which color is most common and set output to this value
-//        if (redCount > blueCount && redCount > yellowCount) {
-        colourOut = OutputColour.RED;
-        Imgproc.putText(redMat, "redA", pointA,  font, scale, YELLOW, thickness);
-        return redMat;
-//        }
-//        else if (yellowCount > blueCount && yellowCount > redCount) {
-//            colourOut = OutputColour.YELLOW;
-//            Imgproc.putText(yellowMat, "yellow", pointA,  font, scale, YELLOW, thickness);
-//            return yellowMat;
-//        } else {
-//            colourOut = OutputColour.BLUE;
-//            Imgproc.putText(blueMat, "blue", pointA,  font, scale, YELLOW, thickness);
-//            return input;
-//        }
+        out[0] = redCount;
+        out[1] = yellowCount;
+        out[2] = blueCount;
+
+        if (blueCount > yellowCount && blueCount > redCount){
+            result = 3; // blue
+        } else if (yellowCount > redCount && yellowCount > blueCount) {
+            result = 2; // yellow
+        } else {
+            result = 1; // red
+        }
 
         // return input frame to cam preview, so no cool filters yet
-
+        return crop;
     }
 
     /*
      * Call this from the OpMode thread to obtain the latest analysis
      */
-    public OutputColour getAnalysis()
+    public int[] getAnalysis()
     {
-        return colourOut;
+        return out;
+    }
+
+    public int getResult()
+    {
+        return result;
     }
 }
