@@ -104,17 +104,14 @@ public class DriverControlled extends OpMode {
         } else if (gamepad2.b) {
             telemetry.addLine("Drop");
             Robot.grabber.drop();
-        } else {
-            telemetry.addLine("StopGrabber");
-            Robot.grabber.stop();
         }
 
         //--------------------------------------------------------------------
         /** Controls of the lift on the robot. */
-        if (gamepad2.left_stick_y > 0){
+        if (gamepad2.left_stick_y > 0.1){
             telemetry.addLine("Up");
             Robot.lift.up();
-        } else if (gamepad2.left_stick_y < 0) {
+        } else if (gamepad2.left_stick_y < -0.1) {
             telemetry.addLine("Down");
             Robot.lift.down();
         } else {
@@ -142,8 +139,8 @@ public class DriverControlled extends OpMode {
             else{
                 CorrectionFactor = Math.signum(DeviationAngle);
             }
-
-            Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
+            //TODO: deze moet eigenlijk wel iets doen
+           // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
 
         //--------------------------------------------------------------------
         //Gyro correction
