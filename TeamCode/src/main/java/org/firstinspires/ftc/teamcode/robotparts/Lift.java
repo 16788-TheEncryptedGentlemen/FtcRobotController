@@ -39,15 +39,15 @@ public class Lift {
     /** The robot lift goes up */
     public void up()
     {
-        left.setPower(-1);
-        right.setPower(1);
+        left.setPower(1);
+        right.setPower(-1);
     }
 
     /** The robot lift down */
     public void down()
     {
-        left.setPower(1);
-        right.setPower(-1);
+        left.setPower(-1);
+        right.setPower(1);
     }
 
    /** The robot lift stops. */
