@@ -140,7 +140,7 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("StopLift");
             Robot.lift.stop();
         }
-        if (gamepad1.dpad_right) {
+        if (gamepad1.dpad_left) {
                 telemetry.addLine ("LiftHighPole");
                 Robot.lift.liftHighPole();
         } else  {
