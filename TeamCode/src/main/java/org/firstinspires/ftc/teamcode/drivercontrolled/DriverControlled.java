@@ -119,6 +119,36 @@ public class DriverControlled extends OpMode {
             Robot.lift.stop();
         }
         //--------------------------------------------------------------------
+        if (gamepad2.dpad_up) {
+            telemetry.addLine("LiftLow");
+            Robot.lift.liftLow();
+        } else  {
+            telemetry.addLine("StopLift");
+            Robot.lift.stop();
+        }
+        if (gamepad2.dpad_right) {
+            telemetry.addLine ("LiftLowPole");
+            Robot.lift.liftLowPole();
+        } else  {
+            telemetry.addLine("StopLift");
+            Robot.lift.stop();
+        }
+        if (gamepad2.dpad_down) {
+            telemetry.addLine ("LiftMidPole");
+            Robot.lift.liftMidPole();
+        } else  {
+            telemetry.addLine("StopLift");
+            Robot.lift.stop();
+        }
+        if (gamepad1.dpad_right) {
+                telemetry.addLine ("LiftHighPole");
+                Robot.lift.liftHighPole();
+        } else  {
+            telemetry.addLine("StopLift");
+            Robot.lift.stop();
+        }
+
+        //--------------------------------------------------------------------
         //Final calculations for the Drivetrain:
         // * GyroCorrection when strafing without turning.
         // * Fixing any overflow in the MotorSpeed array of the Drivetrain class.
