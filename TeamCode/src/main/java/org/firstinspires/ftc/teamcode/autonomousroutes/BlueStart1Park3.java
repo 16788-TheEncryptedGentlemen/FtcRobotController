@@ -31,6 +31,7 @@ public class BlueStart1Park3 extends LinearOpMode {
 
         // Close robot grabber around cone before driving.
         robot.grabber.grab();
+        sleep(3000);
 
         BlueStart1Park3.executeWithPointSkip();
     }
