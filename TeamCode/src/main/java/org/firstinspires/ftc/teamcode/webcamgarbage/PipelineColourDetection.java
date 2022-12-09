@@ -10,7 +10,7 @@ import org.openftc.easyopencv.OpenCvPipeline;
 public class PipelineColourDetection extends OpenCvPipeline {
     public enum ConeColour {UNKNOWN, RED, BLUE};
     private static final int CONE_CORRECTION_RED = 7000;
-    private static final int CONE_CORRECTION_BLUE = 2000;
+    private static final int CONE_CORRECTION_BLUE = 2500;
     public ConeColour cone = ConeColour.UNKNOWN;
     /*
      * Working variables

@@ -31,6 +31,8 @@ public class BlueStart1ParkVision extends LinearOpMode
             telemetry.addData("R", output[0]);
             telemetry.addData("Y", output[1]);
             telemetry.addData("B", output[2]);
+            telemetry.addData("Cone red", robot.webcam.pipeline.cone == PipelineColourDetection.ConeColour.RED);
+            telemetry.addData("Cone blue", robot.webcam.pipeline.cone == PipelineColourDetection.ConeColour.BLUE);
 
             // result
             result = robot.webcam.getResult();
