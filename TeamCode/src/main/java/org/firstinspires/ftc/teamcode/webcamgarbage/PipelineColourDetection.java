@@ -27,13 +27,16 @@ public class PipelineColourDetection extends OpenCvPipeline {
     int result = 1;
 
 
-    //making scalars, TODO: check this
-    Scalar yellowMin = new Scalar(20,100,100);
-    Scalar yellowMax = new Scalar(30,255,255);
-    Scalar blueMin = new Scalar(75,100,100);
-    Scalar blueMax = new Scalar(135,255,255);
+    // Making scalars, the limits of the colour that the robot thinks of as red, yellow or blue.
+    // Degrees are divided by 2 since OpenCV 0 to 180 degrees.
+    //  TODO: change blue because gray = blue according to robot.
+    //  TODO: figure out why the second and third number is either 255 or 100.
     Scalar redMin = new Scalar(170,100,100);
     Scalar redMax = new Scalar(180,255,255);
+    Scalar yellowMin = new Scalar(20,100,100);
+    Scalar yellowMax = new Scalar(30,255,255);
+    Scalar blueMin = new Scalar(220 / 2.0,67 * 2.55,50 * 2.55);
+    Scalar blueMax = new Scalar(263 / 2.0,255,255);
 
     int[] out = {0,0,0};
 
