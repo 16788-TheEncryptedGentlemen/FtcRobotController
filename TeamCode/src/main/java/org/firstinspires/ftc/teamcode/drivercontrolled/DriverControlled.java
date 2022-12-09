@@ -16,7 +16,7 @@ public class DriverControlled extends OpMode {
 
     //--------------------------------------------------------------------
     /** The robot */
-    CompetitionRobot Robot;
+    CompetitionRobot robot;
 
     /** The float value of the left joystick of player 1. */
     private double LeftJoyX = 0;
@@ -48,7 +48,7 @@ public class DriverControlled extends OpMode {
     /** Initialisation */
     public void init()
     {
-        Robot = new CompetitionRobot(this);
+        robot = new CompetitionRobot(this);
     }
     //--------------------------------------------------------------------
 
@@ -66,7 +66,7 @@ public class DriverControlled extends OpMode {
         LeftJoyX = gamepad1.left_stick_x;
 
         /** The angle the robot is in with help of the IMU.*/
-        RobotAngle = Robot.imu.getAngle();
+        RobotAngle = robot.imu.getAngle();
 
         /** The speed of strafing.*/
         StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX,2) + Math.pow(LeftJoyY,2));
@@ -85,48 +85,50 @@ public class DriverControlled extends OpMode {
         /** The speed of turning is controlled by moving the right joystick horizontally. */
         TurnSpeed = gamepad1.right_stick_x;
 
-        Robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
-        Robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
+        robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
+        robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
         //--------------------------------------------------------------------
         if(gamepad1.start)
-            Robot.imu.reset();
+            robot.imu.reset();
 
 
-        telemetry.addData("X", Robot.odometry.getX());
-        telemetry.addData("Y", Robot.odometry.getY());
-        telemetry.addData("IMU", Robot.imu.getAngle());
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
+        telemetry.addData("IMU", robot.imu.getAngle());
 
         //--------------------------------------------------------------------
         /** Controls of the grabber on the robot for the beacon. */
         if (gamepad2.x) {
             telemetry.addLine("Grab");
-            Robot.grabber.grab();
+            robot.grabber.grab();
         } else if (gamepad2.b) {
             telemetry.addLine("Drop");
-            Robot.grabber.drop();
+            robot.grabber.drop();
         }
 
         //--------------------------------------------------------------------
         /** Controls of the lift on the robot. */
-        if (gamepad2.left_stick_y > 0.1){
+        telemetry.addData("Left stick y:", gamepad2.left_stick_y);
+        if (gamepad2.left_stick_y > 0.1) {
             telemetry.addLine("Up");
-            Robot.lift.up();
+            robot.lift.up();
         } else if (gamepad2.left_stick_y < -0.1) {
             telemetry.addLine("Down");
-            Robot.lift.down();
+            robot.lift.down();
         } else if (gamepad2.dpad_up) {
             telemetry.addLine("LiftHighPole");
-            Robot.lift.liftHighPole();
+            robot.lift.liftHighPole();
         } else if (gamepad2.dpad_right) {
             telemetry.addLine ("LiftMidPole");
-            Robot.lift.liftMidPole();
+            robot.lift.liftMidPole();
         } else if (gamepad2.dpad_down) {
             telemetry.addLine ("LiftLowPole");
-            Robot.lift.liftLowPole();
+            robot.lift.liftLowPole();
         } else  {
             telemetry.addLine("StopLift");
-            Robot.lift.stop();
+            robot.lift.stop();
         }
+        robot.lift.stop();
 
         //--------------------------------------------------------------------
         //Final calculations for the Drivetrain:
@@ -156,23 +158,23 @@ public class DriverControlled extends OpMode {
         //Gyro correction
         //--------------------------------------------------------------------
 
-        Robot.drivetrain.fixMotorSpeedOverflow();
+        robot.drivetrain.fixMotorSpeedOverflow();
 
 
 
         if(gamepad1.right_bumper)
-            Robot.drivetrain.multiplySpeed(0.7);
+            robot.drivetrain.multiplySpeed(0.7);
         else if(gamepad1.left_bumper)
-            Robot.drivetrain.multiplySpeed(0.2);
+            robot.drivetrain.multiplySpeed(0.2);
         else
-            Robot.drivetrain.multiplySpeed(0.5);
+            robot.drivetrain.multiplySpeed(0.5);
 
-        Robot.drivetrain.setPower();
+        robot.drivetrain.setPower();
 
         telemetry.addData("DeviationAngle", DeviationAngle);
         telemetry.addData("controllery", LeftJoyY);
         telemetry.addData("GyroCorrectionFactor",CorrectionFactor);
-        telemetry.addData("Heading",Robot.drivetrain.imu.getAngle());
+        telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
 
     }
 
