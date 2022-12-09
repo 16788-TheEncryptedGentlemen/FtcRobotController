@@ -161,11 +161,11 @@ public class DriverControlled extends OpMode {
 
 
         if(gamepad1.right_bumper)
-            Robot.drivetrain.multiplySpeed(1.0);
+            Robot.drivetrain.multiplySpeed(0.7);
         else if(gamepad1.left_bumper)
             Robot.drivetrain.multiplySpeed(0.2);
         else
-            Robot.drivetrain.multiplySpeed(0.4);
+            Robot.drivetrain.multiplySpeed(0.5);
 
         Robot.drivetrain.setPower();
 
