@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 
 /** Uncomment @Autonomous to show up on the DC controller app */
 @Autonomous
-public class Test extends LinearOpMode
+public class RedStart2ParkVision extends LinearOpMode
 {
 
     int[] output;
@@ -21,7 +21,7 @@ public class Test extends LinearOpMode
 
         //Variables------------------------------------
         CompetitionRobot robot = new CompetitionRobot(this);
-        robot.webcam.pipeline.cone = PipelineColourDetection.ConeColour.BLUE;
+        robot.webcam.pipeline.cone = PipelineColourDetection.ConeColour.RED;
 
 
         while (!isStarted() && !isStopRequested())
@@ -54,11 +54,11 @@ public class Test extends LinearOpMode
 
         // autonomous routes:
 
-        BezierCurveRoute BlueStart1Park1 = new BezierCurveRoute(
+        BezierCurveRoute RedStart2Park1 = new BezierCurveRoute(
                 /** The x-coefficients. */
-                new double[] {-243.780000000001, 290.385000000003, -114.720000000002},
+                new double[] {-195.98, 212.71, -74.8866666666666},
                 /** The Y-coefficients. */
-                new double[] {-22.7049999999988, 44.2149999999988, 43.02},
+                new double[] {9.55999999999847, -50.1899999999981, 101.575},
                 robot,
                 0.6,
                 /** STRAFE or FOLLOW. */
@@ -66,11 +66,11 @@ public class Test extends LinearOpMode
                 this
         );
 
-        BezierCurveRoute BlueStart1Park2 = new BezierCurveRoute(
+        BezierCurveRoute RedStart2Park2 = new BezierCurveRoute(
                 /** The x-coefficients. */
-                new double[] {370.45, -856.416666666667, 884.3, -254.933333333333, -143.001666666667},
+                new double[] {-412.275, 1051.6, -1107.36666666666, 207.133333333333, 262.9},
                 /** The Y-coefficients. */
-                new double[] {-3.9833333333338, -51.7833333333265, 1422.04999999998, -2039.46666666665, 799.853333333328},
+                new double[] {-3.98333333333403, -87.6333333333348, 1326.45, -1718.80833333334, 604.670000000001},
                 robot,
                 0.6,
                 /** STRAFE or FOLLOW. */
@@ -78,11 +78,11 @@ public class Test extends LinearOpMode
                 this
         );
 
-        BezierCurveRoute BlueStart1Park3 = new BezierCurveRoute(
+        BezierCurveRoute RedStart2Park3 = new BezierCurveRoute(
                 /** The x-coefficients. */
-                new double[] {152.96, -139.815, 43.8166666666667},
+                new double[] {209.125, -225.855, 79.6666666666661},
                 /** The Y-coefficients. */
-                new double[] {8.36500000000046, -65.7250000000004, 121.093333333333},
+                new double[] {13.1449999999976, -76.479999999996, 131.051666666665},
                 robot,
                 0.6,
                 /** STRAFE or FOLLOW. */
@@ -97,15 +97,15 @@ public class Test extends LinearOpMode
         //webcam.close();
 
         switch (result) {
-            case 1: BlueStart1Park1.executeWithPointSkip();
+            case 1: RedStart2Park1.executeWithPointSkip();
                 //route voor rood
                 break;
 
-            case 2: BlueStart1Park2.executeWithPointSkip();
+            case 2: RedStart2Park2.executeWithPointSkip();
                 //route voor geel
                 break;
 
-            case 3: BlueStart1Park3.executeWithPointSkip();
+            case 3: RedStart2Park3.executeWithPointSkip();
                 // route voor blauw
                 break;
         }

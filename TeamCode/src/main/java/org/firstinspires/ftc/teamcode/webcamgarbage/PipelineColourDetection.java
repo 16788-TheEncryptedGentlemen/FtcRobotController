@@ -8,7 +8,10 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 public class PipelineColourDetection extends OpenCvPipeline {
-
+    public enum ConeColour {UNKNOWN, RED, BLUE};
+    private static final int CONE_CORRECTION_RED = 7000;
+    private static final int CONE_CORRECTION_BLUE = 1000;
+    public ConeColour cone = ConeColour.UNKNOWN;
     /*
      * Working variables
      */
@@ -51,13 +54,13 @@ public class PipelineColourDetection extends OpenCvPipeline {
 
         // check frame colors within color min max values, store those pixels in colorMat
         Core.inRange(hsvImage, redMin, redMax, redMat);
-        Core.inRange(hsvImage, blueMin, blueMax, blueMat);
         Core.inRange(hsvImage, yellowMin, yellowMax, yellowMat);
+        Core.inRange(hsvImage, blueMin, blueMax, blueMat);
 
-        // count non empty pixels in colorMats, so count number of pixels of each color and store amount
-        redCount = Core.countNonZero(redMat);
-        blueCount = Core.countNonZero(blueMat);
+        // count number of pixels of each color and correct for cone colour.
+        redCount = Core.countNonZero(redMat) - (cone == ConeColour.RED ? CONE_CORRECTION_RED : 0);
         yellowCount = Core.countNonZero(yellowMat);
+        blueCount = Core.countNonZero(blueMat) - (cone == ConeColour.BLUE ? CONE_CORRECTION_BLUE : 0);
 
         out[0] = redCount;
         out[1] = yellowCount;
