@@ -42,6 +42,8 @@ public class CompetitionRobot {
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("webcam");
         webcam = new Webcam(hardwaremap);
+        display.showLoading("grabber");
+        grabber = new Grabber(hardwaremap);
         display.showLoading("lift");
         lift = new Lift(hardwaremap, true);
         display.showLoading("Done initializing! Press start to play");

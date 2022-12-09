@@ -29,6 +29,9 @@ public class BlueStart2Park2 extends LinearOpMode {
         /** Initialisation. */
         waitForStart();
 
+        // Close robot grabber around cone before driving.
+        robot.grabber.grab();
+
         BlueStart2Park2.executeWithPointSkip();
     }
 }
