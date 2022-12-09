@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 
 /** Uncomment @Autonomous to show up on the DC controller app */
 @Autonomous
-public class Test extends LinearOpMode
+public class RedStart1ParkVision extends LinearOpMode
 {
 
     int[] output;
@@ -21,7 +21,7 @@ public class Test extends LinearOpMode
 
         //Variables------------------------------------
         CompetitionRobot robot = new CompetitionRobot(this);
-        robot.webcam.pipeline.cone = PipelineColourDetection.ConeColour.BLUE;
+        robot.webcam.pipeline.cone = PipelineColourDetection.ConeColour.RED;
 
 
         while (!isStarted() && !isStopRequested())
@@ -54,7 +54,7 @@ public class Test extends LinearOpMode
 
         // autonomous routes:
 
-        BezierCurveRoute BlueStart1Park1 = new BezierCurveRoute(
+        BezierCurveRoute RedStart1Park1 = new BezierCurveRoute(
                 /** The x-coefficients. */
                 new double[] {-243.780000000001, 290.385000000003, -114.720000000002},
                 /** The Y-coefficients. */
@@ -66,7 +66,7 @@ public class Test extends LinearOpMode
                 this
         );
 
-        BezierCurveRoute BlueStart1Park2 = new BezierCurveRoute(
+        BezierCurveRoute RedStart1Park2 = new BezierCurveRoute(
                 /** The x-coefficients. */
                 new double[] {370.45, -856.416666666667, 884.3, -254.933333333333, -143.001666666667},
                 /** The Y-coefficients. */
@@ -78,7 +78,7 @@ public class Test extends LinearOpMode
                 this
         );
 
-        BezierCurveRoute BlueStart1Park3 = new BezierCurveRoute(
+        BezierCurveRoute RedStart1Park3 = new BezierCurveRoute(
                 /** The x-coefficients. */
                 new double[] {152.96, -139.815, 43.8166666666667},
                 /** The Y-coefficients. */
@@ -97,15 +97,15 @@ public class Test extends LinearOpMode
         //webcam.close();
 
         switch (result) {
-            case 1: BlueStart1Park1.executeWithPointSkip();
+            case 1: RedStart1Park1.executeWithPointSkip();
                 //route voor rood
                 break;
 
-            case 2: BlueStart1Park2.executeWithPointSkip();
+            case 2: RedStart1Park2.executeWithPointSkip();
                 //route voor geel
                 break;
 
-            case 3: BlueStart1Park3.executeWithPointSkip();
+            case 3: RedStart1Park3.executeWithPointSkip();
                 // route voor blauw
                 break;
         }

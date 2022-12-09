@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 
 /** Uncomment @Autonomous to show up on the DC controller app */
 @Autonomous
-public class Test extends LinearOpMode
+public class BlueStart1ParkVision extends LinearOpMode
 {
 
     int[] output;
