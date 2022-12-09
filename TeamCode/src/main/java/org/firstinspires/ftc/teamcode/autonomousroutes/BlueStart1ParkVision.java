@@ -99,8 +99,6 @@ public class BlueStart1ParkVision extends LinearOpMode
         // Close robot grabber around cone before driving.
         robot.grabber.grab();
         sleep(3000);
-        robot.lift.liftMidPole();
-        sleep(2000);
 
         //webcam.close();
 

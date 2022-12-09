@@ -31,6 +31,7 @@ public class RedStart1Park3 extends LinearOpMode {
 
         // Close robot grabber around cone before driving.
         robot.grabber.grab();
+        sleep(3000);
 
         RedStart1Park3.executeWithPointSkip();
     }

@@ -94,6 +94,10 @@ public class RedStart2ParkVision extends LinearOpMode
 
         waitForStart();
 
+        // Close robot grabber around cone before driving.
+        robot.grabber.grab();
+        sleep(3000);
+
         //webcam.close();
 
         switch (result) {
