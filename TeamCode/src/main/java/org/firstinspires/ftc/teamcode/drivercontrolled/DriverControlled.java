@@ -18,6 +18,7 @@ public class DriverControlled extends OpMode {
     /** Initialisation */
     public void init() {
         robot = new CompetitionRobot(this);
+        antiJerkTimer = new Timer();
     }
 
     @Override
