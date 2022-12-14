@@ -47,33 +47,7 @@ public class DriverControlled extends OpMode {
         // Left joystick up and down on the gamepad
         double LeftJoyY = -gamepad1.left_stick_y;
 
-        /** The angle the robot is in with help of the IMU. */
-        double robotAngle = robot.imu.getAngle();
-
-        if (turnSpeed != 0)
-            antiJerkTimer.Reset();
-
-        double deviationAngle = 0;
-        double correctionFactor = 0;
-
-        if (antiJerkTimer.getTime() < 0.5)
-            gyroCorrectionAngle = robot.imu.getAngle();
-
-        deviationAngle = robotAngle - gyroCorrectionAngle;
-
-        // If there are no big jumps in angle, we are not standing still, not turning
-        // and 250 seconds has elapsed with no turning:
-        if (Math.abs(deviationAngle) < 90 && strafeSpeed != 0 && turnSpeed == 0
-                && antiJerkTimer.getTime() > 0.25)
-        {
-            if (deviationAngle > -30 && deviationAngle < 30) {
-                correctionFactor = deviationAngle / 30;
-            } else {
-                correctionFactor = Math.signum(deviationAngle);
-            }
-
-            robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
-        }
+        setGyroCorrection(strafeSpeed, turnSpeed);
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
@@ -86,9 +60,7 @@ public class DriverControlled extends OpMode {
 
         robot.drivetrain.setPower();
 
-        telemetry.addData("DeviationAngle", deviationAngle);
         telemetry.addData("controllery", LeftJoyY);
-        telemetry.addData("GyroCorrectionFactor", correctionFactor);
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
     }
 
@@ -138,6 +110,39 @@ public class DriverControlled extends OpMode {
         // Set values in the drivetrain.
         robot.drivetrain.setStrafeValues(strafeAngle, strafeSpeed);
         return strafeSpeed;
+    }
+
+    /** Compensate unwanted rotations during strafing. */
+    private void setGyroCorrection(double strafeSpeed, double turnSpeed) {
+        /** The angle the robot is in with help of the IMU. */
+        double robotAngle = robot.imu.getAngle();
+
+        if (turnSpeed != 0)
+            antiJerkTimer.Reset();
+
+        double deviationAngle = 0;
+        double correctionFactor = 0;
+
+        if (antiJerkTimer.getTime() < 0.5)
+            gyroCorrectionAngle = robot.imu.getAngle();
+
+        deviationAngle = robotAngle - gyroCorrectionAngle;
+
+        // If there are no big jumps in angle, we are not standing still, not turning
+        // and 250 seconds has elapsed with no turning:
+        if (Math.abs(deviationAngle) < 90 && strafeSpeed != 0 && turnSpeed == 0
+                && antiJerkTimer.getTime() > 0.25)
+        {
+            if (deviationAngle > -30 && deviationAngle < 30) {
+                correctionFactor = deviationAngle / 30;
+            } else {
+                correctionFactor = Math.signum(deviationAngle);
+            }
+
+            robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
+        }
+        telemetry.addData("DeviationAngle", deviationAngle);
+        telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
     /** Controls of the lift on the robot. */
