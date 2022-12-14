@@ -3,12 +3,16 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
 @TeleOp
 public class DriverControlled extends OpMode {
     /** The robot */
     CompetitionRobot robot;
+
+    private double gyroCorrectionAngle = 0;
+    private Timer antiJerkTimer;
 
     @Override
     /** Initialisation */
@@ -37,29 +41,39 @@ public class DriverControlled extends OpMode {
 
     /** Set the drivetrain using the controller inputs. */
     private void controlDrivetrain() {
-        double StrafeSpeed = setStrafeValues();
-        double TurnSpeed = setTurnValues();
-        
+        double strafeSpeed = setStrafeValues();
+        double turnSpeed = setTurnValues();
+
         // Left joystick up and down on the gamepad
         double LeftJoyY = -gamepad1.left_stick_y;
-        
+
         /** The angle the robot is in with help of the IMU. */
-        double RobotAngle = robot.imu.getAngle();
+        double robotAngle = robot.imu.getAngle();
 
-        // Place AntiJerkTimer and GyroCorrection here, if there is an error.
-        double GyroCorrectionAngle = 0;
-        
-        double DeviationAngle = RobotAngle - GyroCorrectionAngle;
-        // Place DeviationAngle code here, if there is an error.
+        if (turnSpeed != 0)
+            antiJerkTimer.Reset();
 
-        double CorrectionFactor = 0;
-        if (DeviationAngle > -30 && DeviationAngle < 30) {
-            CorrectionFactor = DeviationAngle / 30;
-        } else {
-            CorrectionFactor = Math.signum(DeviationAngle);
+        double deviationAngle = 0;
+        double correctionFactor = 0;
+
+        if (antiJerkTimer.getTime() < 0.5)
+            gyroCorrectionAngle = robot.imu.getAngle();
+
+        deviationAngle = robotAngle - gyroCorrectionAngle;
+
+        // If there are no big jumps in angle, we are not standing still, not turning
+        // and 250 seconds has elapsed with no turning:
+        if (Math.abs(deviationAngle) < 90 && strafeSpeed != 0 && turnSpeed == 0
+                && antiJerkTimer.getTime() > 0.25)
+        {
+            if (deviationAngle > -30 && deviationAngle < 30) {
+                correctionFactor = deviationAngle / 30;
+            } else {
+                correctionFactor = Math.signum(deviationAngle);
+            }
+
+            robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
         }
-        // TODO: deze moet eigenlijk wel iets doen
-        // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
@@ -72,9 +86,9 @@ public class DriverControlled extends OpMode {
 
         robot.drivetrain.setPower();
 
-        telemetry.addData("DeviationAngle", DeviationAngle);
+        telemetry.addData("DeviationAngle", deviationAngle);
         telemetry.addData("controllery", LeftJoyY);
-        telemetry.addData("GyroCorrectionFactor", CorrectionFactor);
+        telemetry.addData("GyroCorrectionFactor", correctionFactor);
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
     }
 
@@ -120,12 +134,12 @@ public class DriverControlled extends OpMode {
             // Strafing perfectly in reverse.
             strafeAngle = 180;
         }
-        
+
         // Set values in the drivetrain.
         robot.drivetrain.setStrafeValues(strafeAngle, strafeSpeed);
         return strafeSpeed;
     }
-    
+
     /** Controls of the lift on the robot. */
     private void controlLift() {
         telemetry.addData("Left stick y:", gamepad2.left_stick_y);
