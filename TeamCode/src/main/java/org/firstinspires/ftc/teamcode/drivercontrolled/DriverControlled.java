@@ -140,14 +140,12 @@ public class DriverControlled extends OpMode {
             return;
         }
 
-        // If 250 milliseconds has elapsed with no turning:
+        // Correct small angles proportional to the angle, capped at +/-1.
         double correctionFactor = 0;
-        if (antiJerkTimer.getTime() > 0.25) {
-            if (deviationAngle > -30 && deviationAngle < 30) {
-                correctionFactor = deviationAngle / 30;
-            } else {
-                correctionFactor = Math.signum(deviationAngle);
-            }
+        if (deviationAngle > -30 && deviationAngle < 30) {
+            correctionFactor = deviationAngle / 30;
+        } else {
+            correctionFactor = Math.signum(deviationAngle);
         }
 
         robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
