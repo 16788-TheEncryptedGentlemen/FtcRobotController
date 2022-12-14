@@ -55,6 +55,24 @@ public class DriverControlled extends OpMode {
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
+        // Reset the IMU if start is pressed.
+        if(gamepad1.start) {
+            robot.imu.reset();
+        }
+
+        // Show current position of the robot.
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
+        telemetry.addData("IMU", robot.imu.getAngle());
+
+        // Control different robot parts.
+        controlDrivetrain();
+        controlLift();
+        controlGrabber();
+    }
+    
+    /** Set the drivetrain using the controller inputs. */
+    private void controlDrivetrain() {
         //---------------------------------------------------------------------
         //Getting inputs and calculating values for the drive system
         // * Getting inputs from controller, imu and calculating variables:
@@ -87,38 +105,7 @@ public class DriverControlled extends OpMode {
 
         robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
         robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
-        //--------------------------------------------------------------------
-        if(gamepad1.start)
-            robot.imu.reset();
 
-
-        telemetry.addData("X", robot.odometry.getX());
-        telemetry.addData("Y", robot.odometry.getY());
-        telemetry.addData("IMU", robot.imu.getAngle());
-
-        //--------------------------------------------------------------------
-        /** Controls of the grabber on the robot for the beacon. */
-        if (gamepad2.x) {
-            telemetry.addLine("Grab");
-            robot.grabber.grab();
-        } else if (gamepad2.b) {
-            telemetry.addLine("Drop");
-            robot.grabber.drop();
-        }
-
-        //--------------------------------------------------------------------
-        /** Controls of the lift on the robot. */
-        telemetry.addData("Left stick y:", gamepad2.left_stick_y);
-        if (gamepad2.left_stick_y > 0.1) {
-            telemetry.addLine("Up");
-            robot.lift.up();
-        } else if (gamepad2.left_stick_y < -0.1) {
-            telemetry.addLine("Down");
-            robot.lift.down();
-        } else {
-            telemetry.addLine("StopLift");
-            robot.lift.stop();
-        }
 
         //--------------------------------------------------------------------
         //Final calculations for the Drivetrain:
@@ -165,7 +152,32 @@ public class DriverControlled extends OpMode {
         telemetry.addData("controllery", LeftJoyY);
         telemetry.addData("GyroCorrectionFactor",CorrectionFactor);
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
+    }
 
+    /** Controls of the lift on the robot. */
+    private void controlLift() {
+        telemetry.addData("Left stick y:", gamepad2.left_stick_y);
+        if (gamepad2.left_stick_y > 0.1) {
+            telemetry.addLine("Up");
+            robot.lift.up();
+        } else if (gamepad2.left_stick_y < -0.1) {
+            telemetry.addLine("Down");
+            robot.lift.down();
+        } else {
+            telemetry.addLine("StopLift");
+            robot.lift.stop();
+        }
+    }
+
+    /** Controls of the grabber on the robot for the beacon. */
+    private void controlGrabber() {
+        if (gamepad2.x) {
+            telemetry.addLine("Grab");
+            robot.grabber.grab();
+        } else if (gamepad2.b) {
+            telemetry.addLine("Drop");
+            robot.grabber.drop();
+        }
     }
 
     //--------------------------------------------------------------------
