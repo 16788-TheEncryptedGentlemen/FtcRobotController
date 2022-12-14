@@ -6,12 +6,16 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
+/** OpMode that makes the robot respond to controller inputs. */
 @TeleOp
 public class DriverControlled extends OpMode {
     /** The robot */
     CompetitionRobot robot;
 
+    /** The desired heading of the robot when strafing. */
     private double gyroCorrectionAngle = 0;
+
+    /** The strafing timer (formerly anti-jerk timer, but we are not jerks). */
     private Timer antiJerkTimer;
 
     @Override
@@ -42,7 +46,10 @@ public class DriverControlled extends OpMode {
 
     /** Set the drivetrain using the controller inputs. */
     private void controlDrivetrain() {
+        // Set strafe values in the drivetrain, and return the speed for gyro correction.
         double strafeSpeed = setStrafeValues();
+
+        // Set turning values in the drivetrain, and return the speed for gyro correction.
         double turnSpeed = setTurnValues();
 
         // Left joystick up and down on the gamepad
@@ -56,15 +63,19 @@ public class DriverControlled extends OpMode {
             antiJerkTimer.Reset();
         }
 
+        // At this point, values might be larger 1, so we fix them.
         robot.drivetrain.fixMotorSpeedOverflow();
 
-        if (gamepad1.right_bumper)
+        // Scale speed for fast mode (right bumper) and slow mode (left bumper).
+        if (gamepad1.right_bumper) {
             robot.drivetrain.multiplySpeed(0.7);
-        else if (gamepad1.left_bumper)
+        } else if (gamepad1.left_bumper) {
             robot.drivetrain.multiplySpeed(0.2);
-        else
+        } else {
             robot.drivetrain.multiplySpeed(0.5);
+        }
 
+        // Apply the values to the drivetrain.
         robot.drivetrain.setPower();
 
         telemetry.addData("controllery", LeftJoyY);
