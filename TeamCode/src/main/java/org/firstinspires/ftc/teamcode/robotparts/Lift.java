@@ -2,86 +2,99 @@ package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-// TODO: Make sure this program works!!!! Make different height for the different junctions.
-// TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
-// TODO: Test It!
+// TODO: Test it!
 
+/**
+ * Lift with two DC motors. The lift is moved in a start/stop fashion in driver
+ * controlled and uses preset positions in autonomous.
+ */
 public class Lift {
+    /** The lowest position of the lift. This is not zero to prevent overshoot. */
+    public static final double FLOOR_POSITION = 10;
 
-    /** The left DCMotor of the lift */
+    /** The position of the ground junction. */
+    public static final double GROUND_JUNCTION_POSITION = 200;
+
+    /** The position of the low junction. */
+    public static final double LOW_JUNCTION_POSITION = 400;
+
+    /** The position of the medium junction. */
+    public static final double MEDIUM_JUNCTION_POSITION = 600;
+
+    /** The position of the high junction. */
+    public static final double HIGH_JUNCTION_POSITION = 800;
+
+    /** The left DCMotor of the lift. */
     public DcMotorEx left;
-    /** The right DCMotor of the lift */
+
+    /** The right DCMotor of the lift. */
     public DcMotorEx right;
 
-    //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
-
-    /** The lift has a right and left DCMotor */
-    public Lift(HardwareMap hardwareMap, boolean autonomous)
-    {
+    /** Constructor for the lift. */
+    public Lift(HardwareMap hardwareMap, boolean autonomous) {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
 
         if (autonomous) {
             left.setTargetPosition(0);
-            left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            left.setDirection(DcMotorEx.Direction.REVERSE);
+            left.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            left.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
             right.setTargetPosition(0);
-            right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            right.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            right.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         } else {
-            left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            left.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            right.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
     }
 
-    /** The robot lift goes up */
-    public void up()
-    {
-        left.setPower(1);
-        right.setPower(-1);
+    /** Start moving the lift upwards. */
+    public void up() {
+        left.setPower(1.0);
+        right.setPower(-1.0);
     }
 
-    /** The robot lift down */
-    public void down()
-    {
-        left.setPower(-1);
-        right.setPower(1);
+    /** Start moving the lift downwards. */
+    public void down() {
+        left.setPower(-1.0);
+        right.setPower(1.0);
     }
 
-   /** The robot lift stops. */
-    public void stop()
-    {
+    /** Stop the lift. */
+    public void stop() {
         left.setPower(0.0);
         right.setPower(0.0);
     }
 
-    //TODO: ADITI: Make sure all the words except for first word in the function name start with capitals!!!
-    public void liftGround() {
-        left.setTargetPosition(-10); //not zero because we would overshoot and break something
-        right.setTargetPosition(10);
+    /** Move the lift to the floor position. */
+    public void toFloor() {
+        left.setTargetPosition(FLOOR_POSITION);
+        right.setTargetPosition(FLOOR_POSITION);
     }
-    public void liftLow() {
-        left.setTargetPosition(-200);
-        right.setTargetPosition(200);
+
+    /** Move the lift to the ground junction position. */
+    public void toGroundJunction() {
+        left.setTargetPosition(GROUND_JUNCTION_POSITION);
+        right.setTargetPosition(GROUND_JUNCTION_POSITION);
     }
-    public void liftLowPole() {
-        left.setTargetPosition(-400);
-        right.setTargetPosition(400);
+
+    /** Move the lift to the low junction position. */
+    public void toLowJunction() {
+        left.setTargetPosition(LOW_JUNCTION_POSITION);
+        right.setTargetPosition(LOW_JUNCTION_POSITION);
     }
-    public void liftMidPole() {
-        left.setTargetPosition(-600);
-        right.setTargetPosition(600);
+
+    /** Move the lift to the medium junction position. */
+    public void toMediumJunction() {
+        left.setTargetPosition(MEDIUM_JUNCTION_POSITION);
+        right.setTargetPosition(MEDIUM_JUNCTION_POSITION);
     }
-    public void liftHighPole() {
-        left.setTargetPosition(-800);
-        right.setTargetPosition(800);
+
+    /** Move the lift to the high junction position. */
+    public void toHighJunction() {
+        left.setTargetPosition(HIGH_JUNCTION_POSITION);
+        right.setTargetPosition(HIGH_JUNCTION_POSITION);
     }
 }
-
-
-
-
-
-// TODO: Aditi: Add documentation to this class
