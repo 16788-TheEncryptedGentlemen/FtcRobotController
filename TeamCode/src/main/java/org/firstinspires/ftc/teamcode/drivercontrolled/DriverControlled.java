@@ -5,16 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
-
-
 @TeleOp
 public class DriverControlled extends OpMode {
-
-    // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
-    // TODO: Aditi : Make sure errors are fixed and make sure you write "!Does not work!" on top of your commits.
-    // TODO: Still need to test it!
-
-    //--------------------------------------------------------------------
     /** The robot */
     CompetitionRobot robot;
 
@@ -34,29 +26,25 @@ public class DriverControlled extends OpMode {
     /** The speed of turning between -1 (left) and 1 (right). */
     private double TurnSpeed = 0;
 
-    /** The angle that the robot needs to correct to whilst strafing with gyro correction. */
+    /** The angle that the robot needs to correct to whilst strafing. */
     private double GyroCorrectionAngle = 0;
     /** The deviation of the robot whilst strafing with gyro correction. */
     private double DeviationAngle = 0;
-    /** The correction factor for the motors whilst strafing with gyro correction. */
+    /** The correction factor for the motors whilst strafing. */
     private double CorrectionFactor = 0;
     // Place AntiJerkTimer object here, if there is an error.
 
-
-    //--------------------------------------------------------------------
     @Override
     /** Initialisation */
-    public void init()
-    {
+    public void init() {
         robot = new CompetitionRobot(this);
     }
-    //--------------------------------------------------------------------
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
         // Reset the IMU if start is pressed.
-        if(gamepad1.start) {
+        if (gamepad1.start) {
             robot.imu.reset();
         }
 
@@ -70,78 +58,61 @@ public class DriverControlled extends OpMode {
         controlLift();
         controlGrabber();
     }
-    
+
     /** Set the drivetrain using the controller inputs. */
     private void controlDrivetrain() {
-        //---------------------------------------------------------------------
-        //Getting inputs and calculating values for the drive system
+        // ---------------------------------------------------------------------
+        // Getting inputs and calculating values for the drive system
         // * Getting inputs from controller, imu and calculating variables:
         // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
-        //--------------------------------------------------------------------
-       /** Left joystick up and down on the gamepad */
+        // --------------------------------------------------------------------
+        /** Left joystick up and down on the gamepad */
         LeftJoyY = -gamepad1.left_stick_y;
         /** Left joystick left and right on the gamepad */
         LeftJoyX = gamepad1.left_stick_x;
 
-        /** The angle the robot is in with help of the IMU.*/
+        /** The angle the robot is in with help of the IMU. */
         RobotAngle = robot.imu.getAngle();
 
-        /** The speed of strafing.*/
-        StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX,2) + Math.pow(LeftJoyY,2));
+        /** The speed of strafing. */
+        StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX, 2) + Math.pow(LeftJoyY, 2));
 
-        if(StrafeSpeed != 0 && LeftJoyX != 0)
-            StrafeAngle = Math.signum(LeftJoyX)*Math.toDegrees(Math.acos(LeftJoyY/StrafeSpeed));
-        else if(LeftJoyY < 0)
+        if (StrafeSpeed != 0 && LeftJoyX != 0)
+            StrafeAngle = Math.signum(LeftJoyX) * Math.toDegrees(Math.acos(LeftJoyY / StrafeSpeed));
+        else if (LeftJoyY < 0)
             StrafeAngle = 180;
         else
             StrafeAngle = 0;
 
-        //The control stick is not perfect and it can have a radius bigger than 1. We fix that here.
-        if(StrafeSpeed > 1)
+        // The control stick is not perfect and it can have a radius bigger than 1. We
+        // fix that here.
+        if (StrafeSpeed > 1)
             StrafeSpeed = 1;
 
-        /** The speed of turning is controlled by moving the right joystick horizontally. */
+        // The speed of turning is controlled by moving the right joystick horizontally.
         TurnSpeed = gamepad1.right_stick_x;
 
         robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
         robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
-
-
-        //--------------------------------------------------------------------
-        //Final calculations for the Drivetrain:
-        // * GyroCorrection when strafing without turning.
-        // * Fixing any overflow in the MotorSpeed array of the Drivetrain class.
-        // * Sets new speed values if we auto align to shooting line.
-        // * Slow mode.
-        // * Sets power to the motors.
-        //--------------------------------------------------------------------
-
 
         // Place AntiJerkTimer and GyroCorrection here, if there is an error.
 
         DeviationAngle = RobotAngle - GyroCorrectionAngle;
         // Place DeviationAngle code here, if there is an error.
 
-            if(DeviationAngle > -30 && DeviationAngle < 30){
-                CorrectionFactor = DeviationAngle/30;
-            }
-            else{
-                CorrectionFactor = Math.signum(DeviationAngle);
-            }
-            //TODO: deze moet eigenlijk wel iets doen
-           // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
-
-        //--------------------------------------------------------------------
-        //Gyro correction
-        //--------------------------------------------------------------------
+        if (DeviationAngle > -30 && DeviationAngle < 30) {
+            CorrectionFactor = DeviationAngle / 30;
+        } else {
+            CorrectionFactor = Math.signum(DeviationAngle);
+        }
+        // TODO: deze moet eigenlijk wel iets doen
+        // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
-
-
-        if(gamepad1.right_bumper)
+        if (gamepad1.right_bumper)
             robot.drivetrain.multiplySpeed(0.7);
-        else if(gamepad1.left_bumper)
+        else if (gamepad1.left_bumper)
             robot.drivetrain.multiplySpeed(0.2);
         else
             robot.drivetrain.multiplySpeed(0.5);
@@ -150,7 +121,7 @@ public class DriverControlled extends OpMode {
 
         telemetry.addData("DeviationAngle", DeviationAngle);
         telemetry.addData("controllery", LeftJoyY);
-        telemetry.addData("GyroCorrectionFactor",CorrectionFactor);
+        telemetry.addData("GyroCorrectionFactor", CorrectionFactor);
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
     }
 
@@ -179,13 +150,4 @@ public class DriverControlled extends OpMode {
             robot.grabber.drop();
         }
     }
-
-    //--------------------------------------------------------------------
-    //Final calculations for the Drivetrain
-    //--------------------------------------------------------------------
 }
-
-//--------------------------------------------------------------------
-//Loop
-//--------------------------------------------------------------------
-
