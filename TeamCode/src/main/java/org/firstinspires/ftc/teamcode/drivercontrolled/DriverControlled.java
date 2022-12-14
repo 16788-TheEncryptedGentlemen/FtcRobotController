@@ -131,10 +131,14 @@ public class DriverControlled extends OpMode {
         double deviationAngle = robotAngle - gyroCorrectionAngle;
         telemetry.addData("DeviationAngle", deviationAngle);
 
-        // If there are no big jumps in angle, we are not standing still, not turning
-        // and 250 seconds has elapsed with no turning:
+        // Do not correct the angle if there is a big jump in angle.
+        if (Math.abs(deviationAngle) >= 90) {
+            return;
+        }
+
+        // If we are not standing still, not turning and 250 seconds has elapsed with no turning:
         double correctionFactor = 0;
-        if (Math.abs(deviationAngle) < 90 && strafeSpeed != 0 && turnSpeed == 0 && antiJerkTimer.getTime() > 0.25) {
+        if (strafeSpeed != 0 && turnSpeed == 0 && antiJerkTimer.getTime() > 0.25) {
             if (deviationAngle > -30 && deviationAngle < 30) {
                 correctionFactor = deviationAngle / 30;
             } else {
