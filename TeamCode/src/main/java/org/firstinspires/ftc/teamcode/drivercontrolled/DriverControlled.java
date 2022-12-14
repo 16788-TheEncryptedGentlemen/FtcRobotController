@@ -48,7 +48,13 @@ public class DriverControlled extends OpMode {
         // Left joystick up and down on the gamepad
         double LeftJoyY = -gamepad1.left_stick_y;
 
-        setGyroCorrection(strafeSpeed, turnSpeed);
+        // Correct the strafing angle when strafing and not rotating.
+        if (strafeSpeed > 0 && turnSpeed == 0) {
+            setGyroCorrection();
+        } else {
+            // Otherwise, keep the timer at 0.
+            antiJerkTimer.Reset();
+        }
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
@@ -114,12 +120,9 @@ public class DriverControlled extends OpMode {
     }
 
     /** Compensate unwanted rotations during strafing. */
-    private void setGyroCorrection(double strafeSpeed, double turnSpeed) {
+    private void setGyroCorrection() {
         // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
-
-        if (turnSpeed != 0)
-            antiJerkTimer.Reset();
 
         // Only update the correction angle during the first 0.5s of strafing.
         if (antiJerkTimer.getTime() < 0.5) {
@@ -137,9 +140,9 @@ public class DriverControlled extends OpMode {
             return;
         }
 
-        // If we are not standing still, not turning and 250 seconds has elapsed with no turning:
+        // If 250 milliseconds has elapsed with no turning:
         double correctionFactor = 0;
-        if (strafeSpeed != 0 && turnSpeed == 0 && antiJerkTimer.getTime() > 0.25) {
+        if (antiJerkTimer.getTime() > 0.25) {
             if (deviationAngle > -30 && deviationAngle < 30) {
                 correctionFactor = deviationAngle / 30;
             } else {
