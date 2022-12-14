@@ -88,35 +88,36 @@ public class DriverControlled extends OpMode {
      * @return The strafe speed.
      */
     private double setStrafeValues() {
-     // ---------------------------------------------------------------------
-        // Getting inputs and calculating values for the drive system
-        // * Getting inputs from controller, imu and calculating variables:
-        // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
-        // --------------------------------------------------------------------
-        /** Left joystick up and down on the gamepad */
-        double LeftJoyY = -gamepad1.left_stick_y;
-        /** Left joystick left and right on the gamepad */
-        double LeftJoyX = gamepad1.left_stick_x;
+        // Left to right motion, between -1 (left) and 1 (right).
+        double leftRightMotion = gamepad1.left_stick_x;
+        // Up and down motion, between -1 (down) and 1 (up). negated so up is positive.
+        double upDownMotion = -gamepad1.left_stick_y;
 
-        /** The speed of strafing. */
-        double StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX, 2) + Math.pow(LeftJoyY, 2));
+        // How far the left joystick is pushed from the center determines the speed. It
+        // can have a radius bigger than 1, so we cap it at 1.
+        double strafeSpeed = Math.hypot(leftRightMotion, upDownMotion);
+        if (strafeSpeed > 1) {
+            strafeSpeed = 1;
+        }
 
-        double StrafeAngle = 0;
-        if (StrafeSpeed != 0 && LeftJoyX != 0)
-            StrafeAngle = Math.signum(LeftJoyX) * Math.toDegrees(Math.acos(LeftJoyY / StrafeSpeed));
-        else if (LeftJoyY < 0)
-            StrafeAngle = 180;
-        else
-            StrafeAngle = 0;
-
-        // The control stick is not perfect and it can have a radius bigger than 1. We
-        // fix that here.
-        if (StrafeSpeed > 1)
-            StrafeSpeed = 1;
-
-        robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
+        // The angle of the joystick determines the angle (in degrees).
+        double strafeAngle = 0;
+        if (leftRightMotion > 0) {
+            // Strafing right-ish.
+            strafeAngle = Math.toDegrees(Math.acos(upDownMotion / strafeSpeed));
+        } else if (leftRightMotion < 0) {
+            // Strafing left-ish.
+            strafeAngle = -Math.toDegrees(Math.acos(upDownMotion / strafeSpeed));
+        } else if (upDownMotion < 0) {
+            // Strafing perfectly in reverse.
+            strafeAngle = 180;
+        }
+        
+        // Set values in the drivetrain.
+        robot.drivetrain.setStrafeValues(strafeAngle, strafeSpeed);
         return strafeSpeed;
     }
+    
     /** Controls of the lift on the robot. */
     private void controlLift() {
         telemetry.addData("Left stick y:", gamepad2.left_stick_y);
