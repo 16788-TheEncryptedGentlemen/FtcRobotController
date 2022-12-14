@@ -38,17 +38,13 @@ public class DriverControlled extends OpMode {
     /** Set the drivetrain using the controller inputs. */
     private void controlDrivetrain() {
         double StrafeSpeed = setStrafeValues();
+        double TurnSpeed = setTurnValues();
         
         // Left joystick up and down on the gamepad
         double LeftJoyY = -gamepad1.left_stick_y;
         
         /** The angle the robot is in with help of the IMU. */
         double RobotAngle = robot.imu.getAngle();
-
-        // The speed of turning is controlled by moving the right joystick horizontally.
-        double TurnSpeed = gamepad1.right_stick_x;
-
-        robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
 
         // Place AntiJerkTimer and GyroCorrection here, if there is an error.
         double GyroCorrectionAngle = 0;
@@ -80,6 +76,18 @@ public class DriverControlled extends OpMode {
         telemetry.addData("controllery", LeftJoyY);
         telemetry.addData("GyroCorrectionFactor", CorrectionFactor);
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
+    }
+
+    /**
+     * Set the turning values in the drivetrain, based on the controller inputs.
+     * 
+     * @return The turning speed.
+     */
+    private double setTurnValues() {
+        // The desired turning speed, between -1 (left) and 1 (right).
+        double turnSpeed = gamepad1.right_stick_x;
+        robot.drivetrain.addSpeed(-turnSpeed, -turnSpeed, turnSpeed, turnSpeed);
+        return turnSpeed;
     }
 
     /**
