@@ -37,39 +37,17 @@ public class DriverControlled extends OpMode {
 
     /** Set the drivetrain using the controller inputs. */
     private void controlDrivetrain() {
-        // ---------------------------------------------------------------------
-        // Getting inputs and calculating values for the drive system
-        // * Getting inputs from controller, imu and calculating variables:
-        // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
-        // --------------------------------------------------------------------
-        /** Left joystick up and down on the gamepad */
+        double StrafeSpeed = setStrafeValues();
+        
+        // Left joystick up and down on the gamepad
         double LeftJoyY = -gamepad1.left_stick_y;
-        /** Left joystick left and right on the gamepad */
-        double LeftJoyX = gamepad1.left_stick_x;
-
+        
         /** The angle the robot is in with help of the IMU. */
         double RobotAngle = robot.imu.getAngle();
-
-        /** The speed of strafing. */
-        double StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX, 2) + Math.pow(LeftJoyY, 2));
-
-        double StrafeAngle = 0;
-        if (StrafeSpeed != 0 && LeftJoyX != 0)
-            StrafeAngle = Math.signum(LeftJoyX) * Math.toDegrees(Math.acos(LeftJoyY / StrafeSpeed));
-        else if (LeftJoyY < 0)
-            StrafeAngle = 180;
-        else
-            StrafeAngle = 0;
-
-        // The control stick is not perfect and it can have a radius bigger than 1. We
-        // fix that here.
-        if (StrafeSpeed > 1)
-            StrafeSpeed = 1;
 
         // The speed of turning is controlled by moving the right joystick horizontally.
         double TurnSpeed = gamepad1.right_stick_x;
 
-        robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
         robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
 
         // Place AntiJerkTimer and GyroCorrection here, if there is an error.
@@ -104,6 +82,41 @@ public class DriverControlled extends OpMode {
         telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
     }
 
+    /**
+     * Set the strafe values in the drivetrain, based on the controller inputs.
+     * 
+     * @return The strafe speed.
+     */
+    private double setStrafeValues() {
+     // ---------------------------------------------------------------------
+        // Getting inputs and calculating values for the drive system
+        // * Getting inputs from controller, imu and calculating variables:
+        // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
+        // --------------------------------------------------------------------
+        /** Left joystick up and down on the gamepad */
+        double LeftJoyY = -gamepad1.left_stick_y;
+        /** Left joystick left and right on the gamepad */
+        double LeftJoyX = gamepad1.left_stick_x;
+
+        /** The speed of strafing. */
+        double StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX, 2) + Math.pow(LeftJoyY, 2));
+
+        double StrafeAngle = 0;
+        if (StrafeSpeed != 0 && LeftJoyX != 0)
+            StrafeAngle = Math.signum(LeftJoyX) * Math.toDegrees(Math.acos(LeftJoyY / StrafeSpeed));
+        else if (LeftJoyY < 0)
+            StrafeAngle = 180;
+        else
+            StrafeAngle = 0;
+
+        // The control stick is not perfect and it can have a radius bigger than 1. We
+        // fix that here.
+        if (StrafeSpeed > 1)
+            StrafeSpeed = 1;
+
+        robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
+        return strafeSpeed;
+    }
     /** Controls of the lift on the robot. */
     private void controlLift() {
         telemetry.addData("Left stick y:", gamepad2.left_stick_y);
