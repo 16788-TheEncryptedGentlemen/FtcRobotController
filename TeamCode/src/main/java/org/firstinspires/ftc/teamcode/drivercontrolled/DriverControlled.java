@@ -18,15 +18,15 @@ public class DriverControlled extends OpMode {
     /** The strafing timer (formerly anti-jerk timer, but we are not jerks). */
     private Timer antiJerkTimer;
 
-    @Override
     /** Initialisation */
+    @Override
     public void init() {
         robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
     }
 
-    @Override
     /** Repeats program until program is stopped */
+    @Override
     public void loop() {
         // Reset the IMU if start is pressed.
         if (gamepad1.start) {
