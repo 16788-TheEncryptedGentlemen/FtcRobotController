@@ -38,8 +38,8 @@ public class PipelineColourDetection extends OpenCvPipeline {
     Scalar redMax = new Scalar(180,255,255);
     Scalar yellowMin = new Scalar(20,100,100);
     Scalar yellowMax = new Scalar(30,255,255);
-    Scalar blueMin = new Scalar(220 / 2.0,67 * 2.55,50 * 2.55);
-    Scalar blueMax = new Scalar(263 / 2.0,255,255);
+    Scalar blueMin = new Scalar(180 / 2.0,67 * 2.55,50 * 2.55);
+    Scalar blueMax = new Scalar(280 / 2.0,255,255);
 
     int[] out = {0,0,0};
 

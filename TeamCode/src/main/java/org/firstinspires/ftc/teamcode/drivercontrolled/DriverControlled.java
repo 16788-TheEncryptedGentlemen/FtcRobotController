@@ -128,7 +128,7 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("StopLift");
             robot.lift.stop();
         }
-        robot.lift.stop();
+
 
         //--------------------------------------------------------------------
         //Final calculations for the Drivetrain:
