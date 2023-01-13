@@ -62,7 +62,7 @@ public class Lift {
         left.setTargetPosition(-10); //not zero because we would overshoot and break something
         right.setTargetPosition(10);
     }
-    public void liftLow() {
+    public void liftLow() { //TODO: ADITI: Make names more clear
         left.setTargetPosition(-200);
         right.setTargetPosition(200);
     }
