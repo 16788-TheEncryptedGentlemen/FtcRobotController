@@ -82,6 +82,4 @@ public class Lift {
 
 
 
-
-
 // TODO: Aditi: Add documentation to this class

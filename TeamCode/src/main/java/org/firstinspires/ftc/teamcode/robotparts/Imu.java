@@ -60,8 +60,8 @@ public class Imu
         }
     }
 
-    /** Returns an array with correction values for the motors to turn. */ //TODO: figure out what P does and find a more discriptive name for it.
-    public double[] getTurnCorrectionValues(double DesiredAngle, double P)
+    /** Returns an array with correction values for the motors to turn. */
+    public double[] getTurnCorrectionValues(double DesiredAngle, double P) // P: the minimum angle that will result in a full speed turn. Lower values will result into slower turning.
     {
         double CorrectionValue = 0;
         double DeviationAngle = getDeviation(DesiredAngle);
@@ -76,7 +76,7 @@ public class Imu
                 CorrectionValue = -1;
             }
         }
-        CorrectionValue *= 0.3;
+        CorrectionValue *= 0.3; // turning speed multiplier
         return new double[] {CorrectionValue, CorrectionValue, -CorrectionValue, -CorrectionValue};
     }
 

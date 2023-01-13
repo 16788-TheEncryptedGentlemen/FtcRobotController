@@ -39,7 +39,7 @@ public class CompetitionRobot {
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");
-        drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
         display.showLoading("webcam");
         webcam = new Webcam(hardwaremap);
         display.showLoading("grabber");

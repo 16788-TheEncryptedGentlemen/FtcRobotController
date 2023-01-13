@@ -67,14 +67,11 @@ public class RedStart2ParkVision extends LinearOpMode
         );
 
         BezierCurveRoute RedStart2Park2 = new BezierCurveRoute(
-                /** The x-coefficients. */
-                new double[] {-412.275, 1051.6, -1107.36666666666, 207.133333333333, 262.9},
-                /** The Y-coefficients. */
-                new double[] {-3.98333333333403, -87.6333333333348, 1326.45, -1718.80833333334, 604.670000000001},
+                new double[] {-412.275, 1051.6, -1127.28333333333, 209.124999999998, 281.223333333334}, //The x-coefficients
+                new double[] {-3.98333333333403, -87.6333333333348, 880.316666666671, -764.800000000003, 101.176666666667}, //The y-coefficients
                 robot,
                 0.6,
-                /** STRAFE or FOLLOW. */
-                BezierCurveRoute.DRIVE_METHOD.STRAFE,
+                BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
 
@@ -107,6 +104,7 @@ public class RedStart2ParkVision extends LinearOpMode
 
             case 2: RedStart2Park2.executeWithPointSkip();
                 //route voor geel
+                robot.drivetrain.driveStraight(10,-0.3);
                 break;
 
             case 3: RedStart2Park3.executeWithPointSkip();

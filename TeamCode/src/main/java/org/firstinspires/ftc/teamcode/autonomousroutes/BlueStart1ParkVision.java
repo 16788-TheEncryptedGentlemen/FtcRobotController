@@ -109,6 +109,7 @@ public class BlueStart1ParkVision extends LinearOpMode
 
             case 2: BlueStart1Park2.executeWithPointSkip();
                 //route voor geel
+                robot.drivetrain.driveStraight(10,-0.3);
                 break;
 
             case 3: BlueStart1Park3.executeWithPointSkip();
