@@ -17,8 +17,10 @@ public class Test extends LinearOpMode {
         /** Initialisation. */
         waitForStart();
 
+        robot.autolift.liftGroundJunction();
 
-        robot.drivetrain.turnRobotAO(90);
+        sleep(10000);
+
 
     }
 }

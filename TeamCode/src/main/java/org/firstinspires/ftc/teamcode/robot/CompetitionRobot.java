@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Display;
+import org.firstinspires.ftc.teamcode.robotparts.AutoLift;
 import org.firstinspires.ftc.teamcode.robotparts.Grabber;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.Lift;
@@ -28,6 +29,8 @@ public class CompetitionRobot {
     public Grabber grabber;
     /** The lift of the robot */
     public Lift lift;
+    /** The lift of the robot for autonomous*/
+    public AutoLift autolift;
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
@@ -45,7 +48,7 @@ public class CompetitionRobot {
         display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
         display.showLoading("lift");
-        lift = new Lift(hardwaremap, true);
+        autolift = new AutoLift(hardwaremap, runningLinearOpMode);
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -63,7 +66,7 @@ public class CompetitionRobot {
         display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
         display.showLoading("lift");
-        lift = new Lift(hardwaremap, false);
+        lift = new Lift(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 

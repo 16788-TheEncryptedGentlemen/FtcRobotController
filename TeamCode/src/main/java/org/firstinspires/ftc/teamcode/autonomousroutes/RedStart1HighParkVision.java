@@ -67,7 +67,7 @@ public class RedStart1HighParkVision extends LinearOpMode {
 
         robot.grabber.grab();
         sleep(1500);
-        //robot.lift.liftLow();
+        //robot.lift.liftGroundJunction();
         RedStart1High.executeWithPointSkip();
         robot.drivetrain.turnRobotAO(-45);
         //robot.lift.liftHighPole();
@@ -76,7 +76,7 @@ public class RedStart1HighParkVision extends LinearOpMode {
         //sleep(1000);
         //robot.grabber.grab();
         //robot.drivetrain.driveStraight(5,-0.3);
-        //robot.lift.liftLow();
+        //robot.lift.liftGroundJunction();
         //robot.grabber.drop();
         //robot.drivetrain.turnRobotAO(45);
         // gebruik camera voor goede eind positie:
