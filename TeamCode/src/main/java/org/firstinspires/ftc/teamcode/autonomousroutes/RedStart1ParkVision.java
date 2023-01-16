@@ -102,16 +102,16 @@ public class RedStart1ParkVision extends LinearOpMode
 
         switch (result) {
             case 1: RedStart1Park1.executeWithPointSkip();
-                //route voor rood
+                //route for red
                 break;
 
             case 2: RedStart1Park2.executeWithPointSkip();
-                //route voor geel
+                //route for yellow
                 robot.drivetrain.driveStraight(10,-0.3);
                 break;
 
             case 3: RedStart1Park3.executeWithPointSkip();
-                // route voor blauw
+                // route for blue
                 break;
         }
 
