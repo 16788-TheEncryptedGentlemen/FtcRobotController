@@ -31,8 +31,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
         /** The robot grabber open */
         public void drop()
         {
-            left.setPosition(1);
-            right.setPosition(0);
+            left.setPosition(0.6);
+            right.setPosition(0.2);
         }
         /** The robot grabber stops. */
         public void stop()

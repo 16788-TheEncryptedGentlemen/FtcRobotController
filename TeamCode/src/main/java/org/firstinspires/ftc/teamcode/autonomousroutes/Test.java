@@ -17,9 +17,34 @@ public class Test extends LinearOpMode {
         /** Initialisation. */
         waitForStart();
 
-        robot.autolift.liftGroundJunction();
+        telemetry.addData("enc", robot.autolift.currentEnc());
+        telemetry.update();
+        sleep(2000);
 
-        sleep(10000);
+
+// laten staan voor wedstrijd calibration
+        robot.grabber.grab();
+//        sleep(1000);
+//        robot.autolift.liftGroundLevel();
+        sleep(3000);
+        robot.autolift.liftGroundJunction();
+        sleep(3000);
+        robot.autolift.liftLowPole();
+        sleep(3000);
+        robot.autolift.liftMidPole();
+        sleep(3000);
+        robot.autolift.liftHighPole();
+        sleep(3000);
+        robot.autolift.liftGroundLevel();
+        sleep(3000);
+        robot.grabber.drop();
+        sleep(1000);
+        robot.autolift.liftHighPole();
+        robot.autolift.liftGroundLevel();
+        sleep(1000);
+        telemetry.addData("enc", robot.autolift.currentEnc());
+        telemetry.update();
+        sleep(5000);
 
 
     }
