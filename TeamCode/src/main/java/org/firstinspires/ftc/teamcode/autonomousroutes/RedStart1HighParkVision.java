@@ -65,20 +65,28 @@ public class RedStart1HighParkVision extends LinearOpMode {
         /** Initialisation. */
         waitForStart();
 
+        telemetry.addData("enc", robot.autolift.currentEnc());
+        telemetry.update();
+        sleep(200);
+
         robot.grabber.grab();
-        sleep(1500);
-        //robot.lift.liftGroundJunction();
+        sleep(1000);
+//           robot.autolift.liftGroundJunction();
+//        sleep(2000);
         RedStart1High.executeWithPointSkip();
-        robot.drivetrain.turnRobotAO(-45);
-        //robot.lift.liftHighPole();
-        //robot.drivetrain.driveStraight(5,0.3);
+        robot.drivetrain.turnRobotAO(-43);
+        robot.autolift.liftHighPole();
+        sleep(2000);
+        robot.drivetrain.driveStraight(8,0.6);
+        sleep(500);
+        robot.grabber.drop();
+        sleep(1000);
+        robot.grabber.grab();
+        robot.drivetrain.driveStraight(8,-0.6);
+        sleep(500);
+        robot.autolift.liftGroundJunction();
         //robot.grabber.drop();
-        //sleep(1000);
-        //robot.grabber.grab();
-        //robot.drivetrain.driveStraight(5,-0.3);
-        //robot.lift.liftGroundJunction();
-        //robot.grabber.drop();
-        //robot.drivetrain.turnRobotAO(45);
+        //robot.drivetrain.turnRobotAO(43);
         // gebruik camera voor goede eind positie:
         /* switch (result) {
             case 1: BlueStart1Park1.executeWithPointSkip(); //TODO: verander beziercurve

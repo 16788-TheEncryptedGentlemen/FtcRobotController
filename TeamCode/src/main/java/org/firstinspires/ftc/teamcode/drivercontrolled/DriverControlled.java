@@ -96,6 +96,8 @@ public class DriverControlled extends OpMode {
         telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
+        telemetry.addData("encoder", robot.lift.left.getCurrentPosition());
+
         //--------------------------------------------------------------------
         /** Controls of the grabber on the robot for the beacon. */
         if (gamepad2.x) {

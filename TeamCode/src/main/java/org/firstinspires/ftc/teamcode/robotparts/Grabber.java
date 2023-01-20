@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
         {
             left = hardwareMap.get(Servo.class, "leftGrabber");
             right = hardwareMap.get(Servo.class, "rightGrabber");
+
         }
 
         /** The robot grabber closes */

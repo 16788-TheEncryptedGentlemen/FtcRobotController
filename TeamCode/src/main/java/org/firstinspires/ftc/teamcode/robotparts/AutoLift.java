@@ -24,7 +24,7 @@ public class AutoLift {
     private int groundJunctionPos = 700;
     private int lowPolePos = 3800;
     private int midPolePos = 5300;
-    private int highPolePos = 6000;
+    private int highPolePos = 5600;
 
     //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
 
