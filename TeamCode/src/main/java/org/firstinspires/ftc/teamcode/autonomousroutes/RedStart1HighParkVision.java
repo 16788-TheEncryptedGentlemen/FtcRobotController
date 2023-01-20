@@ -62,6 +62,25 @@ public class RedStart1HighParkVision extends LinearOpMode {
         	this
         );
 
+        BezierCurveRoute RedStart1HighPark1 = new BezierCurveRoute(
+                new double[] {-167.3, -329.820000000001, 675.573333333334, -302.733333333334}, //The x-coefficients
+                new double[] {0, 43.02, -49.3933333333334, -21.51}, //The y-coefficients
+                robot,
+                0.6,
+                BezierCurveRoute.DRIVE_METHOD.STRAFE,
+                this
+        );
+
+        BezierCurveRoute RedStart1HighPark2 = new BezierCurveRoute(
+                new double[] {-167.3, 81.2599999999993, 101.973333333334, -77.2766666666669}, //The x-coefficients
+                new double[] {0, 26.2900000000006, -50.9866666666676, 7.96666666666712}, //The y-coefficients
+                robot,
+                0.6,
+                BezierCurveRoute.DRIVE_METHOD.STRAFE,
+                this
+        );
+
+
         /** Initialisation. */
         waitForStart();
 
@@ -71,37 +90,33 @@ public class RedStart1HighParkVision extends LinearOpMode {
 
         robot.grabber.grab();
         sleep(1000);
-//           robot.autolift.liftGroundJunction();
-//        sleep(2000);
-        RedStart1High.executeWithPointSkip();
-        robot.drivetrain.turnRobotAO(-43);
-        robot.autolift.liftHighPole();
-        sleep(2000);
-        robot.drivetrain.driveStraight(8,0.6);
-        sleep(500);
-        robot.grabber.drop();
-        sleep(1000);
-        robot.grabber.grab();
-        robot.drivetrain.driveStraight(8,-0.6);
-        sleep(500);
         robot.autolift.liftGroundJunction();
-        //robot.grabber.drop();
-        //robot.drivetrain.turnRobotAO(43);
-        // gebruik camera voor goede eind positie:
-        /* switch (result) {
-            case 1: BlueStart1Park1.executeWithPointSkip(); //TODO: verander beziercurve
+        sleep(500);
+        RedStart1High.executeWithPointSkip();
+        robot.drivetrain.turnRobotAO(-45);
+        robot.autolift.liftHighPole();
+        robot.drivetrain.driveStraight(18,0.3);
+        sleep(500);
+        robot.autolift.liftMidPole();
+        sleep(200);
+        robot.grabber.drop();
+        sleep(200);
+        robot.drivetrain.driveStraight(18,-0.3);
+        robot.autolift.liftGroundJunction();
+        robot.drivetrain.turnRobotAO(0);
+        switch (result) {
+            case 1: RedStart1HighPark1.executeWithPointSkip(); //TODO: verander beziercurve
                 //route voor rood
                 break;
 
-            case 2: BlueStart1Park2.executeWithPointSkip();
+            case 2: RedStart1HighPark2.executeWithPointSkip();
                 //route voor geel
-                robot.drivetrain.driveStraight(10,-0.3);
                 break;
 
-            case 3: BlueStart1Park3.executeWithPointSkip();
+            case 3: robot.drivetrain.driveStraight(10,-0.3);
                 // route voor blauw
                 break;
-        } */
+        }
 
 
     }
