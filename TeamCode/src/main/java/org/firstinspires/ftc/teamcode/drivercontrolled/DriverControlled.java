@@ -3,66 +3,36 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
-
 
 @TeleOp
 public class DriverControlled extends OpMode {
-
-    // TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
-    // TODO: Aditi : Make sure errors are fixed and make sure you write "!Does not work!" on top of your commits.
     // TODO: Still need to test it!
 
-    //--------------------------------------------------------------------
     /** The robot */
     CompetitionRobot robot;
 
-    // Place AntiJerkTimer object here, if there is an error.
+    /** The desired heading when strafing. */
+    private double desiredHeading = 0;
+    private Timer antiJerkTimer;
 
-
-    //--------------------------------------------------------------------
     @Override
     /** Initialisation */
     public void init() {
         robot = new CompetitionRobot(this);
+        antiJerkTimer = new Timer();
     }
-    //--------------------------------------------------------------------
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
-        //---------------------------------------------------------------------
-        //Getting inputs and calculating values for the drive system
-        // * Getting inputs from controller, imu and calculating variables:
-        // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
-        //--------------------------------------------------------------------
-
 
         telemetry.addData("encoder", robot.lift.left.getCurrentPosition());
 
-        //--------------------------------------------------------------------
         controlGrabber();
-
-        //--------------------------------------------------------------------
         controlLift();
-
-
-        //--------------------------------------------------------------------
-        //Final calculations for the Drivetrain:
-        // * GyroCorrection when strafing without turning.
-        // * Fixing any overflow in the MotorSpeed array of the Drivetrain class.
-        // * Sets new speed values if we auto align to shooting line.
-        // * Slow mode.
-        // * Sets power to the motors.
-        //--------------------------------------------------------------------
-
-
-        //--------------------------------------------------------------------
-        //Gyro correction
-        //--------------------------------------------------------------------
-
         controlDrivetrain();
-
     }
 
     private void controlDrivetrain() {
@@ -110,7 +80,13 @@ public class DriverControlled extends OpMode {
         // TODO: figure out what's going out here.
         robot.drivetrain.addSpeed(-turnSpeed, -turnSpeed, turnSpeed, turnSpeed);
 
-        correctHeading();
+        // Correct the strafing angle when strafing and not rotating.
+        if (strafeSpeed > 0 && turnSpeed == 0) {
+            correctHeading();
+        } else {
+            // Otherwise, keep the timer at 0.
+            antiJerkTimer.Reset();
+        }
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
@@ -122,26 +98,35 @@ public class DriverControlled extends OpMode {
     }
 
     private void correctHeading() {
-        //``````````````````````````````````````````````````````````````````````````````````````````````````````````    11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````      1   1 The heading of the robot in the absolute orientation field.
+        // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
 
-        // Place AntiJerkTimer and GyroCorrection here, if there is an error.
+        // Only update the correction angle during the first 0.5s of strafing.
+        if (antiJerkTimer.getTime() < 0.5) {
+            desiredHeading = robotAngle;
+            // This also means deviationAngle will be 0, so we can skip the rest.
+            return;
+        }
 
-        /** The angle that the robot needs to correct to whilst strafing with gyro correction. */
-        double gyroCorrectionAngle = 0;
-        /** The deviation of the robot whilst strafing with gyro correction. */
-        double deviationAngle = robotAngle - gyroCorrectionAngle;
-        // Place DeviationAngle code here, if there is an error.
+        // Compute the deviation from the desired angle.
+        double deviationAngle = robotAngle - desiredHeading;
+        telemetry.addData("DeviationAngle", deviationAngle);
 
-        /** The correction factor for the motors whilst strafing with gyro correction. */
+        // Do not correct the angle if there is a big jump in angle.
+        if (Math.abs(deviationAngle) >= 90) {
+            return;
+        }
+
+        // Correct small angles proportional to the angle, capped at +/-1.
         double correctionFactor = 0;
         if (deviationAngle > -30 && deviationAngle < 30) {
             correctionFactor = deviationAngle / 30;
         } else {
             correctionFactor = Math.signum(deviationAngle);
         }
-        //TODO: deze moet eigenlijk wel iets doen
-        // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
+
+        robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
+        telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
     private void controlGrabber() {
