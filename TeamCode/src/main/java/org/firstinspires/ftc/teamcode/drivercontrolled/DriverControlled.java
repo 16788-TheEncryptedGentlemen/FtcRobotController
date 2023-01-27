@@ -17,34 +17,13 @@ public class DriverControlled extends OpMode {
     /** The robot */
     CompetitionRobot robot;
 
-    /** The float value of the left joystick of player 1. */
-    private double LeftJoyX = 0;
-    /** The float value of the right joystick of player 1. */
-    private double LeftJoyY = 0;
-
-    /** The speed of strafing (between 0 en 1) */
-    private double StrafeSpeed = 0;
-    /** The angle at which the robot needs to strafe between -180 and 180 degrees. */
-    private double StrafeAngle = 0;
-
-    /** The angle of the robot in the absolute orientation field. */
-    private double RobotAngle = 0;
-
-    /** The speed of turning between -1 (left) and 1 (right). */
-    private double TurnSpeed = 0;
-
-    /** The angle that the robot needs to correct to whilst strafing with gyro correction. */
-    private final double GyroCorrectionAngle = 0;
-    /** The deviation of the robot whilst strafing with gyro correction. */
-    private double DeviationAngle = 0;
-    /** The correction factor for the motors whilst strafing with gyro correction. */
-    private double CorrectionFactor = 0;
     // Place AntiJerkTimer object here, if there is an error.
 
 
     //--------------------------------------------------------------------
     @Override
-    /** Initialisation */ public void init() {
+    /** Initialisation */
+    public void init() {
         robot = new CompetitionRobot(this);
     }
     //--------------------------------------------------------------------
@@ -57,22 +36,7 @@ public class DriverControlled extends OpMode {
         // * Getting inputs from controller, imu and calculating variables:
         // * LeftJoyY, LeftJoyX, RobotAngle, StrafeSpeed, StrafeAngle, TurnSpeed
         //--------------------------------------------------------------------
-        /** Left joystick up and down on the gamepad */
-        LeftJoyY = -gamepad1.left_stick_y;
-        /** Left joystick left and right on the gamepad */
-        LeftJoyX = gamepad1.left_stick_x;
 
-        /** The angle the robot is in with help of the IMU.*/
-        RobotAngle = robot.imu.getAngle();
-
-
-        //--------------------------------------------------------------------
-        if (gamepad1.start) robot.imu.reset();
-
-
-        telemetry.addData("X", robot.odometry.getX());
-        telemetry.addData("Y", robot.odometry.getY());
-        telemetry.addData("IMU", robot.imu.getAngle());
 
         telemetry.addData("encoder", robot.lift.left.getCurrentPosition());
 
@@ -102,50 +66,82 @@ public class DriverControlled extends OpMode {
     }
 
     private void controlDrivetrain() {
-        /** The speed of strafing.*/
-        StrafeSpeed = Math.sqrt(Math.pow(LeftJoyX, 2) + Math.pow(LeftJoyY, 2));
-
-        if (StrafeSpeed != 0 && LeftJoyX != 0)
-            StrafeAngle = Math.signum(LeftJoyX) * Math.toDegrees(Math.acos(LeftJoyY / StrafeSpeed));
-        else if (LeftJoyY < 0) StrafeAngle = 180;
-        else StrafeAngle = 0;
-
-        //The control stick is not perfect and it can have a radius bigger than 1. We fix that here.
-        if (StrafeSpeed > 1) StrafeSpeed = 1;
-
-        /** The speed of turning is controlled by moving the right joystick horizontally. */
-        TurnSpeed = gamepad1.right_stick_x;
-
-        robot.drivetrain.setStrafeValues(StrafeAngle, StrafeSpeed);
-        robot.drivetrain.addSpeed(-TurnSpeed, -TurnSpeed, TurnSpeed, TurnSpeed);
-
-        // Place AntiJerkTimer and GyroCorrection here, if there is an error.
-
-        DeviationAngle = RobotAngle - GyroCorrectionAngle;
-        // Place DeviationAngle code here, if there is an error.
-
-        if (DeviationAngle > -30 && DeviationAngle < 30) {
-            CorrectionFactor = DeviationAngle / 30;
-        } else {
-            CorrectionFactor = Math.signum(DeviationAngle);
+        // If start is pressed then the current heading of the imu is set to 0.
+        if (gamepad1.start) {
+            robot.imu.reset();
         }
-        //TODO: deze moet eigenlijk wel iets doen
-        // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
 
+        // The up and down movements of the left joystick on the gamepad of player 1.
+        // There is a minus because up is negative and down is positive on the controller.
+        double leftJoyY = -gamepad1.left_stick_y;
+        // The left and right movements of the left joystick on the gamepad of player 1.
+        double leftJoyX = gamepad1.left_stick_x;
+
+        // Show distance (x,y) of the robot on the driver hub for debugging.
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
+        telemetry.addData("IMU", robot.imu.getAngle());
+
+        // The speed of strafing (between 0 and 1).
+        double strafeSpeed = Math.hypot(leftJoyX, leftJoyY);
+
+        // The control stick is not perfect and it can have a radius bigger than 1.
+        if (strafeSpeed > 1) {
+            strafeSpeed = 1;
+        }
+
+        // The direction in which the robot should strafe in <-180, 180].
+        double strafeAngle = 0;
+        if (strafeSpeed != 0 && leftJoyX != 0) {
+            // If the robot is moving towards the side, then calculate the direction.
+            strafeAngle = Math.signum(leftJoyX) * Math.toDegrees(Math.acos(leftJoyY / strafeSpeed));
+        } else if (leftJoyY < 0) {
+            // If the robot is moving backwards, then the direction is 180 degrees.
+            strafeAngle = 180;
+        } else {
+            // If the robot is moving forward or not strafing then the direction is 0 degrees.
+            strafeAngle = 0;
+        }
+        // Set strafe values of the drivetrain.
+        robot.drivetrain.setStrafeValues(strafeAngle, strafeSpeed);
+
+        // The speed of turning between -1 (left) and 1 (right).
+        double turnSpeed = gamepad1.right_stick_x;
+        // TODO: figure out what's going out here.
+        robot.drivetrain.addSpeed(-turnSpeed, -turnSpeed, turnSpeed, turnSpeed);
+
+        correctHeading();
 
         robot.drivetrain.fixMotorSpeedOverflow();
-
 
         if (gamepad1.right_bumper) robot.drivetrain.multiplySpeed(0.7);
         else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
         robot.drivetrain.setPower();
+    }
 
-        telemetry.addData("DeviationAngle", DeviationAngle);
-        telemetry.addData("controllery", LeftJoyY);
-        telemetry.addData("GyroCorrectionFactor", CorrectionFactor);
-        telemetry.addData("Heading", robot.drivetrain.imu.getAngle());
+    private void correctHeading() {
+        //``````````````````````````````````````````````````````````````````````````````````````````````````````````    11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111``````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````````      1   1 The heading of the robot in the absolute orientation field.
+        double robotAngle = robot.imu.getAngle();
+
+        // Place AntiJerkTimer and GyroCorrection here, if there is an error.
+
+        /** The angle that the robot needs to correct to whilst strafing with gyro correction. */
+        double gyroCorrectionAngle = 0;
+        /** The deviation of the robot whilst strafing with gyro correction. */
+        double deviationAngle = robotAngle - gyroCorrectionAngle;
+        // Place DeviationAngle code here, if there is an error.
+
+        /** The correction factor for the motors whilst strafing with gyro correction. */
+        double correctionFactor = 0;
+        if (deviationAngle > -30 && deviationAngle < 30) {
+            correctionFactor = deviationAngle / 30;
+        } else {
+            correctionFactor = Math.signum(deviationAngle);
+        }
+        //TODO: deze moet eigenlijk wel iets doen
+        // Robot.drivetrain.addSpeed(CorrectionFactor,CorrectionFactor,-CorrectionFactor,-CorrectionFactor);
     }
 
     private void controlGrabber() {
