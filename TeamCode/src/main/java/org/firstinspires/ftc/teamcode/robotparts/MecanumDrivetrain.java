@@ -191,7 +191,7 @@ public class MecanumDrivetrain {
 
     /** Sets speed values to the robot for turning a certain amount of degrees in the absolute orientation plane. */
     public void setSpeedValuesTurnRobot(double NewAngle) {
-        double[] SpeedValues = imu.getTurnCorrectionValues(NewAngle, 20);
+        double[] SpeedValues = imu.getTurnCorrectionValues(NewAngle, 20, 0.3);
         setSpeed(SpeedValues);
     }
 
@@ -212,7 +212,7 @@ public class MecanumDrivetrain {
     /** Turns the robot on the absolute orientation plane with a certain angle. */
     public void turnRobotAO(double Angle) {
         while (Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested()) {
-            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20);
+            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20, 0.3);
             setPower(SpeedValues);
         }
         stop();
@@ -250,7 +250,7 @@ public class MecanumDrivetrain {
      - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void setStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed);
-        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30);
+        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30, 0.6);
         addSpeed(CorrectionFactors);
     }
 

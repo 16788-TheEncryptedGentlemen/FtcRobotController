@@ -49,7 +49,8 @@ public class RedStart1HighParkVision extends LinearOpMode {
         telemetry.addData("Final result", result);
         telemetry.update();
 
-        robot.imu.resetAngularOrientation();
+        robot.imu.reset();
+        //robot.imu.resetAngularOrientation();
 
        // Autonomous routes:
          BezierCurveRoute RedStart1High = new BezierCurveRoute(

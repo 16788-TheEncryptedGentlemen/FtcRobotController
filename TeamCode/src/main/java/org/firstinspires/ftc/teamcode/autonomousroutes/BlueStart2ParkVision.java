@@ -52,6 +52,7 @@ public class BlueStart2ParkVision extends LinearOpMode
         telemetry.update();
 
 
+
         // autonomous routes:
 
         BezierCurveRoute BlueStart2Park1 = new BezierCurveRoute(
@@ -91,6 +92,7 @@ public class BlueStart2ParkVision extends LinearOpMode
 
 
         waitForStart();
+
 
         // Close robot grabber around cone before driving.
         robot.grabber.grab();
