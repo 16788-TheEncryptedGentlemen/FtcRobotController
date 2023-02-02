@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import org.firstinspires.ftc.teamcode.Timer;
 
 
 // TODO: Make sure this program works!!!! Make different height for the different junctions.
@@ -18,6 +19,9 @@ public class AutoLift {
     public DcMotorEx right;
     /** The linear opmode for autonomous */
     public LinearOpMode runningOpMode;
+    /** Timer for measuring lift usage time. */
+    private Timer liftTimer;
+
 
     /** position values for levels */
     private int groundPos = 80;
@@ -34,6 +38,7 @@ public class AutoLift {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
         runningOpMode = _runningOpMode;
+        liftTimer = new Timer();
 
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -49,14 +54,15 @@ public class AutoLift {
     public void moveLiftToPosition(int position) {
         int currentPos = -left.getCurrentPosition();
         boolean targetAbove = currentPos < position;   // go up or go down?
+        liftTimer.Reset();
 
         if (targetAbove){ // going up
-            while (Math.abs(left.getCurrentPosition()) < position && !runningOpMode.isStopRequested()){
+            while (Math.abs(left.getCurrentPosition()) < position && !runningOpMode.isStopRequested() && liftTimer.getTime() < 3.0){
                 left.setPower(-0.6);
                 right.setPower(0.6);
             }
         } else { // going down
-            while (Math.abs(left.getCurrentPosition()) > position && !runningOpMode.isStopRequested()){
+            while (Math.abs(left.getCurrentPosition()) > position && !runningOpMode.isStopRequested() && liftTimer.getTime() < 3.0){
                 left.setPower(0.6);
                 right.setPower(-0.6);
             }
