@@ -49,18 +49,17 @@ public class RedStart1HighParkVision extends LinearOpMode {
         telemetry.addData("Final result", result);
         telemetry.update();
 
-        robot.imu.reset();
-        //robot.imu.resetAngularOrientation();
+        //robot.imu.reset();
+        robot.imu.resetAngularOrientation();
 
        // Autonomous routes:
-         BezierCurveRoute RedStart1High = new BezierCurveRoute(
-        	new double[] {264.493333333333, -434.98, 309.106666666667, -78.4716666666669}, //The x-coefficients
-        	new double[] {11.1533333333339, -35.8500000000006, 307.513333333333, -159.731666666666}, //The y-coefficients
-        	robot,
-        	0.6,
-        	/** STRAFE or FOLLOW. */
-          BezierCurveRoute.DRIVE_METHOD.STRAFE,
-        	this
+        BezierCurveRoute RedStart1High = new BezierCurveRoute(
+                new double[] {299.546666666667, -540.14, 414.266666666667, -113.525}, //The x-coefficients
+                new double[] {46.2066666666676, 16.7299999999984, 97.1933333333329, -37.044999999999}, //The y-coefficients
+                robot,
+                0.5,
+                BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
+                this
         );
 
         BezierCurveRoute RedStart1HighPark1 = new BezierCurveRoute(
