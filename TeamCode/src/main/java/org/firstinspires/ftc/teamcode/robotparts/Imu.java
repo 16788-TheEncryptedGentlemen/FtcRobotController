@@ -9,8 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
-public class Imu
-{
+public class Imu {
     /** The actual IMU in this object. */
     private BNO055IMU imu;
     /** The parameters of the IMU. */
@@ -19,7 +18,7 @@ public class Imu
     private double angularOffset = 0;
 
 
-    public Imu(HardwareMap hardwareMap){
+    public Imu(HardwareMap hardwareMap) {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.loggingTag = "IMU";  //Loggin tag and config name ARE NOT THE SAME (I think) TODO: Figure out if luc was correct
 
@@ -29,67 +28,58 @@ public class Imu
 
 
     /** Gets the angle of the robot on the absolute orientation plane from -180 to 180 degrees. */
-    public double getAngle()
-    {
+    public double getAngle() {
         Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double angle = -angles.firstAngle - angularOffset;
 
-        {
-            if (angle > 180)
-                angle -= 360;
-            else if (angle < -180)
-                angle += 360;
-
-            return angle;
+        if (angle > 180) {
+            angle -= 360;
+        } else if (angle < -180) {
+            angle += 360;
         }
-
+        return angle;
     }
 
     /** Gets the deviation from a given angle. */
-    public double getDeviation(double DesiredAngle)
-    {
+    public double getDeviation(double DesiredAngle) {
         double deviationAngle = getAngle() - DesiredAngle;
 
-        {
-            if (deviationAngle > 180)
-                deviationAngle -= 360;
-            else if (deviationAngle < -180)
-                deviationAngle += 360;
-
-            return deviationAngle;
+        if (deviationAngle > 180) {
+            deviationAngle -= 360;
+        } else if (deviationAngle < -180) {
+            deviationAngle += 360;
         }
+        return deviationAngle;
     }
 
     /** Returns an array with correction values for the motors to turn. */
     public double[] getTurnCorrectionValues(double DesiredAngle, double P, double speedMultiplier) // P: the minimum angle that will result in a full speed turn. Lower values will result into slower turning.
     {
-        double CorrectionValue = 0;
+        double correctionValue = 0;
         double DeviationAngle = getDeviation(DesiredAngle);
 
-        if(Math.abs(DeviationAngle) <= P)  {
-            CorrectionValue = DeviationAngle/P;
+        if (Math.abs(DeviationAngle) <= P) {
+            correctionValue = DeviationAngle / P;
 
         } else {
-            if(DeviationAngle > 0) {
-                CorrectionValue = 1;
+            if (DeviationAngle > 0) {
+                correctionValue = 1;
             } else {
-                CorrectionValue = -1;
+                correctionValue = -1;
             }
         }
-        CorrectionValue *= speedMultiplier; // turning speed multiplier
-        return new double[] {CorrectionValue, CorrectionValue, -CorrectionValue, -CorrectionValue};
+        correctionValue *= speedMultiplier; // turning speed multiplier
+        return new double[]{correctionValue, correctionValue, -correctionValue, -correctionValue};
     }
 
 
     /** Resets the entire IMU. This takes up a second. */
-    public void reset()
-    {
+    public void reset() {
         imu.initialize(parameters);
     }
 
     /** Sets AngularOffset, which will result in a resetted angular orientation. */
-    public void resetAngularOrientation()
-    {
+    public void resetAngularOrientation() {
         angularOffset = getAngle();
     }
 

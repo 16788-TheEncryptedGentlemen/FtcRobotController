@@ -102,7 +102,7 @@ public class DriverControlled extends OpMode {
         double robotAngle = robot.imu.getAngle();
 
         // Only update the correction angle during the first 0.5s of strafing.
-        if (antiJerkTimer.getTime() < 0.5) {
+        if (antiJerkTimer.getTime() < 0.1) {
             desiredHeading = robotAngle;
             // This also means deviationAngle will be 0, so we can skip the rest.
             return;

@@ -63,8 +63,8 @@ public class RedStart1HighParkVision extends LinearOpMode {
         );
 
         BezierCurveRoute RedStart1HighPark1 = new BezierCurveRoute(
-                new double[] {-167.3, -329.820000000001, 675.573333333334, -302.733333333334}, //The x-coefficients
-                new double[] {0, 43.02, -49.3933333333334, -21.51}, //The y-coefficients
+                new double[] {-175.266666666667, -265.29, 599.093333333333, -275.646666666666}, //The x-coefficients
+                new double[] {38.2400000000001, -174.47, 310.700000000001, -207.93}, //The y-coefficients
                 robot,
                 0.6,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE,
@@ -80,7 +80,6 @@ public class RedStart1HighParkVision extends LinearOpMode {
                 this
         );
 
-
         /** Initialisation. */
         waitForStart();
 
@@ -95,13 +94,13 @@ public class RedStart1HighParkVision extends LinearOpMode {
         RedStart1High.executeWithPointSkip();
         robot.drivetrain.turnRobotAO(-45);
         robot.autolift.liftHighPole();
-        robot.drivetrain.driveStraight(18,0.3);
+        robot.drivetrain.driveStraight(13,0.3);
         sleep(500);
         robot.autolift.liftMidPole();
         sleep(200);
         robot.grabber.drop();
         sleep(200);
-        robot.drivetrain.driveStraight(18,-0.3);
+        robot.drivetrain.driveStraight(13,-0.3);
         robot.autolift.liftGroundJunction();
         robot.drivetrain.turnRobotAO(0);
         switch (result) {

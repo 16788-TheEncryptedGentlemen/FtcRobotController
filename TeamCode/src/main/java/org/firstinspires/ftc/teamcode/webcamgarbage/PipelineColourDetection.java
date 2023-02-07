@@ -69,42 +69,42 @@ public class PipelineColourDetection extends OpenCvPipeline {
         out[1] = yellowCount;
         out[2] = blueCount;
 
-        if (yellowCount > YELLOW_CONE_PIXELS ) {
-            result = 2;
-            return crop;
-        }
-
-        if (cone == ConeColour.RED && blueCount > BLUE_CONE_PIXELS ){
-            result = 3;
-            return crop;
-        }
-         if (cone == ConeColour.RED && blueCount <= BLUE_CONE_PIXELS) {
-             result = 1;
-             return crop;
-         }
-        if (cone == ConeColour.BLUE && redCount > RED_CONE_PIXELS ){
-            result = 1;
-            return crop;
-        }
-        if (cone == ConeColour.BLUE && redCount <= RED_CONE_PIXELS ){
-            result = 3;
-            return crop;
-        }
-        else {
-            result = 3;
-            return crop;
-        }
-
-//        if (blueCount > yellowCount && blueCount > redCount){
-//            result = 3; // blue
-//        } else if (yellowCount > redCount && yellowCount > blueCount) {
-//            result = 2; // yellow
-//        } else {
-//            result = 1; // red
+//        if (yellowCount > YELLOW_CONE_PIXELS ) {
+//            result = 2;
+//            return crop;
 //        }
 //
-//        // return input frame to cam preview, so no cool filters yet
-      //return crop;
+//        if (cone == ConeColour.RED && blueCount > BLUE_CONE_PIXELS ){
+//            result = 3;
+//            return crop;
+//        }
+//         if (cone == ConeColour.RED && blueCount <= BLUE_CONE_PIXELS) {
+//             result = 1;
+//             return crop;
+//         }
+//        if (cone == ConeColour.BLUE && redCount > RED_CONE_PIXELS ){
+//            result = 1;
+//            return crop;
+//        }
+//        if (cone == ConeColour.BLUE && redCount <= RED_CONE_PIXELS ){
+//            result = 3;
+//            return crop;
+//        }
+//        else {
+//            result = 3;
+//            return crop;
+//        }
+
+        if (blueCount > yellowCount && blueCount > redCount) {
+            result = 3; // blue
+        } else if (yellowCount > redCount && yellowCount > blueCount) {
+            result = 2; // yellow
+        } else {
+            result = 1; // red
+        }
+
+        // return input frame to cam preview, so no cool filters yet
+        return crop;
     }
 
     /*
