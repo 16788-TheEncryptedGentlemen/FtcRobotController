@@ -1,26 +1,71 @@
 package org.firstinspires.ftc.teamcode;
 
-/** Timer class to measure the elapsed time. Includes a reset function */
 public class Timer {
-    /** The start time of the timer in milliseconds. */
-    private double startTime = 0;
 
-    /** Constructor of the timer. The timer is started immediately. */
-    public Timer() {
-        startTime = System.currentTimeMillis();
+        //-----------------------------------------------------------------------
+        //Used variables:
+        // * Time: The start time of the timer in ms
+        // * TimeLastChecked: The time since the last check on getTimeElapsedSinceLastCheck() in ms
+        //-----------------------------------------------------------------------
+        public double Time = 0;
+        double TimeLastChecked = 0;
+        //-----------------------------------------------------------------------
+        //Used variables
+        //-----------------------------------------------------------------------
+
+
+
+
+
+        //-----------------------------------------------------------------------
+        //Constructor
+        //-----------------------------------------------------------------------
+        public Timer()
+        {
+            Time = System.currentTimeMillis();
+        }
+        //-----------------------------------------------------------------------
+        //Constructor
+        //-----------------------------------------------------------------------
+
+
+
+
+
+        //-----------------------------------------------------------------------
+        //Methods:
+        // * Reset(): Resets the Timer by setting the Time variable to the current time in ms
+        // * getTime(): Gets the Time since the object was created in ms
+        // * getTimeSinceLastCheck(): Returns the time since this specific method was last checked
+        // * isBetween(): Returns true if the current time of this Timer is between the two given values
+        //-----------------------------------------------------------------------
+        public void Reset()
+        {
+            Time = System.currentTimeMillis();
+        }
+
+        public double getTime()
+        {
+            return (System.currentTimeMillis() - Time)/1000;
+        }
+
+        public double getTimeSinceLastCheck()
+        {
+            double TimeElapsed = getTime() - TimeLastChecked;
+            TimeLastChecked = getTime();
+
+            return TimeElapsed;
+        }
+
+        public boolean isBetween(double time1, double time2)
+        {
+            double CurrentTime = getTime();
+            return CurrentTime > time1 && CurrentTime < time2;
+        }
+        //-----------------------------------------------------------------------
+        //Methods
+        //-----------------------------------------------------------------------
+
     }
 
-    /** Reset the timer back to zero. */
-    public void Reset() {
-        startTime = System.currentTimeMillis();
-    }
-
-    /**
-     * Get the elapsed time since the timer was started.
-     * 
-     * @return The elapsed time in seconds.
-     */
-    public double getTime() {
-        return (System.currentTimeMillis() - startTime) / 1000;
-    }
-}
+// TODO: Documenteren

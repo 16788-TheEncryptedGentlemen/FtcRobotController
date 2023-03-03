@@ -38,7 +38,7 @@ public class CompetitionRobot {
         display = new Display(runningLinearOpMode.telemetry);
 
         display.showLoading("odometry");
-        odometry = new Odometry(hardwaremap);
+      //  odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");
@@ -58,7 +58,7 @@ public class CompetitionRobot {
         display = new Display(opMode.telemetry);
 
         display.showLoading("odometry");
-        odometry = new Odometry(hardwaremap);
+       // odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");

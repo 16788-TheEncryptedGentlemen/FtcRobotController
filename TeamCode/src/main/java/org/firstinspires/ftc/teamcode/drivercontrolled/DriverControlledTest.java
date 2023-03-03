@@ -4,31 +4,31 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Timer;
-import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robot.TestRobot;
 
 @TeleOp
-public class DriverControlled extends OpMode {
+public class DriverControlledTest extends OpMode {
     // TODO: Still need to test it!
 
     /** The robot */
-    CompetitionRobot robot;
+    TestRobot robot;
 
     /** The desired heading when strafing. */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
-    @Override
     /** Initialisation */
+    @Override
     public void init() {
-        robot = new CompetitionRobot(this);
+        robot = new TestRobot(this);
         antiJerkTimer = new Timer();
     }
 
-    @Override
     /** Repeats program until program is stopped */
+    @Override
     public void loop() {
 
-        telemetry.addData("encoder", robot.lift.left.getCurrentPosition());
+        telemetry.addData("encoder", robot.lift.lift.getCurrentPosition());
 
         controlGrabber();
         controlLift();
@@ -48,8 +48,6 @@ public class DriverControlled extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-     //   telemetry.addData("X", robot.odometry.getX());
-     //   telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
@@ -129,8 +127,8 @@ public class DriverControlled extends OpMode {
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
+    /** Controls of the grabber on the robot for the beacon. */
     private void controlGrabber() {
-        /** Controls of the grabber on the robot for the beacon. */
         if (gamepad2.x) {
             telemetry.addLine("Grab");
             robot.grabber.grab();
@@ -140,8 +138,8 @@ public class DriverControlled extends OpMode {
         }
     }
 
+    /** Controls of the lift on the robot. */
     private void controlLift() {
-        /** Controls of the lift on the robot. */
         telemetry.addData("Left stick y:", gamepad2.left_stick_y);
         if (gamepad2.left_stick_y > 0.1) {
             telemetry.addLine("Up");
