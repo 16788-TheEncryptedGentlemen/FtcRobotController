@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 
 // TODO: Make sure this program works!!!! Make different height for the different junctions.
@@ -17,6 +18,8 @@ public class Lift {
     /** The right DCMotor of the lift */
     public DcMotorEx right;
 
+    public TouchSensor touchSensor;
+
     public LinearOpMode runningOpMode;
 
     //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
@@ -28,6 +31,7 @@ public class Lift {
         right = hardwareMap.get(DcMotorEx.class, "RightLift");
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        touchSensor = hardwareMap.touchSensor.get("TouchSensor");
     }
 
     /** The robot lift goes up */
@@ -49,6 +53,11 @@ public class Lift {
     {
         left.setPower(0.0);
         right.setPower(0.0);
+    }
+
+    public boolean lowPolePos()
+    {
+        return touchSensor.isPressed();
     }
 }
 

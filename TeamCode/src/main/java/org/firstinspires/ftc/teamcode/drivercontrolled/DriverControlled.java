@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
+import static org.firstinspires.ftc.teamcode.drivercontrolled.DriverControlled.Position.GROUND;
+import static org.firstinspires.ftc.teamcode.drivercontrolled.DriverControlled.Position.HIGH;
+import static org.firstinspires.ftc.teamcode.drivercontrolled.DriverControlled.Position.LOW;
+import static org.firstinspires.ftc.teamcode.drivercontrolled.DriverControlled.Position.MEDIUM;
+import static org.firstinspires.ftc.teamcode.drivercontrolled.DriverControlled.Position.NONE;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -16,6 +22,16 @@ public class DriverControlled extends OpMode {
     /** The desired heading when strafing. */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
+
+    enum Position {
+        LOW,
+        MEDIUM,
+        HIGH,
+        GROUND,
+        NONE // When we haven't pressed any of the earlier named positions this is it.
+    }
+
+    private Position lastPressedButton = GROUND;
 
     @Override
     /** Initialisation */
@@ -141,18 +157,68 @@ public class DriverControlled extends OpMode {
     }
 
     private void controlLift() {
+        // krijg de laatst ingedrukte knop
+        // todo stuff
+
+        // Als een knop wordt ingedrukt
+        if (gamepad2.dpad_left) {
+            //      dan is dat de laatst ingedrukte knop.
+            lastPressedButton = GROUND;
+        }  else if (gamepad2.dpad_down) {
+            //      dan is dat de laatst ingedrukte knop.
+            lastPressedButton = LOW;
+        } else if (gamepad2.dpad_right) {
+        //      dan is dat de laatst ingedrukte knop.
+        lastPressedButton = MEDIUM;
+        }  else if (gamepad2.dpad_up) {
+            //      dan is dat de laatst ingedrukte knop.
+            lastPressedButton = HIGH;
+        }  else if (gamepad2.right_bumper || gamepad2.left_bumper) {
+        //      dan is dat de laatst ingedrukte knop.
+        lastPressedButton = NONE;
+        }
+
+
+
+        //      Als de laatst ingedrukte knop ground is
+        //      Dan ga naar positie ...
+        //
+
+        switch (lastPressedButton) {
+            case GROUND:
+                // ga naar beneden
+                if (robot.lift.touchSensor.isPressed()) {
+                    robot.lift.stop();
+                    Position = 0;
+                } else {
+                    robot.lift.down();
+                }
+
+
+                break;
+
+            case 2: RedStart1HighPark2.executeWithPointSkip();
+                //route voor geel
+                break;
+
+            case 3: robot.drivetrain.driveStraight(10,-0.3);
+                // route voor blauw
+                break;
+        }
+
         /** Controls of the lift on the robot. */
         telemetry.addData("Left stick y:", gamepad2.left_stick_y);
-        if (gamepad2.left_stick_y > 0.1) {
+        if (gamepad2.right_bumper) {
             telemetry.addLine("Up");
             robot.lift.up();
-        } else if (gamepad2.left_stick_y < -0.1) {
+        } else if (gamepad2.left_bumper) {
             telemetry.addLine("Down");
             robot.lift.down();
         } else {
             telemetry.addLine("StopLift");
             robot.lift.stop();
         }
+
     }
 
     //--------------------------------------------------------------------

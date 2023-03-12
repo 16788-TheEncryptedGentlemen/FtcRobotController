@@ -94,13 +94,13 @@ public class BlueStart1HighParkVision extends LinearOpMode {
         BlueStart1High.executeWithPointSkip();
         robot.drivetrain.turnRobotAO(-45);
         robot.autolift.liftHighPole();
-        robot.drivetrain.driveStraight(13,0.3);
+        robot.drivetrain.driveStraight(16,0.3);
         sleep(500);
         robot.autolift.liftMidPole();
         sleep(200);
         robot.grabber.drop();
         sleep(200);
-        robot.drivetrain.driveStraight(13,-0.3);
+        robot.drivetrain.driveStraight(16,-0.3);
         robot.autolift.liftGroundJunction();
         robot.drivetrain.turnRobotAO(0);
         switch (result) {

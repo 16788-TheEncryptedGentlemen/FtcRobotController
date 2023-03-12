@@ -250,7 +250,7 @@ public class MecanumDrivetrain {
      - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void setStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed);
-        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30, 0.6);
+        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30, 0.8);
         addSpeed(CorrectionFactors);
     }
 
