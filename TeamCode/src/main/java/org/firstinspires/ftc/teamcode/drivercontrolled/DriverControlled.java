@@ -44,7 +44,7 @@ public class DriverControlled extends OpMode {
     /** Repeats program until program is stopped */
     public void loop() {
 
-        telemetry.addData("encoder", robot.lift.left.getCurrentPosition());
+        telemetry.addData("Encoder", robot.lift.getPosition());
 
         controlGrabber();
         controlLift();
@@ -157,9 +157,51 @@ public class DriverControlled extends OpMode {
     }
 
     private void controlLift() {
-        // krijg de laatst ingedrukte knop
-        // todo stuff
+        setLastPressedButton();
 
+        // Checks what the last pressed button is and moves to position accordingly.
+        switch (lastPressedButton) {
+            case GROUND:
+                telemetry.addLine("Ground");
+                // ga naar beneden
+                if (robot.lift.touchSensor.isPressed()) {
+                    telemetry.addLine("Is pressed");
+                    robot.lift.stop();
+                    robot.lift.resetPosition();
+                } else{
+                    telemetry.addLine("Is not pressed");
+                    robot.lift.down();
+                }
+                break;
+            case LOW:
+                telemetry.addLine("LowJunction");
+                robot.lift.goToLowJunction();
+                break;
+            case MEDIUM:
+                telemetry.addLine("MediumJunction");
+                robot.lift.goToMediumJunction();
+                break;
+            case HIGH:
+                telemetry.addLine("HighJunction");
+                robot.lift.goToHighJunction();
+                break;
+            case NONE:
+                // Controls of the lift on the robot using the bumpers.
+                if (gamepad2.right_bumper) {
+                    telemetry.addLine("Up");
+                    robot.lift.up();
+                } else if (gamepad2.left_bumper) {
+                    telemetry.addLine("Down");
+                    robot.lift.down();
+                } else {
+                    telemetry.addLine("StopLift");
+                    robot.lift.stop();
+                }
+                break;
+        }
+    }
+
+    private void setLastPressedButton() {
         // Als een knop wordt ingedrukt
         if (gamepad2.dpad_left) {
             //      dan is dat de laatst ingedrukte knop.
@@ -177,48 +219,7 @@ public class DriverControlled extends OpMode {
         //      dan is dat de laatst ingedrukte knop.
         lastPressedButton = NONE;
         }
-
-
-
-        //      Als de laatst ingedrukte knop ground is
-        //      Dan ga naar positie ...
-        //
-
-        switch (lastPressedButton) {
-            case GROUND:
-                // ga naar beneden
-                if (robot.lift.touchSensor.isPressed()) {
-                    robot.lift.stop();
-                    Position = 0;
-                } else {
-                    robot.lift.down();
-                }
-
-
-                break;
-
-            case 2: RedStart1HighPark2.executeWithPointSkip();
-                //route voor geel
-                break;
-
-            case 3: robot.drivetrain.driveStraight(10,-0.3);
-                // route voor blauw
-                break;
-        }
-
-        /** Controls of the lift on the robot. */
-        telemetry.addData("Left stick y:", gamepad2.left_stick_y);
-        if (gamepad2.right_bumper) {
-            telemetry.addLine("Up");
-            robot.lift.up();
-        } else if (gamepad2.left_bumper) {
-            telemetry.addLine("Down");
-            robot.lift.down();
-        } else {
-            telemetry.addLine("StopLift");
-            robot.lift.stop();
-        }
-
+        // Als je geen knop indrukt, verandert lastPressedButton niet.
     }
 
     //--------------------------------------------------------------------
