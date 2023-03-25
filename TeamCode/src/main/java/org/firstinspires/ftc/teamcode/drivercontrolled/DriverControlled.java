@@ -160,6 +160,7 @@ public class DriverControlled extends OpMode {
         setLastPressedButton();
 
         // Checks what the last pressed button is and moves to position accordingly.
+        boolean reachedDestination = false;
         switch (lastPressedButton) {
             case GROUND:
                 telemetry.addLine("Ground");
@@ -175,15 +176,34 @@ public class DriverControlled extends OpMode {
                 break;
             case LOW:
                 telemetry.addLine("LowJunction");
-                robot.lift.goToLowJunction();
+                reachedDestination = robot.lift.goToLowJunction();
+
+                //als reached destination is true, dan stop lift.
+                if (reachedDestination){
+                    robot.lift.stop();
+                    lastPressedButton = NONE;
+                }
                 break;
             case MEDIUM:
                 telemetry.addLine("MediumJunction");
-                robot.lift.goToMediumJunction();
+                reachedDestination = robot.lift.goToMediumJunction();
+
+                //als reached destination is true, dan stop lift.
+                if (reachedDestination){
+                    robot.lift.stop();
+                    lastPressedButton = NONE;
+                }
                 break;
             case HIGH:
                 telemetry.addLine("HighJunction");
-                robot.lift.goToHighJunction();
+                reachedDestination = robot.lift.goToHighJunction();
+
+                //als reached destination is true, dan stop lift.
+                if (reachedDestination){
+                    robot.lift.stop();
+                    lastPressedButton = NONE;
+                }
+
                 break;
             case NONE:
                 // Controls of the lift on the robot using the bumpers.
