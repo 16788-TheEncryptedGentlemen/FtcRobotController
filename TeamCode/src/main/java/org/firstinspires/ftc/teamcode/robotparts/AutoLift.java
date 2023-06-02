@@ -7,32 +7,27 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.Timer;
 
 
-// TODO: Make sure this program works!!!! Make different height for the different junctions.
-// TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
-// TODO: Test It!
-
 public class AutoLift {
 
-    /** The left DCMotor of the lift */
+    /** The left DCMotor of the lift. */
     public DcMotorEx left;
-    /** The right DCMotor of the lift */
+    /** The right DCMotor of the lift. */
     public DcMotorEx right;
-    /** The linear opmode for autonomous */
+    /** The linear opmode for autonomous. */
     public LinearOpMode runningOpMode;
     /** Timer for measuring lift usage time. */
     private Timer liftTimer;
 
 
-    /** position values for levels */
+    /** The position values for levels. */
     private int groundPos = 80;
-    private int groundJunctionPos = 400;
+    private int groundJunctionPos = 700;
     private int lowPolePos = 3800;
-    private int midPolePos = 3500; // was 5300
+    private int midPolePos = 3800; // was 5300
     private int highPolePos = 4100;
 
-    //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
 
-    /** The lift has a right and left DCMotor */
+    /** The lift has a right and left DCMotor. */
     public AutoLift(HardwareMap hardwareMap, LinearOpMode _runningOpMode)
     {
         left = hardwareMap.get(DcMotorEx.class, "LeftLift");
@@ -48,9 +43,7 @@ public class AutoLift {
     }
 
 
-    //TODO: ADITI: Make sure all the words except for first word in the function name start with capitals!!!
-
-    /** Reusable function for moving lift to a position up or down */
+   /** Reusable function for moving lift to a position up or down. */
     public void moveLiftToPosition(int position) {
         int currentPos = -left.getCurrentPosition();
         boolean targetAbove = currentPos < position;   // go up or go down?
@@ -71,6 +64,7 @@ public class AutoLift {
         right.setPower(0.0);
     }
 
+    /** The functions for moving lift to a position. */
     public void liftGroundLevel() {
         moveLiftToPosition(groundPos);
     }
@@ -97,7 +91,3 @@ public class AutoLift {
 
 
 }
-
-
-
-// TODO: Aditi: Add documentation to this class
