@@ -6,15 +6,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 
-// TODO: Make sure this program works!!!! Make different height for the different junctions.
-// TODO: Aditi: Add fullstops to documentation and make sure spaces are correct!!!
-// TODO: Test It!
-
 public class Lift {
 
-    /** The left DCMotor of the lift */
+    /** The left DCMotor of the lift. */
     public DcMotorEx left;
-    /** The right DCMotor of the lift */
+    /** The right DCMotor of the lift. */
     public DcMotorEx right;
     public TouchSensor touchSensor;
     private static final double LOWJUNCTION = 2200;
@@ -22,9 +18,8 @@ public class Lift {
     private static final double HIGHJUNCTION = 4000;
     private static final double DEFAULTPOWER = 0.6;
 
-    //TODO: Aditi: change names for configureration so that the first letter is a lowercase letter.
 
-    /** The lift has a right and left DCMotor */
+    /** The lift has a right and left DCMotor. */
     public Lift(HardwareMap hardwareMap)
     {
         left = hardwareMap.get(DcMotorEx.class, "leftLift");
@@ -36,7 +31,7 @@ public class Lift {
         touchSensor = hardwareMap.touchSensor.get("touchSensor");
     }
 
-    /** The robot lift goes up */
+    /** The robot lift goes up. */
     public void up() {
         up(DEFAULTPOWER);
     }
@@ -49,7 +44,7 @@ public class Lift {
         }
     }
 
-    /** The robot lift down */
+    /** The robot lift down. */
     public void down() {
         down(DEFAULTPOWER);
     }
@@ -75,6 +70,7 @@ public class Lift {
         right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    /** Reusable function for moving lift to a position up or down. */
     public boolean goToPosition(double destination){
         if(Math.abs(getPosition() - destination) < 50) {
             stop();
@@ -93,6 +89,7 @@ public class Lift {
         return false;
     }
 
+    /** The function for moving lift to a position. */
     public boolean goToLowJunction(){
         return goToPosition(LOWJUNCTION);
     }
@@ -105,5 +102,3 @@ public class Lift {
 }
 
 
-
-// TODO: Aditi: Add documentation to this class
