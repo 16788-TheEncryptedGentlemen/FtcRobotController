@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.pipelines.PipelineGameElementDetector;
-import org.firstinspires.ftc.teamcode.webcamgarbage.PipelineColourDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -34,14 +33,14 @@ public class Webcam {
             }
         });
     }
-
-    public int[] getAnalysis(){
-        return pipeline.getAnalysis();
-    }
-
-    public int getResult(){
-        return pipeline.getResult();
-    }
+//
+//    public int[] getAnalysis(){
+//        return pipeline.getAnalysis();
+//    }
+//
+//    public int getResult(){
+//        return pipeline.getResult();
+//    }
 
 
 
