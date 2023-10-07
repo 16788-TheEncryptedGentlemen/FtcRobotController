@@ -1,88 +1,144 @@
-package org.firstinspires.ftc.teamcode.webcamgarbage;
+package org.firstinspires.ftc.teamcode.pipelines;
+
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Rect;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+import java.util.ArrayList;
+
 public class PipelineGameElementDetector extends OpenCvPipeline {
 
-    public enum ConeColour {UNKNOWN, RED, BLUE};
-    private static final int CONE_CORRECTION_RED = 14000;
-    private static final int CONE_CORRECTION_BLUE = 1000;
-    private static final int YELLOW_CONE_PIXELS = 1000;
-    private static final int RED_CONE_PIXELS = 7000;
-    private static final int BLUE_CONE_PIXELS = 20;
-    public ConeColour cone = ConeColour.UNKNOWN;
+// Mat = Matrix = verzameling pixels
+    // Alle Mat die wij gebruiken.
+    Mat cbMat = new Mat();
+    Mat thresholdMat = new Mat();
+    Mat morphedThreshold = new Mat();
+    Mat contoursOnPlainImageMat = new Mat();
+
+    // Threshold voor cb kleur kanaal, minimale waarde.
+    static final int CB_CHAN_MASK_THRESHOLD = 20;
+
+    Mat erodeElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(3, 3));
+    Mat dilateElement = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(6, 6));
+
     /*
-     * Working variables
+     * Colors
      */
-    Mat hsvImage = new Mat();
-    Mat crop = new Mat();
-    Mat redMat = new Mat();
-    Mat blueMat = new Mat();
-    Mat yellowMat = new Mat();
+    static final Scalar TEAL = new Scalar(3, 148, 252);
+    static final Scalar PURPLE = new Scalar(158, 52, 235);
+    static final Scalar RED = new Scalar(255, 0, 0);
+    static final Scalar GREEN = new Scalar(0, 255, 0);
+    static final Scalar BLUE = new Scalar(0, 0, 255);
 
-    Rect frame = new Rect(300,100,400,600);
+    static final int CONTOUR_LINE_THICKNESS = 2;
+    static final int CB_CHAN_IDX = 2;
 
-    int redCount = 0;
-    int blueCount = 0;
-    int yellowCount = 0;
+    enum Stage
+    {
+        FINAL,
+        Cb,
+        MASK,
+        MASK_NR,
+        CONTOURS;
+    }
+    Stage[] stages = Stage.values();
+    // Keep track of what stage the viewport is showing
+    int stageNum = 0;
 
-    int result = 1;
+    @Override
+    public void onViewportTapped()
+    {
+        /*
+         * Note that this method is invoked from the UI thread
+         * so whatever we do here, we must do quickly.
+         */
 
+        int nextStageNum = stageNum + 1;
 
-    // Making scalars, the limits of the colour that the robot thinks of as red, yellow or blue.
-    // Degrees are divided by 2 since OpenCV 0 to 180 degrees.
-    //  TODO: figure out why the second and third number is either 255 or 100.
-    Scalar redMin = new Scalar(170,100,100);
-    Scalar redMax = new Scalar(180,255,255);
-    Scalar yellowMin = new Scalar(20,100,100);
-    Scalar yellowMax = new Scalar(30,255,255);
-    Scalar blueMin = new Scalar(180 / 2.0,67 * 2.55,50 * 2.55);
-    Scalar blueMax = new Scalar(280 / 2.0,255,255);
+        if(nextStageNum >= stages.length)
+        {
+            nextStageNum = 0;
+        }
 
-    int[] out = {0,0,0};
-
+        stageNum = nextStageNum;
+    }
 
     // the running funtcion
     @Override
     public Mat processFrame(Mat input) {
 
-        crop = new Mat(input, frame);
-        Imgproc.cvtColor(crop, hsvImage, Imgproc.COLOR_RGB2HSV);
+        switch (stages[stageNum])
+        {
+            case Cb:
+            {
+                return cbMat;
+            }
 
+            case FINAL:
+            {
+                return input;
+            }
 
-        // check frame colors within color min max values, store those pixels in colorMat
-        Core.inRange(hsvImage, redMin, redMax, redMat);
-        Core.inRange(hsvImage, yellowMin, yellowMax, yellowMat);
-        Core.inRange(hsvImage, blueMin, blueMax, blueMat);
+            case MASK:
+            {
+                return thresholdMat;
+            }
 
-        // count number of pixels of each color and correct for cone colour.
-        redCount = Core.countNonZero(redMat) - (cone == ConeColour.RED ? CONE_CORRECTION_RED : 0);
-        yellowCount = Core.countNonZero(yellowMat);
-        blueCount = Core.countNonZero(blueMat) - (cone == ConeColour.BLUE ? CONE_CORRECTION_BLUE : 0);
+            case MASK_NR:
+            {
+                return morphedThreshold;
+            }
 
-        out[0] = redCount;
-        out[1] = yellowCount;
-        out[2] = blueCount;
-
-        if (yellowCount > YELLOW_CONE_PIXELS ) {
-            result = 2;
-            return crop;
+            case CONTOURS:
+            {
+                return contoursOnPlainImageMat;
+            }
         }
 
-        if (redCount > RED_CONE_PIXELS ){
-            result = 1;
-            return crop;
-        }
-//
-        else {
-            result = 3;
-            return crop;
-        }
+        return input;
 
+
+    }
+
+    ArrayList<MatOfPoint> findContours(Mat input)
+    {
+        // A list we'll be using to store the contours we find
+        ArrayList<MatOfPoint> contoursList = new ArrayList<>();
+
+        // Convert the input image to YCrCb color space, then extract the Cb channel
+        Imgproc.cvtColor(input, cbMat, Imgproc.COLOR_RGB2YCrCb);
+        Core.extractChannel(cbMat, cbMat, CB_CHAN_IDX);
+
+        // Threshold the Cb channel to form a mask, then run some noise reduction
+        Imgproc.threshold(cbMat, thresholdMat, CB_CHAN_MASK_THRESHOLD, 255, Imgproc.THRESH_BINARY_INV);
+        morphMask(thresholdMat, morphedThreshold);
+
+        // Ok, now actually look for the contours! We only look for external contours.
+        Imgproc.findContours(morphedThreshold, contoursList, new Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+
+        // We do draw the contours we find, but not to the main input buffer.
+        input.copyTo(contoursOnPlainImageMat);
+        Imgproc.drawContours(contoursOnPlainImageMat, contoursList, -1, BLUE, CONTOUR_LINE_THICKNESS, 8);
+
+        return contoursList;
+    }
+
+    //super moeilijk ding om beeld filteren
+    void morphMask(Mat input, Mat output)
+    {
+        /*
+         * Apply some erosion and dilation for noise reduction
+         */
+
+        Imgproc.erode(input, output, erodeElement);
+        Imgproc.erode(output, output, erodeElement);
+
+        Imgproc.dilate(output, output, dilateElement);
+        Imgproc.dilate(output, output, dilateElement);
     }
 }
