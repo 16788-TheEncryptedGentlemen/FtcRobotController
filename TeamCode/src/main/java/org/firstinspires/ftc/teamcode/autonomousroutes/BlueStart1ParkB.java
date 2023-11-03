@@ -24,7 +24,7 @@ public class BlueStart1ParkB extends LinearOpMode {
         );
 
 
-        /** Initialisation. */
+        // Initialisation.
         waitForStart();
 
         BlueStart1ParkB.executeWithPointSkip();
