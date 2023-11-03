@@ -3,31 +3,41 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+
 
 @TeleOp
 public class DriverControlled extends OpMode {
 
-    /** The robot */
+    /**
+     * The robot
+     */
     CompetitionRobot robot;
 
-    /** The desired heading when strafing. */
+    /**
+     * The desired heading when strafing.
+     */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
+    /**
+     * Initialisation
+     */
     @Override
-    /** Initialisation */
     public void init() {
         robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
     }
 
+    /**
+     * Repeats program until program is stopped
+     */
     @Override
-    /** Repeats program until program is stopped */
     public void loop() {
 
-       controlDrivetrain();
+        controlDrivetrain();
+        controlArm();
+        controlGrabber();
     }
 
     private void controlDrivetrain() {
@@ -122,5 +132,54 @@ public class DriverControlled extends OpMode {
 
         robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
+    }
+
+    /**
+     * Controls of the arm that is attached to the grabber on the robot.
+     */
+    private void controlArm() {
+        // There is a minus because up is negative and down is positive on the controller.
+        double direction = -gamepad2.right_stick_y;
+        if (direction > 0) {
+            telemetry.addLine("Arm Up");
+            robot.arm.MoveArmUp();
+        } else if (direction < 0) {
+            telemetry.addLine("Arm Down");
+            robot.arm.MoveArmDown();
+        } else {
+            telemetry.addLine("Arm Stop");
+            robot.arm.StopArm();
+        }
+    }
+
+    // Controls of the left grabber on the robot for the pixel.
+    private void controlGrabber() {
+        if (gamepad2.x) {
+            telemetry.addLine("GrabLeft");
+            robot.grabberLeft.Grab();
+        } else if (gamepad2.y) {
+            telemetry.addLine("DropLeft");
+            robot.grabberLeft.Drop();
+        }
+
+        // Controls of the right grabber on the robot for the pixel.
+        if (gamepad2.a) {
+            telemetry.addLine("GrabRight");
+            robot.grabberRight.Grab();
+        } else if (gamepad2.b) {
+            telemetry.addLine("DropRight");
+            robot.grabberRight.Drop();
+        }
+
+        // Controls of the left grabber on the robot for the pixel.
+        if (gamepad2.right_bumper) {
+            telemetry.addLine("GrabLeft");
+            robot.grabberLeft.Grab();
+            robot.grabberRight.Grab();
+        } else if (gamepad2.left_bumper) {
+            telemetry.addLine("DropLeft");
+            robot.grabberLeft.Drop();
+            robot.grabberRight.Drop();
+        }
     }
 }
