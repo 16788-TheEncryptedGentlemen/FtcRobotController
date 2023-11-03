@@ -18,7 +18,6 @@ public class DriverControlled extends OpMode {
      * The desired heading when strafing.
      */
     private double desiredHeading = 0;
-    private Timer antiJerkTimer;
 
     /**
      * Initialisation
@@ -26,7 +25,6 @@ public class DriverControlled extends OpMode {
     @Override
     public void init() {
         robot = new CompetitionRobot(this);
-        antiJerkTimer = new Timer();
     }
 
     /**
@@ -90,7 +88,7 @@ public class DriverControlled extends OpMode {
             correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
-            antiJerkTimer.Reset();
+            // Aditi removed the timer 3-11-'23
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();
@@ -107,11 +105,7 @@ public class DriverControlled extends OpMode {
         double robotAngle = robot.imu.getAngle();
 
         // Only update the correction angle during the first 0.5s of strafing.
-        if (antiJerkTimer.getTime() < 0.1) {
-            desiredHeading = robotAngle;
-            // This also means deviationAngle will be 0, so we can skip the rest.
-            return;
-        }
+        // Aditi removed the timer 3-11-'23
 
         // Compute the deviation from the desired angle.
         double deviationAngle = robotAngle - desiredHeading;
