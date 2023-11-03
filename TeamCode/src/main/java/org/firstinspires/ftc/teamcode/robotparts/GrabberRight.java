@@ -20,11 +20,11 @@ public class GrabberRight {
         grabberLeft.setPosition(-power);
     }
 
-    public void drop() {
+    public void Drop() {
         grabberLeft.setPosition(0.4);
     }
 
-    public void drop(double power) {
+    public void Drop(double power) {
         grabberLeft.setPosition(power);
     }
 
