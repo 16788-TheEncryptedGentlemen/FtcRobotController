@@ -28,10 +28,10 @@ public class MecanumDrivetrain {
     public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
         odometry = _odometry;
         imu = _imu;
-        frontRight = hardwareMap.get(DcMotorEx.class, "RV");
-        backRight = hardwareMap.get(DcMotorEx.class, "RA");
-        frontLeft = hardwareMap.get(DcMotorEx.class, "LV");
-        backLeft = hardwareMap.get(DcMotorEx.class, "LA");
+        frontRight = hardwareMap.get(DcMotorEx.class, "FrontRight");
+        backRight = hardwareMap.get(DcMotorEx.class, "BackRight");
+        frontLeft = hardwareMap.get(DcMotorEx.class, "FrontLeft");
+        backLeft = hardwareMap.get(DcMotorEx.class, "BackLeft");
 
         /** Reversing the right motors because they are mirrored. */
         frontRight.setDirection(DcMotorEx.Direction.REVERSE);
@@ -60,11 +60,11 @@ public class MecanumDrivetrain {
     //TODO: Figure out how to simplify this constructor.
     /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
-    public void setSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        motorSpeed[0] = SpeedRV;
-        motorSpeed[1] = SpeedRA;
-        motorSpeed[2] = SpeedLV;
-        motorSpeed[3] = SpeedLA;
+    public void setSpeed(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
+        motorSpeed[0] = SpeedFrontRight;
+        motorSpeed[1] = SpeedBackRight;
+        motorSpeed[2] = SpeedFrontLeft;
+        motorSpeed[3] = SpeedBackLeft;
     }
 
     /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
@@ -87,11 +87,11 @@ public class MecanumDrivetrain {
     //TODO: Figure out how to simplify this constructor.
     /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
      4 doubles, 1 double, 1 array. */
-    public void addSpeed(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        motorSpeed[0] += SpeedRV;
-        motorSpeed[1] += SpeedRA;
-        motorSpeed[2] += SpeedLV;
-        motorSpeed[3] += SpeedLA;
+    public void addSpeed(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
+        motorSpeed[0] += SpeedFrontRight;
+        motorSpeed[1] += SpeedBackRight;
+        motorSpeed[2] += SpeedFrontLeft;
+        motorSpeed[3] += SpeedBackLeft;
     }
 
     /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
@@ -125,11 +125,11 @@ public class MecanumDrivetrain {
     /** Sets power to the motors. The following arguments can be entered:
      No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
      1 double, 1 array. */
-    public void setPower(double SpeedRV, double SpeedRA, double SpeedLV, double SpeedLA) {
-        frontRight.setPower(SpeedRV);
-        backRight.setPower(SpeedRA);
-        frontLeft.setPower(SpeedLV);
-        backLeft.setPower(SpeedLA);
+    public void setPower(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
+        frontRight.setPower(SpeedFrontRight);
+        backRight.setPower(SpeedBackRight);
+        frontLeft.setPower(SpeedFrontLeft);
+        backLeft.setPower(SpeedBackLeft);
     }
 
     /** Sets power to the motors. The following arguments can be entered:
