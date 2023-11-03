@@ -16,12 +16,11 @@ public class Arm {
 
     public void MoveArmUp()
     {
-        Arm.setPower(0.9);
-
+        Arm.setPower(0.3);
     }
     public void MoveArmDown()
     {
-        Arm.setPower(-0.9);
+        Arm.setPower(-0.3);
     }
     public void StopArm()
     {
