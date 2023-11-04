@@ -52,11 +52,13 @@ public class CompetitionRobot {
        // display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
        // display.showLoading("grabberLeft");
-        grabberLeft = new GrabberLeft(hardwaremap);
-        //display.showLoading("grabberRight");
-        grabberRight = new GrabberRight(hardwaremap);
+        // grabberLeft = new GrabberLeft(hardwaremap);
+        // display.showLoading("grabberRight");
+        // grabberRight = new GrabberRight(hardwaremap);
        // display.showLoading("arm");
         arm = new Arm(hardwaremap);
+        display.showLoading("odometry");
+        odometry = new Odometry(hardwaremap);
        // display.showLoading("Done initializing! Press start to play");
     }
 }

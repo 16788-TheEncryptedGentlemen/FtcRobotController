@@ -51,8 +51,8 @@ public class DriverControlled extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-        //   telemetry.addData("X", robot.odometry.getX());
-        //   telemetry.addData("Y", robot.odometry.getY());
+           telemetry.addData("X", robot.odometry.getX());
+           telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
@@ -85,7 +85,7 @@ public class DriverControlled extends OpMode {
 
         // Correct the strafing angle when strafing and not rotating.
         if (strafeSpeed > 0 && turnSpeed == 0) {
-            correctHeading();
+//            correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
             // Aditi removed the timer 3-11-'23
