@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Arm {
 
     public DcMotorEx Arm;
-
+ // TODO: @Aditi Fix deze namen please!
 
     public Arm (HardwareMap hardwareMap)
     {
