@@ -40,7 +40,7 @@ public class Odometry {
         yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         /** Reverses yWheel, because the encoder is mounted in reverse. */
-        yWheel.setDirection(DcMotorEx.Direction.REVERSE);
+        yWheel.setDirection(DcMotorEx.Direction.FORWARD);
     }
 
     /** Returns the x position of the odometry. */
