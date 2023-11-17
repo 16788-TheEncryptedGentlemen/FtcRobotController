@@ -46,7 +46,7 @@ public class Odometry {
     /** Returns the x position of the odometry. */
     public double getX() {
         // TODO: Minus cmPerCount because
-        return -cmPerCount * xWheel.getCurrentPosition() * horizontalCorrection;
+        return cmPerCount * xWheel.getCurrentPosition() * horizontalCorrection;
     }
 
     /** Returns the y position of the odometry. */
