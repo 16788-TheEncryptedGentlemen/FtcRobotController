@@ -33,9 +33,11 @@ public class MecanumDrivetrain {
         frontLeft = hardwareMap.get(DcMotorEx.class, "FrontLeft");
         backLeft = hardwareMap.get(DcMotorEx.class, "BackLeft");
 
-        /** Reversing the right motors because they are mirrored. */
+        /** Reversing motors because they are mirrored. */
         frontRight.setDirection(DcMotorEx.Direction.REVERSE);
         backRight.setDirection(DcMotorEx.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeft.setDirection(DcMotorEx.Direction.FORWARD);
 
         /** Sets power of encoders to zero. */ // TODO: figure out why we use this. (Is it so the encoders don"t break and the wheels just roll?)
         frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
