@@ -89,6 +89,8 @@ public class BezierCurveRoute {
                 lineSegmentToNearestCheckPoint = new LineSegment(robotPosition, NextCheckpoint.toPoint());
                 driveAngle = lineSegmentToNearestCheckPoint.angle;
                 powerRobot(driveAngle, speed);
+                runningOpMode.telemetry.addData("X", robot.odometry.getX());
+                runningOpMode.telemetry.addData("Y", robot.odometry.getY());
             }
         }
 
