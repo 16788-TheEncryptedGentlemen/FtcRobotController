@@ -10,13 +10,13 @@ public class MecanumDrivetrain {
     private LinearOpMode runningOpMode;
     /** An array to store the four different motor speeds. */
     public double[] motorSpeed = new double[4]; // TODO: figure out if this needs to be an array.
-    /** Front right motor (RechtsVoor). */
+    /** Front right motor. */
     public DcMotorEx frontRight;
-    /** Back right motor (RechtsAchter). */
+    /** Back right motor. */
     public DcMotorEx backRight;
-    /** Front left motor (LinksVoor). */
+    /** Front left motor. */
     public DcMotorEx frontLeft;
-    /** Back left motor (LinksAchter). */
+    /** Back left motor . */
     public DcMotorEx backLeft;
     /** The odometry of the robot. */
     private final Odometry odometry;
