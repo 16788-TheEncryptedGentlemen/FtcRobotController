@@ -91,6 +91,8 @@ public class BezierCurveRoute {
                 powerRobot(driveAngle, speed);
                 runningOpMode.telemetry.addData("X", robot.odometry.getX());
                 runningOpMode.telemetry.addData("Y", robot.odometry.getY());
+                runningOpMode.telemetry.addData("IMU", robot.imu.getAngle());
+                runningOpMode.telemetry.update();
             }
         }
 
