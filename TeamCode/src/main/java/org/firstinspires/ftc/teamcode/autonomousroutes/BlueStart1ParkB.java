@@ -14,11 +14,9 @@ public class BlueStart1ParkB extends LinearOpMode {
         BezierCurveRoutes routes = new BezierCurveRoutes(robot, this);
         // Initialisation.
 
-
-
         waitForStart();
 
-        robot.drivetrain.driveStraight(3,0.4);
+       robot.drivetrain.driveStraight(3,0.4);
        routes.BlueStart1ParkB.executeWithPointSkip();
 
     }
