@@ -19,7 +19,7 @@ public class MecanumDrivetrain {
     /** Back left motor . */
     public DcMotorEx backLeft;
     /** The odometry of the robot. */
-    private final Odometry odometry;
+    public Odometry odometry;
     /** The Integrated Measurement Unit of the robot. */
     public Imu imu;
 
