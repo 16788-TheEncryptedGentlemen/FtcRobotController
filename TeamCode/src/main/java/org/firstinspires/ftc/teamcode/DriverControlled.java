@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
-
 
 @TeleOp
 public class DriverControlled extends OpMode {
+    // TODO: Still need to test it!
 
     /**
      * The robot
@@ -18,24 +19,23 @@ public class DriverControlled extends OpMode {
      * The desired heading when strafing.
      */
     private double desiredHeading = 0;
+    private Timer antiJerkTimer;
 
-    /**
-     * Initialisation
-     */
     @Override
+    /** Initialisation */
     public void init() {
         robot = new CompetitionRobot(this);
+        antiJerkTimer = new Timer();
     }
 
-    /**
-     * Repeats program until program is stopped
-     */
     @Override
+    /** Repeats program until program is stopped */
     public void loop() {
-
-        controlDrivetrain();
-        controlArm();
         controlGrabber();
+        //controlArm();
+        controlDrivetrain();
+        controlTiltMechanism();
+        //controlDroneLauncher();
     }
 
     private void controlDrivetrain() {
@@ -51,8 +51,8 @@ public class DriverControlled extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-           telemetry.addData("X", robot.odometry.getX());
-           telemetry.addData("Y", robot.odometry.getY());
+        //  telemetry.addData("X", robot.odometry.getX());
+        //   telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
@@ -85,16 +85,16 @@ public class DriverControlled extends OpMode {
 
         // Correct the strafing angle when strafing and not rotating.
         if (strafeSpeed > 0 && turnSpeed == 0) {
-//            correctHeading();
+            correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
-            // Aditi removed the timer 3-11-'23
+            antiJerkTimer.Reset();
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
-        if (gamepad1.right_bumper) robot.drivetrain.multiplySpeed(0.7);
-        else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
+        //    if (gamepad1.right_bumper) robot.drivetrain.multiplySpeed(0.7);
+        if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
         robot.drivetrain.setPower();
@@ -105,7 +105,11 @@ public class DriverControlled extends OpMode {
         double robotAngle = robot.imu.getAngle();
 
         // Only update the correction angle during the first 0.5s of strafing.
-        // Aditi removed the timer 3-11-'23
+        if (antiJerkTimer.getTime() < 0.1) {
+            desiredHeading = robotAngle;
+            // This also means deviationAngle will be 0, so we can skip the rest.
+            return;
+        }
 
         // Compute the deviation from the desired angle.
         double deviationAngle = robotAngle - desiredHeading;
@@ -131,7 +135,7 @@ public class DriverControlled extends OpMode {
     /**
      * Controls of the arm that is attached to the grabber on the robot.
      */
-    private void controlArm() {
+ /*private void controlArm() {
         // There is a minus because up is negative and down is positive on the controller.
         double direction = -gamepad2.right_stick_y;
         if (direction > 0) {
@@ -144,28 +148,31 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("Arm Stop");
             robot.arm.StopArm();
         }
-    }
+        telemetry.addData("Angle Arm", robot.arm.motor.getCurrentPosition());
+    }*/
+
 
     // Controls of the left grabber on the robot for the pixel.
     private void controlGrabber() {
         if (gamepad2.x) {
-            telemetry.addLine("GrabLeft");
-            robot.grabberLeft.Grab();
+            telemetry.addLine("Grab");
+            robot.grabber.Grab();
         } else if (gamepad2.y) {
-            telemetry.addLine("DropLeft");
-            robot.grabberLeft.Drop();
+            telemetry.addLine("Drop");
+            robot.grabber.Drop();
         }
+    }
 
-        // Controls of the right grabber on the robot for the pixel.
+    /*     // Controls of the right grabber on the robot for the pixel.
         if (gamepad2.a) {
             telemetry.addLine("GrabRight");
-            robot.grabberRight.Grab();
+            robot.grabber.Grab();
         } else if (gamepad2.b) {
             telemetry.addLine("DropRight");
-            robot.grabberRight.Drop();
+            robot.grabber.Drop();
         }
 
-        // Controls of the left grabber on the robot for the pixel.
+       // Controls of the left grabber on the robot for the pixel.
         if (gamepad2.right_bumper) {
             telemetry.addLine("GrabLeft");
             robot.grabberLeft.Grab();
@@ -175,5 +182,31 @@ public class DriverControlled extends OpMode {
             robot.grabberLeft.Drop();
             robot.grabberRight.Drop();
         }
+    } */
+
+    /*  private void controlDroneLauncher (){
+          if (gamepad2.y){
+              robot.droneLauncher.launch();
+              telemetry.addLine("DroneLauncherLaunches");
+          }
+          else{
+              robot.droneLauncher.stop();
+              telemetry.addLine("DroneLauncherStop");
+          }
+      }*/
+    private void controlTiltMechanism() {
+        if (gamepad2.dpad_up) {
+            robot.tiltMechanism.TiltMechanismUp();
+            telemetry.addLine("TiltMechanismUp");
+        } else if (gamepad2.dpad_down) {
+            robot.tiltMechanism.TiltMechanismDown();
+            telemetry.addLine("TiltMechanismDown");
+//        } else {
+//            robot.tiltMechanism.StopTiltMechanism();
+//            telemetry.addLine("StopTiltMechanism");
+//        }
+        }
     }
 }
+
+

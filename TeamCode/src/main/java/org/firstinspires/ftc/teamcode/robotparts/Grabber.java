@@ -13,22 +13,22 @@ public class Grabber {
     }
 
     public void Grab() {
-        servo.setPosition(-0.4);
+        servo.setPosition(0.45);
     }
 
-    public void Grab(double power) {
-        servo.setPosition(-power);
-    }
+//    public void Grab(double power) {
+//        servo.setPosition(-power)
+//    }
 
     public void Drop() {
-        servo.setPosition(0.4);
+        servo.setPosition(0.2);
     }
-
-    public void Drop(double power) {
-        servo.setPosition(power);
-    }
-
-    public void Stop() {
-        servo.setPosition(0.0);
-    }
+//
+//    public void Drop(double power) {
+//        servo.setPosition(power);
+//    }
+//
+//    public void Stop() {
+//        servo.setPosition(0.0);
+//    }
 }

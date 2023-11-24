@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
 import org.firstinspires.ftc.teamcode.robotparts.Arm;
-import org.firstinspires.ftc.teamcode.robotparts.GrabberLeft;
-import org.firstinspires.ftc.teamcode.robotparts.GrabberRight;
+import org.firstinspires.ftc.teamcode.robotparts.Grabber;
+import org.firstinspires.ftc.teamcode.robotparts.DroneLauncher;
+import org.firstinspires.ftc.teamcode.robotparts.TiltMechanism;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
@@ -21,12 +22,11 @@ public class CompetitionRobot {
     public Display display;
     public Imu  imu;
     public Odometry odometry;
-    public MecanumDrivetrain drivetrain;
+   public MecanumDrivetrain drivetrain;
     public Arm  arm;
-    public GrabberLeft grabberLeft;
-    public GrabberRight grabberRight;
-
-
+    public TiltMechanism tiltMechanism;
+   // public DroneLauncher droneLauncher;
+    public Grabber grabber;
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
@@ -49,16 +49,17 @@ public class CompetitionRobot {
 
        // display.showLoading("imu");
         imu = new Imu(hardwaremap);
-       // display.showLoading("drivetrain");
+      // display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
        // display.showLoading("grabberLeft");
-        // grabberLeft = new GrabberLeft(hardwaremap);
-        // display.showLoading("grabberRight");
-        // grabberRight = new GrabberRight(hardwaremap);
+      //display.showLoading("grabberRight");
+       grabber = new Grabber(hardwaremap);
+     //   arm = new Arm(hardwaremap);
        // display.showLoading("arm");
-        arm = new Arm(hardwaremap);
-        display.showLoading("odometry");
-        odometry = new Odometry(hardwaremap);
-       // display.showLoading("Done initializing! Press start to play");
+       tiltMechanism = new TiltMechanism(hardwaremap);
+        //display.showLoading("tiltMechanism")
+       // droneLauncher = new DroneLauncher(hardwaremap);
+        //display.showLoading("droneLauncher")
+      // display.showLoading("Done initializing! Press start to play");
     }
 }
