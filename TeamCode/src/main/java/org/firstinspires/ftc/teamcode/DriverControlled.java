@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Timer;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robotparts.Timer;
 
 @TeleOp
 public class DriverControlled extends OpMode {
@@ -32,7 +32,7 @@ public class DriverControlled extends OpMode {
     /** Repeats program until program is stopped */
     public void loop() {
         controlGrabber();
-        //controlArm();
+        controlArm();
         controlDrivetrain();
         controlTiltMechanism();
         //controlDroneLauncher();
@@ -135,13 +135,13 @@ public class DriverControlled extends OpMode {
     /**
      * Controls of the arm that is attached to the grabber on the robot.
      */
- /*private void controlArm() {
+    private void controlArm() {
         // There is a minus because up is negative and down is positive on the controller.
         double direction = -gamepad2.right_stick_y;
-        if (direction > 0) {
+        if (direction > 0.1) {
             telemetry.addLine("Arm Up");
             robot.arm.MoveArmUp();
-        } else if (direction < 0) {
+        } else if (direction < -0.1) {
             telemetry.addLine("Arm Down");
             robot.arm.MoveArmDown();
         } else {
@@ -149,7 +149,9 @@ public class DriverControlled extends OpMode {
             robot.arm.StopArm();
         }
         telemetry.addData("Angle Arm", robot.arm.motor.getCurrentPosition());
-    }*/
+        telemetry.addData("Target Arm", robot.arm.position);
+
+    }
 
 
     // Controls of the left grabber on the robot for the pixel.
