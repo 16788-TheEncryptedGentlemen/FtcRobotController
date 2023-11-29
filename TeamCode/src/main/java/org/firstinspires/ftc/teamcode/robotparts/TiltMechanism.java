@@ -18,7 +18,7 @@ public class TiltMechanism {
     }
 
     public void TiltMechanismDown() {
-        servo.setPosition(0.6);
+        servo.setPosition(0.8);
     }
 
     public void StopTiltMechanism() {
