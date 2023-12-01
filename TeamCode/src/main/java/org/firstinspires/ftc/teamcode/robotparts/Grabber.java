@@ -16,19 +16,7 @@ public class Grabber {
         servo.setPosition(0.7);
     }
 
-//    public void Grab(double power) {
-//        servo.setPosition(-power)
-//    }
-
     public void Drop() {
         servo.setPosition(0.5);
     }
-//
-//    public void Drop(double power) {
-//        servo.setPosition(power);
-//    }
-//
-//    public void Stop() {
-//        servo.setPosition(0.0);
-//    }
 }
