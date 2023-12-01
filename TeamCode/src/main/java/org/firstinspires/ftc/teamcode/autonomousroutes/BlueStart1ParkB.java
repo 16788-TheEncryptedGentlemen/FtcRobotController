@@ -16,21 +16,24 @@ public class BlueStart1ParkB extends LinearOpMode {
         CompetitionRobot robot = new CompetitionRobot(this);
 
 
-        BezierCurveRoute BlueStart1Park = new BezierCurveRoute(
-                new double[] {5.97499999999985, -83.6499999999998, -107.151666666667}, //The x-coefficients
-                new double[] {229.44, -229.44, 18.7216666666667}, //The y-coefficients
+        BezierCurveRoute BlueStart1ParkB = new BezierCurveRoute(
+                new double[] {-239}, //The x-coefficients
+                new double[] {2.7883333333333}, //The y-coefficients
                 robot,
-                0.5,
+                0.4,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
 
 
         // Initialisation.
         robot.tiltMechanism.TiltMechanismStartPosition();
         waitForStart();
 
-        BlueStart1Park.executeWithPointSkip();
+        robot.drivetrain.driveStraight(1.0, 0.4);
+        sleep(500);
+        BlueStart1ParkB.executeWithPointSkip();
 
         sleep(5000);
     }
