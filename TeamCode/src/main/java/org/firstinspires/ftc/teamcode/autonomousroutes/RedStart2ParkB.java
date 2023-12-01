@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class BlueStart2ParkB extends LinearOpMode {
+public class RedStart2ParkB extends LinearOpMode {
     public void runOpMode() {
 
         CompetitionRobot robot = new CompetitionRobot(this);
