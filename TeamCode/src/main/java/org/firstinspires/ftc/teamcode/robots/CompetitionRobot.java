@@ -22,7 +22,7 @@ public class CompetitionRobot {
     public Display display;
     public Imu  imu;
     public Odometry odometry;
-   public MecanumDrivetrain drivetrain;
+    public MecanumDrivetrain drivetrain;
     public Arm  arm;
     public TiltMechanism tiltMechanism;
     public DroneLauncher droneLauncher;
@@ -40,6 +40,9 @@ public class CompetitionRobot {
         display.showLoading("drivetrain");
         odometry = new Odometry(hardwaremap);
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        grabber = new Grabber(hardwaremap);
+        tiltMechanism = new TiltMechanism(hardwaremap);
+        arm = new Arm(hardwaremap);
 //        display.showLoading("odometry");
         display.showLoading("Done initializing! Press start to play");
     }
