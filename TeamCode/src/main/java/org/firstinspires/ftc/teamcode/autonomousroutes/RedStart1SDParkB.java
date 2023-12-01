@@ -9,28 +9,28 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class BlueStart2ParkB extends LinearOpMode {
+public class RedStart1SDParkB extends LinearOpMode {
     public void runOpMode() {
 
         CompetitionRobot robot = new CompetitionRobot(this);
 
-        BezierCurveRoute BlueStart2ParkB = new BezierCurveRoute(
-                new double[] {-120.296666666667}, //The x-coefficients
-                new double[] {1.19500000000062}, //The y-coefficients
+        BezierCurveRoute RedStart1SDParkB = new BezierCurveRoute(
+                new double[] {-72.895, 38.24, 275.248333333333}, //The x-coefficients
+                new double[] {468.44, -504.29, 171.283333333333}, //The y-coefficients
                 robot,
-                0.6,
+                0.4,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
+
 
 
         // Initialisation.
         robot.tiltMechanism.TiltMechanismStartPosition();
         waitForStart();
 
-        robot.drivetrain.driveStraight(1.0, 0.4);
-        sleep(500);
-        BlueStart2ParkB.executeWithPointSkip();
+        RedStart1SDParkB.executeWithPointSkip();
 
         sleep(5000);
     }
