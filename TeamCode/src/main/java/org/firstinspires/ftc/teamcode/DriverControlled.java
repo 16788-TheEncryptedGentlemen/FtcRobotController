@@ -35,7 +35,7 @@ public class DriverControlled extends OpMode {
         controlArm();
         controlDrivetrain();
         controlTiltMechanism();
-        //controlDroneLauncher();
+        controlDroneLauncher();
     }
 
     private void controlDrivetrain() {
@@ -93,8 +93,8 @@ public class DriverControlled extends OpMode {
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
-        //    if (gamepad1.right_bumper) robot.drivetrain.multiplySpeed(0.7);
-        if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
+        if (gamepad1.right_bumper) robot.drivetrain.multiplySpeed(0.7);
+        else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
         robot.drivetrain.setPower();
@@ -186,16 +186,16 @@ public class DriverControlled extends OpMode {
         }
     } */
 
-    /*  private void controlDroneLauncher (){
-          if (gamepad2.y){
+    private void controlDroneLauncher (){
+          if (gamepad2.a){
               robot.droneLauncher.launch();
               telemetry.addLine("DroneLauncherLaunches");
           }
-          else{
+        /*  else{
               robot.droneLauncher.stop();
               telemetry.addLine("DroneLauncherStop");
-          }
-      }*/
+          }*/
+      }
     private void controlTiltMechanism() {
         if (gamepad2.dpad_up) {
             robot.tiltMechanism.TiltMechanismUp();
