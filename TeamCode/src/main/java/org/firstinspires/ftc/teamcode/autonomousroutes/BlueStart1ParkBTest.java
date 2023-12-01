@@ -27,6 +27,7 @@ public class BlueStart1ParkBTest extends LinearOpMode {
 
 
         // Initialisation.
+        robot.tiltMechanism.TiltMechanismStartPosition();
         waitForStart();
 
         Test.executeWithPointSkip();

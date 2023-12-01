@@ -26,6 +26,7 @@ public class DriverControlled extends OpMode {
     public void init() {
         robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
+        robot.tiltMechanism.TiltMechanismStartPosition();
     }
 
     @Override
@@ -186,15 +187,14 @@ public class DriverControlled extends OpMode {
         }
     } */
 
-    private void controlDroneLauncher (){
-          if (gamepad2.a){
-              robot.droneLauncher.launch();
-              telemetry.addLine("DroneLauncherLaunches");
+    private void controlDroneLauncher () {
+        if (gamepad2.back) {
+            robot.droneLauncher.launch();
+            telemetry.addLine("DroneLauncherLaunches");
+        } else if (gamepad2.b) {
+                robot.droneLauncher.reverse();
+                telemetry.addLine("DroneLauncherStop");
           }
-        /*  else{
-              robot.droneLauncher.stop();
-              telemetry.addLine("DroneLauncherStop");
-          }*/
       }
     private void controlTiltMechanism() {
         if (gamepad2.dpad_up) {
