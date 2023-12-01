@@ -31,57 +31,27 @@ public class Arm {
     }
 
     public void MoveArmUp() {
-        motor.setPower(0.2);
+        motor.setPower(1.0);
         motor.setTargetPosition(position);
         ikBenAanHetStoppen = false;
         position++;
     }
 
     public void MoveArmDown() {
-        motor.setPower(0.2);
+        motor.setPower(1.0);
         motor.setTargetPosition(position);
         ikBenAanHetStoppen = false;
         position--;
     }
 
     public void StopArm() {
-        motor.setPower(0.2);
+        motor.setPower(1.0);
         if (ikBenAanHetStoppen) {
             motor.setTargetPosition(position);
         } else {
             position = motor.getCurrentPosition();
             ikBenAanHetStoppen = true;
         }
-
-
-
-
-//        int currentPosition = motor.getCurrentPosition();
-        //de positie waar de arm nu is, blijf in die positie staan
-        //als je nu begint met stoppen pas de current position aan.
-        // als je al gestopt was, laat de position zoals hij was.
-//        if (ikBenAanHetStoppen) {
-            // hier ben je gestopt.
-            // laat de position zoals hij is
-//            if(currentPosition < position - 25){
-//                motor.setPower(0.2);
-//            } else if (currentPosition > position + 25){
-//                motor.setPower(-0.2);
-//            } else {
-//                motor.setPower(0.0);
-//            }
-
-//            motor.setTargetPosition(position);
-
-//        } else {
-            // hier ben jenog niet aan het stoppen.
-/*            ikBenAanHetStoppen = true;
-            // nu ben ik wel aan het stoppen.
-            position = currentPosition;
-            motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);*/
-            // daar waar ik nu ben, moet ik blijven.
-//        }
-//        motor.setTargetPosition(position);
-
     }
+
 }

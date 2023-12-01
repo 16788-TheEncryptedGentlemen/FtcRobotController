@@ -13,7 +13,7 @@ public class Grabber {
     }
 
     public void Grab() {
-        servo.setPosition(0.55);
+        servo.setPosition(0.7);
     }
 
 //    public void Grab(double power) {
@@ -21,7 +21,7 @@ public class Grabber {
 //    }
 
     public void Drop() {
-        servo.setPosition(0.2);
+        servo.setPosition(0.5);
     }
 //
 //    public void Drop(double power) {
