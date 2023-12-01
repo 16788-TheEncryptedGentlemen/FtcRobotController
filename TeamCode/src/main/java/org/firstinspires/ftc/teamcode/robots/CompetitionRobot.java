@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.TiltMechanism;
+import org.firstinspires.ftc.teamcode.robotparts.DroneLauncher;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 
 /** Contains all the robot parts. */
@@ -24,7 +25,7 @@ public class CompetitionRobot {
    public MecanumDrivetrain drivetrain;
     public Arm  arm;
     public TiltMechanism tiltMechanism;
-   // public DroneLauncher droneLauncher;
+    public DroneLauncher droneLauncher;
     public Grabber grabber;
 
     /** The constructor for a LinearOpMode program. */
@@ -57,7 +58,7 @@ public class CompetitionRobot {
 //        display.showLoading("arm");
        tiltMechanism = new TiltMechanism(hardwaremap);
         //display.showLoading("tiltMechanism")
-       // droneLauncher = new DroneLauncher(hardwaremap);
+       droneLauncher = new DroneLauncher(hardwaremap);
         //display.showLoading("droneLauncher")
       // display.showLoading("Done initializing! Press start to play");
     }
