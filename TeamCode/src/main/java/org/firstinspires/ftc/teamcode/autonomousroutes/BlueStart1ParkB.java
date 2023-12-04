@@ -17,7 +17,7 @@ public class BlueStart1ParkB extends LinearOpMode {
 
 
         BezierCurveRoute BlueStart1ParkB = new BezierCurveRoute(
-                new double[] {-239}, //The x-coefficients
+                new double[] {-235.415}, //The x-coefficients
                 new double[] {2.7883333333333}, //The y-coefficients
                 robot,
                 0.4,

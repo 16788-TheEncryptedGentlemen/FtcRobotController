@@ -15,13 +15,14 @@ public class BlueStart2ParkB extends LinearOpMode {
         CompetitionRobot robot = new CompetitionRobot(this);
 
         BezierCurveRoute BlueStart2ParkB = new BezierCurveRoute(
-                new double[] {-120.296666666667}, //The x-coefficients
-                new double[] {1.19500000000062}, //The y-coefficients
+                new double[] {-115.915}, //The x-coefficients
+                new double[] {2.39000000000027}, //The y-coefficients
                 robot,
-                0.6,
+                0.4,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
 
 
         // Initialisation.
