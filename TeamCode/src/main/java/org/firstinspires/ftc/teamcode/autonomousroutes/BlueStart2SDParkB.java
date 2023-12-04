@@ -16,12 +16,13 @@ public class BlueStart2SDParkB extends LinearOpMode {
 
         BezierCurveRoute BlueStart2SDParkB = new BezierCurveRoute(
                 new double[] {-9.55999999999996, 38.2399999999997, 17.5266666666672, -164.511666666667}, //The x-coefficients
-                new double[] {528.986666666668, -829.330000000002, 591.126666666668, -165.706666666667}, //The y-coefficients
+                new double[] {528.986666666668, -829.330000000002, 591.126666666668, -159.731666666667}, //The y-coefficients
                 robot,
                 0.4,
                 DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
 
 
 
