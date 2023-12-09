@@ -64,6 +64,9 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
     private static final String[] LABELS = {
             "Pixel",
     };
+    private static final double LINKS = 0;
+    private static final double MIDDEN = 1;
+    private static final double RECHTS = 2;
 
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
@@ -74,6 +77,7 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
      * The variable to store our instance of the vision portal.
      */
     private VisionPortal visionPortal;
+    private double sanneMoetHierEenEnumVanMaken = -1;
 
     @Override
     public void runOpMode() {
@@ -84,24 +88,25 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         telemetry.addData(">", "Touch Play to start OpMode");
         telemetry.update();
 
-        while (!isStarted() && !isStopRequested()){
-                telemetryTfod();
+        while (!isStarted() && !isStopRequested()) {
+            telemetryTfod();
 
-                // Push telemetry to the Driver Station.
-                telemetry.update();
+            // Push telemetry to the Driver Station.
+            telemetry.update();
 
         }
 
 
         waitForStart();
 
-
-
-
         // Save more CPU resources when camera is no longer needed.
         visionPortal.close();
 
-    }   // end runOpMode()
+        while (!isStopRequested()) {
+            telemetry.addData("Result", sanneMoetHierEenEnumVanMaken);
+            telemetry.update();
+        }
+    }
 
     /**
      * Initialize the TensorFlow Object Detection processor.
@@ -175,17 +180,32 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
 
+        // midden.
+        double besteX = 600;
+        double bestPixelConfidence = 0;
         // Step through the list of recognitions and display info for each one.
         for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+            double x2 = (recognition.getLeft() + recognition.getRight()) / 2;
+            double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
-            telemetry.addData(""," ");
+            double conf = recognition.getConfidence();
+            if (conf > bestPixelConfidence) {
+                bestPixelConfidence = conf;
+                besteX = x2;
+            }
+            telemetry.addData("", " ");
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
-            telemetry.addData("- Position", "%.0f / %.0f", x, y);
+            telemetry.addData("- Position", "%.0f / %.0f", x2, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
         }   // end for() loop
-
-    }   // end method telemetryTfod()
+        // x is de beste x
+        if (besteX < 400) {
+            sanneMoetHierEenEnumVanMaken = LINKS;
+        } else if (besteX > 800) {
+            sanneMoetHierEenEnumVanMaken = RECHTS;
+        } else {
+            sanneMoetHierEenEnumVanMaken = MIDDEN;
+        }
+    }
 
 }   // end class
