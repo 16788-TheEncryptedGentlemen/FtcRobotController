@@ -14,15 +14,18 @@ public class AutonoomTest extends LinearOpMode {
 
         //Variables
         CompetitionRobot robot = new CompetitionRobot(this);
+//        robot.webcam.pipeline.cone = PipelineRedMarkerDetection.ConeColour.RED;
+        double output;
 
         while (!isStarted() && !isStopRequested())
         {
             // debugging
 
 
+            output = robot.webcam.getResult();
             // result
 //            result = robot.webcam.getResult();
-//            telemetry.addData("Result", result);
+            telemetry.addData("eenOfAnderGetal", output);
             telemetry.update();
 
         }

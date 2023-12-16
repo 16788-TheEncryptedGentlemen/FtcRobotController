@@ -3,20 +3,20 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.pipelines.PipelineGameElementDetector;
+import org.firstinspires.ftc.teamcode.pipelines.PipelineRedMarkerDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class Webcam {
 
-    public PipelineGameElementDetector pipeline;
+    public PipelineRedMarkerDetection pipeline;
 
     public Webcam(HardwareMap hardwareMap) {
         WebcamName webcam = hardwareMap.get(WebcamName.class, "Webcam");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcam);
 
-        pipeline = new PipelineGameElementDetector();
+        pipeline = new PipelineRedMarkerDetection();
 
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -38,9 +38,9 @@ public class Webcam {
 //        return pipeline.getAnalysis();
 //    }
 //
-//    public int getResult(){
-//        return pipeline.getResult();
-//    }
+    public double getResult(){
+        return pipeline.getResult();
+    }
 
 
 
