@@ -75,7 +75,7 @@ public class AutonoomTest extends LinearOpMode {
                 robot.drivetrain.driveStraight(-10, 0.4);
                 break;
             default: // Default MIDDLE
-                robot.drivetrain.driveStraight(100, 0.4);
+                robot.drivetrain.driveStraight(80, 0.4);
                 robot.drivetrain.driveStraight(-25, 0.4);
         }
 
