@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class AutonoomTest extends LinearOpMode {
+public class AutonoomTest2 extends LinearOpMode {
     private final boolean BLUE_SIDE = false;
     private final boolean SKIP_VISION = false;
     private BezierCurveRoute case0;
@@ -29,17 +29,17 @@ public class AutonoomTest extends LinearOpMode {
         );
 
         case2 = new BezierCurveRoute(
-                new double[] {-14.9375000000001, 53.7750000000004, -83.6500000000008, 122.487500000001, -61.5425000000004}, //The x-coefficients
-                new double[] {182.2375, -274.85, 101.575, 167.3, -115.3175}, //The y-coefficients
+                new double[] {100.38, -142.204999999999, 67.7166666666665}, //The x-coefficients
+                new double[] {-13.1450000000003, 74.0900000000012, 4.38166666666595}, //The y-coefficients
                 robot,
                 0.4,
-                BezierCurveRoute.DRIVE_METHOD.FOLLOW, //STRAFE or FOLLOW
+                BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
 
         redStart1Case2Board = new BezierCurveRoute(
-                new double[] {-544.919999999999, 946.439999999998, -1051.59999999999, 29872.0125, -201118.5, 643184.85, -1225166.58, 1502769.2625, -1186862.05, 560016.435, -128844.9, 6803.7325}, //The x-coefficients
-                new double[] {93.2100000000003, -2168.925, 14196.6, -33125.4, 118305, -455474.25, 937448.82, -957974.7375, 374501.05, 117319.125, -148963.92, 36051.3575}, //The y-coefficients
+                new double[] {-268.875, 914.175, -1864.2, 9410.62499999999, -47730.69, 122840.025, -148347.3, 74827.9125000001, -3901.67500000004, -5712.69749999999}, //The x-coefficients
+                new double[] {23.8999999999999, -564.637499999999, 4086.89999999999, 11418.2250000001, -90944.2800000001, 197874.075, -215745.3, 133630.875, -48463.225, 8715.73250000001}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -90,9 +90,8 @@ public class AutonoomTest extends LinearOpMode {
     private void rightPixelPlacement() {
         case2.executeWithPointSkip();
         robot.drivetrain.driveStraight(-10, 0.4);
-        robot.drivetrain.turnRobotAO(90);
-        robot.imu.reset();
         redStart1Case2Board.executeWithPointSkip();
+        robot.drivetrain.turnRobotAO(90);
     }
 
     private void leftPixelPlacement() {

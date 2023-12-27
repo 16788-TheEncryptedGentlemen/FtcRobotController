@@ -8,13 +8,12 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class AutonoomTest extends LinearOpMode {
+public class RedStart1VisionPushParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = false;
     private final boolean SKIP_VISION = false;
     private BezierCurveRoute case0;
     private BezierCurveRoute case2;
     private CompetitionRobot robot;
-    private BezierCurveRoute redStart1Case2Board;
 
     private void initAutonomous() {
         robot = new CompetitionRobot(this);
@@ -29,23 +28,13 @@ public class AutonoomTest extends LinearOpMode {
         );
 
         case2 = new BezierCurveRoute(
-                new double[] {-14.9375000000001, 53.7750000000004, -83.6500000000008, 122.487500000001, -61.5425000000004}, //The x-coefficients
-                new double[] {182.2375, -274.85, 101.575, 167.3, -115.3175}, //The y-coefficients
-                robot,
-                0.4,
-                BezierCurveRoute.DRIVE_METHOD.FOLLOW, //STRAFE or FOLLOW
-                this
-        );
-
-        redStart1Case2Board = new BezierCurveRoute(
-                new double[] {-544.919999999999, 946.439999999998, -1051.59999999999, 29872.0125, -201118.5, 643184.85, -1225166.58, 1502769.2625, -1186862.05, 560016.435, -128844.9, 6803.7325}, //The x-coefficients
-                new double[] {93.2100000000003, -2168.925, 14196.6, -33125.4, 118305, -455474.25, 937448.82, -957974.7375, 374501.05, 117319.125, -148963.92, 36051.3575}, //The y-coefficients
+                new double[]{100.38, -142.205, 67.7166666666666}, //The x-coefficients
+                new double[]{-13.145, 74.0900000000001, 4.3816666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
-
     }
 
     @Override
@@ -90,9 +79,6 @@ public class AutonoomTest extends LinearOpMode {
     private void rightPixelPlacement() {
         case2.executeWithPointSkip();
         robot.drivetrain.driveStraight(-10, 0.4);
-        robot.drivetrain.turnRobotAO(90);
-        robot.imu.reset();
-        redStart1Case2Board.executeWithPointSkip();
     }
 
     private void leftPixelPlacement() {
