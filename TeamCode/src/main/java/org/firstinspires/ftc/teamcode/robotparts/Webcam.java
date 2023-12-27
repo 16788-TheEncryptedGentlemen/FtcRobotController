@@ -33,6 +33,14 @@ public class Webcam {
             }
         });
     }
+
+    public int getMarkerPosition(boolean blue_side) {
+        if (blue_side) {
+            return pipeline.getBluePosition();
+        } else {
+            return pipeline.getRedPosition();
+        }
+    }
 //
 //    public int[] getAnalysis(){
 //        return pipeline.getAnalysis();
