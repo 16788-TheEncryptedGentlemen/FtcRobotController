@@ -16,10 +16,14 @@ import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 public class DriverControlled extends OpMode {
     // TODO: Still need to test it!
 
-    /** The robot */
+    /**
+     * The robot
+     */
     CompetitionRobot robot;
 
-    /** The desired heading when strafing. */
+    /**
+     * The desired heading when strafing.
+     */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
@@ -64,8 +68,8 @@ public class DriverControlled extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-     //   telemetry.addData("X", robot.odometry.getX());
-     //   telemetry.addData("Y", robot.odometry.getY());
+        //   telemetry.addData("X", robot.odometry.getX());
+        //   telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
@@ -157,7 +161,7 @@ public class DriverControlled extends OpMode {
     }
 
     private void controlLift() {
-        setLastPressedButton();
+    /*    setLastPressedButton();
 
         // Checks what the last pressed button is and moves to position accordingly.
         boolean reachedDestination = false;
@@ -240,13 +244,24 @@ public class DriverControlled extends OpMode {
         lastPressedButton = NONE;
         }
         // Als je geen knop indrukt, verandert lastPressedButton niet.
+    }*/
+
+        //--------------------------------------------------------------------
+        //Final calculations for the Drivetrain
+        //--------------------------------------------------------------------
+        if (gamepad2.left_stick_y < 0) {
+            robot.lift.down();
+            telemetry.addLine("LiftDown");
+
+        } else if (gamepad2.left_stick_y > 0) {
+            robot.lift.up();
+            telemetry.addLine("LiftUP");
+        } else {
+            robot.lift.stop();
+            telemetry.addLine("LiftStop");
+        }
     }
-
-    //--------------------------------------------------------------------
-    //Final calculations for the Drivetrain
-    //--------------------------------------------------------------------
 }
-
 //--------------------------------------------------------------------
 //Loop
 //--------------------------------------------------------------------
