@@ -20,8 +20,8 @@ public class Pusher {
     }
 
     public void release() {
-        left.setPosition(0.0);
-        right.setPosition(1.0);
+        left.setPosition(0.2);
+        right.setPosition(0.8);
     }
 
     /** Position for when pixel is preloaded on left side of the robot. */
