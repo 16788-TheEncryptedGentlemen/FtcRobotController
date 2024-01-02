@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class RedStart1VisionPushParkB extends LinearOpMode {
+public class RedStart2VisionPushParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = false;
     private final boolean SKIP_VISION = false;
     private BezierCurveRoute case0;
@@ -22,8 +22,8 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         robot = new CompetitionRobot(this);
 
         case0 = new BezierCurveRoute(
-                new double[] {-134.835833333334, 221.373750000001, -150.769166666667, 36.0989583333336}, //The x-coefficients
-                new double[] {-5.57666666666569, 65.7249999999985, 155.350000000001, -151.1675}, //The y-coefficients
+                new double[] {-3.18666666666675, 54.97, -129.06, 49.7916666666665}, //The x-coefficients
+                new double[] {337.786666666667, -619.01, 497.12, -148.18}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -31,8 +31,8 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         );
 
         case2 = new BezierCurveRoute(
-                new double[] {6.37333333333339, -11.9500000000003, -27.0866666666663, 52.9783333333332}, //The x-coefficients
-                new double[] {195.98, -169.69, 7.96666666666653, 29.4766666666668}, //The y-coefficients
+                new double[] {121.093333333333, -167.3, 108.346666666667, -33.0616666666667}, //The x-coefficients
+                new double[] {1.59333333333325, -14.3399999999995, 17.5266666666658, 59.3516666666669}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -40,8 +40,8 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         );
 
         case0ParkB= new BezierCurveRoute(
-                new double[] {-211.913333333333, 451.709999999998, -557.66666666666, 1672.99999999999, -4215.95999999999, 4084.90833333333, -960.779999999998}, //The x-coefficients
-                new double[] {-22.3066666666668, -25.0949999999984, 334.599999999993, 2342.20000000001, -6591.62000000001, 5557.14833333334, -1523.625}, //The y-coefficients
+                new double[] {360.093333333333, 100.380000000001, -3122.93333333334, 8811.13333333334, -15391.6, 18692.9866666667, -13511.4666666667, 4207.99333333333}, //The x-coefficients
+                new double[] {-12.7466666666668, 89.2266666666674, 89.2266666666628, -585.54999999999, -3457.53333333335, 10283.3733333333, -9209.46666666667, 2746.90666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -49,8 +49,8 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         );
 
         case1ParkB = new BezierCurveRoute(
-                new double[] {-577.185, 2082.885, -4433.45, 6315.575, -5939.14999999999, 3039.28333333333, -251.348333333334}, //The x-coefficients
-                new double[] {58.5550000000002, -777.944999999999, 4461.33333333333, -8922.66666666666, 8390.09499999999, -3847.89999999999, 701.464999999999}, //The y-coefficients
+                new double[] {332.608333333333, -760.816666666667, 1011.76666666667, -979.900000000001, 515.443333333334}, //The x-coefficients
+                new double[] {-37.8416666666669, 533.766666666667, -1915.98333333333, 2103.2, -734.128333333334}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -58,8 +58,8 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         );
 
         case2ParkB = new BezierCurveRoute(
-                new double[] {-607.856666666667, 1790.11, -2147.01666666667, 613.433333333332, 334.600000000003, 75.2849999999969, 158.935000000001}, //The x-coefficients
-                new double[] {33.46, -334.6, 1812.41666666667, -1101.39166666667, -3145.24, 4399.99, -1596.91833333333}, //The y-coefficients
+                new double[] {384.79, -1430.415, 3081.10833333334, -4461.33333333334, 4592.385, -3175.91166666667, 1101.79}, //The x-coefficients
+                new double[] {-30.6716666666667, 267.68, -822.558333333332, -627.375, 3471.475, -3385.03666666666, 1070.32166666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -84,7 +84,7 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
             telemetry.update();
         }
 
-        // Jeroen denkt dat dit niet nodig is.
+        // Initialisation.
         waitForStart();
 
         // Choose default option if skip.
