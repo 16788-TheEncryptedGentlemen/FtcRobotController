@@ -36,7 +36,7 @@ public class DriverControlled extends OpMode {
         controlArm();
         controlDrivetrain();
         controlTiltMechanism();
-        controlDroneLauncher();
+        controlPusher();
     }
 
     private void controlDrivetrain() {
@@ -155,7 +155,7 @@ public class DriverControlled extends OpMode {
     }
 
 
-    // Controls of the left grabber on the robot for the pixel.
+    /** Controls of the left grabber on the robot for the pixel. */
     private void controlGrabber() {
         if (gamepad2.x) {
             telemetry.addLine("Grab");
@@ -166,36 +166,6 @@ public class DriverControlled extends OpMode {
         }
     }
 
-    /*     // Controls of the right grabber on the robot for the pixel.
-        if (gamepad2.a) {
-            telemetry.addLine("GrabRight");
-            robot.grabber.Grab();
-        } else if (gamepad2.b) {
-            telemetry.addLine("DropRight");
-            robot.grabber.Drop();
-        }
-
-       // Controls of the left grabber on the robot for the pixel.
-        if (gamepad2.right_bumper) {
-            telemetry.addLine("GrabLeft");
-            robot.grabberLeft.Grab();
-            robot.grabberRight.Grab();
-        } else if (gamepad2.left_bumper) {
-            telemetry.addLine("DropLeft");
-            robot.grabberLeft.Drop();
-            robot.grabberRight.Drop();
-        }
-    } */
-
-    private void controlDroneLauncher () {
-        if (gamepad2.back) {
-            robot.droneLauncher.launch();
-            telemetry.addLine("DroneLauncherLaunches");
-        } else if (gamepad2.b) {
-                robot.droneLauncher.reverse();
-                telemetry.addLine("DroneLauncherStop");
-          }
-      }
     private void controlTiltMechanism() {
         if (gamepad2.dpad_up) {
             robot.tiltMechanism.TiltMechanismUp();
@@ -203,12 +173,29 @@ public class DriverControlled extends OpMode {
         } else if (gamepad2.dpad_down) {
             robot.tiltMechanism.TiltMechanismDown();
             telemetry.addLine("TiltMechanismDown");
-//        } else {
-//            robot.tiltMechanism.StopTiltMechanism();
-//            telemetry.addLine("StopTiltMechanism");
-//        }
         }
     }
+
+    private void controlPusher() {
+        if (gamepad2.a) {
+            telemetry.addLine("Grab");
+            robot.pusher.grab();
+        } else if (gamepad2.b) {
+            telemetry.addLine("Release");
+            robot.pusher.release();
+        }
+        // Just for testing autonomous positions.
+        else if (gamepad1.b) {
+            telemetry.addLine("Right");
+            robot.pusher.preloadRight();
+        }
+        // Just for testing autonomous positions.
+        else if (gamepad1.x) {
+            telemetry.addLine("Left");
+            robot.pusher.preloadLeft();
+        }
+    }
+
 }
 
 
