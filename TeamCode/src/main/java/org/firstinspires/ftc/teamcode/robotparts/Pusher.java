@@ -15,7 +15,8 @@ public class Pusher {
     }
 
     public void grab() {
-        right.setPosition(0.5);
+        // Compensate for half a tooth offset
+        right.setPosition(0.5 - 2.0/25.0/2);
         left.setPosition(0.5);
     }
 
@@ -26,14 +27,14 @@ public class Pusher {
 
     /** Position for when pixel is preloaded on left side of the robot. */
     public void preloadLeft() {
-        left.setPosition(0.75);
-        right.setPosition(1.0);
+        left.setPosition(0.9);
+        right.setPosition(0.8);
     }
 
     /** Position for when pixel is preloaded on right side of the robot. */
     public void preloadRight() {
-        left.setPosition(0.0);
-        right.setPosition(0.25);
+        left.setPosition(0.2);
+        right.setPosition(0.1);
     }
 
 }
