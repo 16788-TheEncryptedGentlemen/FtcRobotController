@@ -10,59 +10,67 @@ import org.firstinspires.ftc.teamcode.robotparts.Grabber;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
+import org.firstinspires.ftc.teamcode.robotparts.Pusher;
 import org.firstinspires.ftc.teamcode.robotparts.TiltMechanism;
-import org.firstinspires.ftc.teamcode.robotparts.DroneLauncher;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 
 /** Contains all the robot parts. */
 public class CompetitionRobot {
 
-    /** The webcam of the robot. */
-    public Webcam webcam;
     public Display display;
-    public Imu  imu;
+    public Webcam webcam;
+    public Imu imu;
     public Odometry odometry;
     public MecanumDrivetrain drivetrain;
-    public Arm  arm;
-    public TiltMechanism tiltMechanism;
-    public DroneLauncher droneLauncher;
     public Grabber grabber;
+    public Pusher pusher;
+    public TiltMechanism tiltMechanism;
+    public Arm arm;
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
-        HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
         display = new Display(runningLinearOpMode.telemetry);
+        HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
 
         display.showLoading("webcam");
         webcam = new Webcam(hardwaremap);
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
-        display.showLoading("drivetrain");
+        display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
+        display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
+        display.showLoading("pusher");
+        pusher = new Pusher(hardwaremap);
+        display.showLoading("tiltMechanism");
         tiltMechanism = new TiltMechanism(hardwaremap);
+        display.showLoading("arm");
         arm = new Arm(hardwaremap);
-//        display.showLoading("odometry");
         display.showLoading("Done initializing! Press start to play");
     }
-    public CompetitionRobot(OpMode opMode) {
-        HardwareMap hardwaremap = opMode.hardwareMap;
-        display = new Display(opMode.telemetry);
 
-       // display.showLoading("imu");
+    public CompetitionRobot(OpMode opMode) {
+        display = new Display(opMode.telemetry);
+        HardwareMap hardwaremap = opMode.hardwareMap;
+
+        display.showLoading("webcam");
+        webcam = new Webcam(hardwaremap);
+        display.showLoading("imu");
         imu = new Imu(hardwaremap);
-      // display.showLoading("drivetrain");
+        display.showLoading("odometry");
+        odometry = new Odometry(hardwaremap);
+        display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
-       // display.showLoading("grabberLeft");
-      //display.showLoading("grabberRight");
-       grabber = new Grabber(hardwaremap);
+        display.showLoading("grabber");
+        grabber = new Grabber(hardwaremap);
+        display.showLoading("pusher");
+        pusher = new Pusher(hardwaremap);
+        display.showLoading("tiltMechanism");
+        tiltMechanism = new TiltMechanism(hardwaremap);
+        display.showLoading("arm");
         arm = new Arm(hardwaremap);
-//        display.showLoading("arm");
-       tiltMechanism = new TiltMechanism(hardwaremap);
-        //display.showLoading("tiltMechanism")
-       droneLauncher = new DroneLauncher(hardwaremap);
-        //display.showLoading("droneLauncher")
-      // display.showLoading("Done initializing! Press start to play");
+        display.showLoading("Done initializing! Press start to play");
     }
 }
