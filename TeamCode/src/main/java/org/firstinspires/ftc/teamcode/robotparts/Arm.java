@@ -59,5 +59,16 @@ public class Arm {
         motor.setTargetPosition(69);
     }
 
+    public void ArmToLowestPosition(){
+        motor.setPower(1.0);
+        position = 0;
+        motor.setTargetPosition(position);
+    }
+    public void ArmToNeutralPosition(){
+        motor.setPower(1.0);
+        position = 60 ;
+        motor.setTargetPosition(position);
+    }
+
 
 }
