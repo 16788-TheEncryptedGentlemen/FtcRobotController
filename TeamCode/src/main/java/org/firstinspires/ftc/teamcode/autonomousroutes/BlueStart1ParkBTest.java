@@ -28,7 +28,7 @@ public class BlueStart1ParkBTest extends LinearOpMode {
 
         // Initialisation.
         robot.tiltMechanism.TiltMechanismStartPosition();
-        robot.grabber.Grab();
+        robot.grabber.grab();
         waitForStart();
 
         // DRIVE TO BOARD
@@ -40,7 +40,7 @@ public class BlueStart1ParkBTest extends LinearOpMode {
 
         sleep(800);
         robot.arm.motor.setTargetPosition(40);
-        robot.grabber.Grab();
+        robot.grabber.grab();
 
         sleep(800);
         robot.arm.AutoArmToBoardPosition();
@@ -49,7 +49,7 @@ public class BlueStart1ParkBTest extends LinearOpMode {
         robot.drivetrain.turnRobotAO(90);
         sleep(5000);
         // DRIVE FORWARD 10CM
-        robot.grabber.Drop();
+        robot.grabber.drop();
         // DRIVE BACK 10CM
 
         // DRIVE TO PARKING

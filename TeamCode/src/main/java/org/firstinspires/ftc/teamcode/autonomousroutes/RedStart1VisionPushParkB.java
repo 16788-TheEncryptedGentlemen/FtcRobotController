@@ -74,7 +74,7 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         initAutonomous();
 
         // TODO: Hier 1 functie van maken.
-        robot.grabber.Grab();
+        robot.grabber.grab();
         robot.tiltMechanism.TiltMechanismUp();
 
         while (!isStarted() && !isStopRequested()) {
