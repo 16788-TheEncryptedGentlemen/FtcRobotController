@@ -13,10 +13,10 @@ public class Grabber {
     }
 
     public void grab() {
-        servo.setPosition(0.7);
+        servo.setPosition(0.8);
     }
 
     public void drop() {
-        servo.setPosition(0.5);
+        servo.setPosition(0.2);
     }
 }

@@ -14,11 +14,11 @@ public class TiltMechanism {
     }
 
     public void TiltMechanismUp() {
-        servo.setPosition(0.4 + 1.0/6.0);
+        servo.setPosition(0.4);
     }
 
     public void TiltMechanismDown() {
-        servo.setPosition(0.1 + 1.0/6.0);
+        servo.setPosition(0.0);
     }
 
     public void TiltMechanismStartPosition() {
