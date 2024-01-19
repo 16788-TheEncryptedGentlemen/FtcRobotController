@@ -56,7 +56,7 @@ public class Arm {
 
     public void AutoArmToBoardPosition(){
         motor.setPower(1.0);
-        motor.setTargetPosition(69);
+        motor.setTargetPosition(100);
     }
 
     public void ArmToLowestPosition(){
