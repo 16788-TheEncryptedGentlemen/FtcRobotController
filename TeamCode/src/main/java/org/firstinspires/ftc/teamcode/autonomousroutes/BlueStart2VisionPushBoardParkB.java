@@ -140,7 +140,7 @@ public class BlueStart2VisionPushBoardParkB extends LinearOpMode {
 
     private void middlePixelPlacement() {
         //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(80, 0.4);
+        robot.drivetrain.driveStraight(70, 0.4);
         // Laat pixel in pusher los.
         robot.pusher.releasePreLoadRight();
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
