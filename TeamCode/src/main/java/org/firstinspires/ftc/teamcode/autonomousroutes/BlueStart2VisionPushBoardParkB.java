@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class RedStart2VisionPushBoardParkB extends LinearOpMode {
-    private final boolean BLUE_SIDE = false;
+public class BlueStart2VisionPushBoardParkB extends LinearOpMode {
+    private final boolean BLUE_SIDE = true;
     private final boolean SKIP_VISION = false;
     private BezierCurveRoute case0;
     private BezierCurveRoute case2;
@@ -25,8 +25,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         robot = new CompetitionRobot(this);
 
         case0 = new BezierCurveRoute(
-                new double[] {-3.18666666666675, 54.97, -129.06, 49.7916666666665}, //The x-coefficients
-                new double[] {337.786666666667, -619.01, 497.12, -148.18}, //The y-coefficients
+                new double[] {-109.94, 136.23, -54.1733333333334}, //The x-coefficients
+                new double[] {-5.97500000000014, 3.58500000000015, 65.3266666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -34,8 +34,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case2 = new BezierCurveRoute(
-                new double[] {121.093333333333, -167.3, 108.346666666667, -33.0616666666667}, //The x-coefficients
-                new double[] {1.59333333333325, -14.3399999999995, 17.5266666666658, 59.3516666666669}, //The y-coefficients
+                new double[] {0, 35.8500000000002, -130.653333333334, 125.873333333333}, //The x-coefficients
+                new double[] {240.593333333333, -313.09, 154.553333333333, -17.1283333333333}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -43,8 +43,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case0Board0 = new BezierCurveRoute(
-                new double[] {-14.3399999999999, -83.6499999999998, 549.699999999999, 734.925000000003, -2251.38, 1151.98}, //The x-coefficients
-                new double[] {-179.250000000004, 495.925000000015, -231.033333333363, -1021.72499999997, 1438.77999999998, -486.364999999997}, //The y-coefficients
+                new double[] {-3.18666666666675, 4.78000000000014, -1.59333333333333, -60.9450000000001}, //The x-coefficients
+                new double[] {-66.92, 100.38, -55.7666666666667, 8.36500000000008}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -52,8 +52,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case1Board1 = new BezierCurveRoute(
-                new double[] {356.11, -770.775, 677.166666666666, -221.074999999998, 21.509999999999, 19.1200000000002}, //The x-coefficients
-                new double[] {-45.4100000000017, 35.8500000000047, 438.16666666666, -794.674999999996, 418.249999999999, -41.0283333333338}, //The y-coefficients
+                new double[] {-88.8283333333333}, //The x-coefficients
+                new double[] {-0.398333333333355}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -61,8 +61,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case2Board2 = new BezierCurveRoute(
-                new double[] {39.0366666666667}, //The x-coefficients
-                new double[] {1.19499999999998}, //The y-coefficients
+                new double[] {-468.041666666667, 717, -246.966666666667, -201.158333333333, 80.4633333333335}, //The x-coefficients
+                new double[] {-5.97500000000008, -23.8999999999998, 306.716666666666, -440.158333333332, 181.241666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -70,8 +70,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case0ParkB = new BezierCurveRoute(
-                new double[] {4.78000000000014, -17.9250000000003, 48.1983333333335}, //The x-coefficients
-                new double[] {-231.83, 253.34, -90.4216666666666}, //The y-coefficients
+                new double[] {4.77999999999997, 7.17000000000007, -42.6216666666667}, //The x-coefficients
+                new double[] {-108.745, 112.33, -39.0366666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -79,8 +79,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case1ParkB = new BezierCurveRoute(
-                new double[] {20.7133333333343, -66.9200000000016, 41.4266666666678, 40.2316666666664}, //The x-coefficients
-                new double[] {-184.826666666666, 236.61, -184.826666666666, 70.1066666666666}, //The y-coefficients  y-coefficients
+                new double[] {-1.19499999999999, 32.265, -62.5383333333333}, //The x-coefficients
+                new double[] {-175.665, 168.495, -50.9866666666667}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -88,8 +88,8 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         );
 
         case2ParkB = new BezierCurveRoute(
-                new double[] {-7.17000000000007, 3.58500000000015, 35.0533333333333}, //The x-coefficients
-                new double[] {-90.8199999999999, 71.7, -12.7466666666667}, //The y-coefficients
+                new double[] {-15.9333333333333, 100.38, -149.773333333334, 33.0616666666668}, //The x-coefficients
+                new double[] {-296.36, 415.86, -245.373333333333, 49.3933333333334}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -109,7 +109,6 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         robot.arm.AutoArmToBoardPosition();
         sleep(1000);
         robot.tiltMechanism.TiltMechanismStartPosition();
-
 
         while (!isStarted() && !isStopRequested()) {
             markerPosition = robot.webcam.getMarkerPosition(BLUE_SIDE);
@@ -141,32 +140,24 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
 
     private void middlePixelPlacement() {
         //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(70, 0.4);
+        robot.drivetrain.driveStraight(80, 0.4);
         // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadLeft();
+        robot.pusher.releasePreLoadRight();
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-25, 0.4);
         // Rij naar board.
         case1Board1.executeWithPointSkip();
         // Draai
-        sleep(200);
-        robot.drivetrain.turnRobotAO(90);
+        robot.drivetrain.turnRobotAO(-90);
         // Beweeg arm naar juiste positie.
-        sleep(200);
         robot.arm.AutoArmToBoardPosition();
-        sleep(200);
-        robot.tiltMechanism.TiltMechanismUp();
-        sleep(200);
         // Rij stukje naar voren.
         robot.drivetrain.driveStraight(10, 0.4);
-        sleep(200);
         // laat pikel los.
         robot.grabber.drop();
-        sleep(200);
         // rijd achteruit.
         robot.drivetrain.driveStraight(-10,0.4);
         // Beweeg arm terug.
-        sleep(200);
         robot.arm.MoveArmDown();
         // Draai robot.
         robot.drivetrain.turnRobotAO(0);
@@ -179,13 +170,13 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         // Push pixel naar de rechter streep.
         case2.executeWithPointSkip();
         // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadLeft();
+        robot.pusher.releasePreLoadRight();
         // Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-10, 0.4);
         // Rij naar board.
         case2Board2.executeWithPointSkip();
         // Draai
-        robot.drivetrain.turnRobotAO(90);
+        robot.drivetrain.turnRobotAO(-90);
         // Beweeg arm naar juiste positie.
         robot.arm.AutoArmToBoardPosition();
         // Rij stukje naar voren.
@@ -206,13 +197,13 @@ public class RedStart2VisionPushBoardParkB extends LinearOpMode {
         // Push pixel naar de rechter streep.
         case0.executeWithPointSkip();
         // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadLeft();
+        robot.pusher.releasePreLoadRight();
         // Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-4, 0.4);
+        robot.drivetrain.driveStraight(-10, 0.4);
         // Rij naar board.
         case0Board0.executeWithPointSkip();
         // Draai
-        robot.drivetrain.turnRobotAO(90);
+        robot.drivetrain.turnRobotAO(-90);
         // Beweeg arm naar juiste positie.
         robot.arm.AutoArmToBoardPosition();
         // Rij stukje naar voren.
