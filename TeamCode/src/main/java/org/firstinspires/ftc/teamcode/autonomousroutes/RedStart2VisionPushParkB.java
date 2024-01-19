@@ -73,9 +73,12 @@ public class RedStart2VisionPushParkB extends LinearOpMode {
 
         initAutonomous();
 
-        // TODO: Hier 1 functie van maken.
         robot.grabber.grab();
-        robot.tiltMechanism.TiltMechanismUp();
+        sleep(1000);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+
 
         while (!isStarted() && !isStopRequested()) {
             markerPosition = robot.webcam.getMarkerPosition(BLUE_SIDE);
@@ -107,7 +110,7 @@ public class RedStart2VisionPushParkB extends LinearOpMode {
 
     private void middlePixelPlacement() {
         //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(80, 0.4);
+        robot.drivetrain.driveStraight(70, 0.4);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-25, 0.4);
         //Rij naar de backstage en parkeer.
@@ -124,10 +127,11 @@ public class RedStart2VisionPushParkB extends LinearOpMode {
     }
 
     private void leftPixelPlacement() {
-        //Push pixel naar de linker streep.
-        case0.executeWithPointSkip();
-        //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-10, 0.4);
+        robot.drivetrain.driveStraight(70, 0.4);
+        robot.drivetrain.turnRobotAO(-45);
+        robot.drivetrain.driveStraight(20, 0.4);
+        robot.drivetrain.driveStraight(-20, 0.4);
+        robot.drivetrain.turnRobotAO(0);
         //Rij naar de backstage en parkeer.
         case0ParkB.executeWithPointSkip();
     }

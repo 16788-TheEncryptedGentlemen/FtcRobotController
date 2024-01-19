@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomousroutes;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute.DRIVE_METHOD;
-
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-@Autonomous
+// @Autonomous
 public class BlueStart1ParkB extends LinearOpMode {
     public void runOpMode() {
 
