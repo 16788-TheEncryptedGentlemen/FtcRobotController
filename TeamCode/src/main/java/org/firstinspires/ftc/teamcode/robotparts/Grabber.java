@@ -12,11 +12,11 @@ public class Grabber {
         servo = hardwaremap.get(Servo.class, "Grabber");
     }
 
-    public void Grab() {
+    public void grab() {
         servo.setPosition(0.7);
     }
 
-    public void Drop() {
+    public void drop() {
         servo.setPosition(0.5);
     }
 }
