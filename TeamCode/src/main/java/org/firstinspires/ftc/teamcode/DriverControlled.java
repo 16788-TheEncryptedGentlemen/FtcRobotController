@@ -33,7 +33,7 @@ public class DriverControlled extends OpMode {
         FINISHED
     }
 
-    public PROCESSING_STATE State = PROCESSING_STATE.FINISHED;
+    public PROCESSING_STATE State = PROCESSING_STATE.IDLE;
 
     @Override
     /** Initialisation */
@@ -47,7 +47,7 @@ public class DriverControlled extends OpMode {
     /** Repeats program until program is stopped */
     public void loop() {
         controlGrabber();
-        if (State == PROCESSING_STATE.IDLE) {
+        if (State != PROCESSING_STATE.MOVING) {
             controlArm();
         }
         controlDrivetrain();
@@ -160,7 +160,7 @@ public class DriverControlled extends OpMode {
         robot.droneLauncher.reverse();
         telemetry.addLine("DroneLauncherStop");
     }
-}
+    }
     /** Controls of the arm that is attached to the grabber on the robot. */
     private void controlArm() {
         // There is a minus because up is negative and down is positive on the controller.
@@ -223,38 +223,39 @@ public class DriverControlled extends OpMode {
 
     private void controlPixelProcess() {
 
-        if(State == PROCESSING_STATE.FINISHED)
+        if(State == PROCESSING_STATE.IDLE)
         {
             grabberTimer.Reset();
         }
 
-    if(State == PROCESSING_STATE.MOVING) {
+        if(State == PROCESSING_STATE.MOVING) {
 
-        if (grabberTimer.isBetween(0, 1.0)) {
-            robot.pusher.grab();
-            robot.arm.ArmToLowestPosition();
-            robot.grabber.drop();
-            robot.tiltMechanism.TiltMechanismUp();
-        }
-        else if (grabberTimer.isBetween(1.0, 1.8)) {
-            robot.tiltMechanism.TiltMechanismDown();
+            if (grabberTimer.isBetween(0, 0.7)) {
+                robot.pusher.grab();
+                robot.arm.ArmToLowestPosition();
+                robot.grabber.drop();
+                robot.tiltMechanism.TiltMechanismUp();
+            }
+            else if (grabberTimer.isBetween(0.7, 1.4)) {
+                robot.tiltMechanism.TiltMechanismDown();
 
-        } else if (grabberTimer.isBetween(1.8, 2.6)){
-            robot.grabber.grab();
-            robot.pusher.release();
+            } else if (grabberTimer.isBetween(1.4, 2.1)){
+                robot.grabber.grab();
+                robot.pusher.release();
+            }
+            else if (grabberTimer.isBetween(2.1, 2.8)) {
+                robot.arm.ArmToNeutralPosition();
+                robot.tiltMechanism.TiltMechanismUp();
+            }
+            else if (grabberTimer.getTime() > 2.8) {
+                State = PROCESSING_STATE.FINISHED;
+            }
         }
-        else if (grabberTimer.isBetween(2.6, 3.6)) {
-            robot.arm.ArmToNeutralPosition();
-            robot.tiltMechanism.TiltMechanismUp();
-        }
-        else if (grabberTimer.getTime() > 3.6) {
-            State = PROCESSING_STATE.FINISHED;
-        }
-    }
 
-        if (gamepad2.right_bumper && State == PROCESSING_STATE.IDLE){
+        if (gamepad2.right_bumper && State != PROCESSING_STATE.MOVING){
             State = PROCESSING_STATE.MOVING;
+        } else if (State == PROCESSING_STATE.FINISHED) {
+            State = PROCESSING_STATE.IDLE;
         }
     }
 }
-
