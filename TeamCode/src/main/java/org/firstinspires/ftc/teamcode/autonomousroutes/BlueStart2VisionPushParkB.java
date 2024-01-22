@@ -31,8 +31,8 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         );
 
         case0ParkB= new BezierCurveRoute(
-                new double[] {-9.55999999999995, 71.6999999999998, -144.993333333333, -10.3566666666668}, //The x-coefficients
-                new double[] {-165.706666666667, 229.44, -186.419999999999, 73.6916666666663}, //The y-coefficients
+                new double[] {-17.5266666666667, 102.77, -172.08, -8.76333333333321}, //The x-coefficients
+                new double[] {-36.6466666666653, -69.3100000000019, 119.500000000001, -42.621666666667}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -40,8 +40,8 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         );
 
         case1ParkB = new BezierCurveRoute(
-                new double[] {-4.78000000000006, 38.2400000000003, -219.880000000001, 66.5216666666669}, //The x-coefficients
-                new double[] {-148.18, -11.9500000000003, 237.406666666667, -137.026666666667}, //The y-coefficients
+                new double[] {-6.37333333333346, 90.8200000000003, -321.853333333334, 112.33}, //The x-coefficients
+                new double[] {-39.8333333333335, -164.91, 309.106666666666, -140.611666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -49,8 +49,8 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         );
 
         case2ParkB = new BezierCurveRoute(
-                new double[] {-4.78000000000006, 38.2400000000003, -219.880000000001, 66.5216666666669}, //The x-coefficients
-                new double[] {-148.18, -11.9500000000003, 237.406666666667, -137.026666666667}, //The y-coefficients
+                new double[] {-6.37333333333346, 90.8200000000003, -321.853333333334, 112.33}, //The x-coefficients
+                new double[] {-39.8333333333335, -164.91, 309.106666666666, -140.611666666666}, //The y-coefficients
                 robot,
                 0.4,
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
@@ -67,9 +67,6 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         // TODO: Hier 1 functie van maken.
         robot.grabber.grab();
         sleep(1000);
-        robot.arm.AutoArmToBoardPosition();
-        sleep(1000);
-        robot.tiltMechanism.TiltMechanismStartPosition();
 
 
         while (!isStarted() && !isStopRequested()) {
@@ -101,8 +98,14 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
     }
 
     private void middlePixelPlacement() {
-        //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(70, 0.4);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.drivetrain.driveStraight(65, 0.4);
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-25, 0.4);
         //Rij naar de backstage en parkeer.
@@ -110,9 +113,16 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
     }
 
     private void rightPixelPlacement() {
-        robot.drivetrain.driveStraight(70, 0.4);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.drivetrain.driveStraight(50, 0.4);
         robot.drivetrain.turnRobotAO(45);
         robot.drivetrain.driveStraight(20, 0.4);
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
         robot.drivetrain.driveStraight(-20, 0.4);
         robot.drivetrain.turnRobotAO(0);
         //Rij naar de backstage en parkeer.
@@ -120,8 +130,15 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
     }
 
     private void leftPixelPlacement() {
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
         //Push pixel naar de linker streep.
         case0.executeWithPointSkip();
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-10, 0.4);
         //Rij naar de backstage en parkeer.

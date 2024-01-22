@@ -66,9 +66,6 @@ public class BlueStart1VisionPushParkB extends LinearOpMode {
 
         robot.grabber.grab();
         sleep(1000);
-        robot.arm.AutoArmToBoardPosition();
-        sleep(1000);
-        robot.tiltMechanism.TiltMechanismStartPosition();
 
 
         while (!isStarted() && !isStopRequested()) {
@@ -100,30 +97,42 @@ public class BlueStart1VisionPushParkB extends LinearOpMode {
     }
 
     private void middlePixelPlacement() {
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
         //Push pixel naar de middelste streep.
         robot.drivetrain.driveStraight(70, 0.4);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-25, 0.4);
         //Rij naar de backstage en parkeer.
-        case1ParkB.executeWithPointSkip();
+        //case1ParkB.executeWithPointSkip();
     }
 
     private void rightPixelPlacement() {
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
         //Push pixel naar de rechter streep.
         case2.executeWithPointSkip();
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
         robot.drivetrain.driveStraight(-10, 0.4);
         //Rij naar de backstage en parkeer.
-        case2ParkB.executeWithPointSkip();
+       // case2ParkB.executeWithPointSkip();
     }
 
     private void leftPixelPlacement() {
+        robot.arm.AutoArmToBoardPosition();
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
         robot.drivetrain.driveStraight(70, 0.4);
         robot.drivetrain.turnRobotAO(-45);
         robot.drivetrain.driveStraight(20, 0.4);
         robot.drivetrain.driveStraight(-20, 0.4);
-        robot.drivetrain.turnRobotAO(0);
+        //robot.drivetrain.turnRobotAO(0);
         //Rij naar de backstage en parkeer.
-        case0ParkB.executeWithPointSkip();
+        //case0ParkB.executeWithPointSkip();
     }
 }
