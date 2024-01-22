@@ -3,10 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-
-import javax.annotation.processing.Completion;
+import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 @TeleOp
 public class DriverControlled extends OpMode {
@@ -256,6 +254,11 @@ public class DriverControlled extends OpMode {
             State = PROCESSING_STATE.MOVING;
         } else if (State == PROCESSING_STATE.FINISHED) {
             State = PROCESSING_STATE.IDLE;
+        }
+    }
+    private void ArmReset() {
+        if (gamepad2.left_bumper){
+            robot.arm.ArmReset();
         }
     }
 }

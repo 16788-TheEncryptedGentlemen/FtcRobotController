@@ -17,7 +17,7 @@ public class DroneLauncher {
     }
 
     public void reverse () {
-        servo.setPosition(0.0);
+        servo.setPosition(0.4);
     }
 
 }
