@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Arm {
     /** De positie */
     public int position = 0;
+    public int offset = 0;
 
     /** Ben ik al aan het stoppen? */
     boolean ikBenAanHetStoppen = false;
@@ -32,14 +33,14 @@ public class Arm {
 
     public void MoveArmUp() {
         motor.setPower(1.0);
-        motor.setTargetPosition(position);
+        motor.setTargetPosition(position+offset);
         ikBenAanHetStoppen = false;
         position++;
     }
 
     public void MoveArmDown() {
         motor.setPower(1.0);
-        motor.setTargetPosition(position);
+        motor.setTargetPosition(position+offset);
         ikBenAanHetStoppen = false;
         position--;
     }
@@ -47,11 +48,15 @@ public class Arm {
     public void StopArm() {
         motor.setPower(1.0);
         if (ikBenAanHetStoppen) {
-            motor.setTargetPosition(position);
+            motor.setTargetPosition(position+offset);
         } else {
             position = motor.getCurrentPosition();
             ikBenAanHetStoppen = true;
         }
+    }
+
+    public void ArmReset(){
+        offset = motor.getCurrentPosition();
     }
 
     public void AutoArmToBoardPosition(){
@@ -62,12 +67,12 @@ public class Arm {
     public void ArmToLowestPosition(){
         motor.setPower(1.0);
         position = 0;
-        motor.setTargetPosition(position);
+        motor.setTargetPosition(position+offset);
     }
     public void ArmToNeutralPosition(){
         motor.setPower(1.0);
         position = 60 ;
-        motor.setTargetPosition(position);
+        motor.setTargetPosition(position+offset);
     }
 
 
