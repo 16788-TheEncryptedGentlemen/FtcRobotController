@@ -10,14 +10,10 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 public class DriverControlled extends OpMode {
     // TODO: Still need to test it!
 
-    /**
-     * The robot
-     */
+    /** The robot */
     CompetitionRobot robot;
 
-    /**
-     * The desired heading when strafing.
-     */
+    /** The desired heading when strafing. */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
@@ -149,6 +145,7 @@ public class DriverControlled extends OpMode {
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
+    /** Controls of the paper drone launcher. */
     private void controlDroneLauncher() {
        if(gamepad2.back) {
         robot.droneLauncher.launch();
@@ -178,7 +175,7 @@ public class DriverControlled extends OpMode {
 
     }
 
-    /** Controls of the left grabber on the robot for the pixel. */
+    /** Controls of the grabber on the robot for the pixel. */
     private void controlGrabber() {
         if (gamepad2.x) {
             telemetry.addLine("Grab");
@@ -189,6 +186,7 @@ public class DriverControlled extends OpMode {
         }
     }
 
+    /** Controls of the tilt mechanism on the robot supporting the grabber. */
     private void controlTiltMechanism() {
         if (gamepad2.dpad_up) {
             robot.tiltMechanism.TiltMechanismUp();
@@ -199,6 +197,7 @@ public class DriverControlled extends OpMode {
         }
     }
 
+    /** Controls of the grabber/pusher under the robot. */
     private void controlPusher() {
         if (gamepad2.right_trigger >= 0.1) {
             telemetry.addLine("Grab");
@@ -218,7 +217,7 @@ public class DriverControlled extends OpMode {
 //            robot.pusher.preloadLeft();
 //        }
     }
-
+    /** Controls and code of the pixel grab processor. */
     private void controlPixelProcess() {
 
         if(State == PROCESSING_STATE.IDLE)
@@ -249,7 +248,7 @@ public class DriverControlled extends OpMode {
                 State = PROCESSING_STATE.FINISHED;
             }
         }
-
+    /** Controls of the pixel processor. */
         if (gamepad2.right_bumper && State != PROCESSING_STATE.MOVING){
             State = PROCESSING_STATE.MOVING;
         } else if (State == PROCESSING_STATE.FINISHED) {

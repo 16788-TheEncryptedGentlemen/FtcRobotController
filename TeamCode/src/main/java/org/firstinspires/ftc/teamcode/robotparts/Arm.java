@@ -31,6 +31,7 @@ public class Arm {
         motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
 
+    // Move the arm the up.
     public void MoveArmUp() {
         motor.setPower(1.0);
         motor.setTargetPosition(position+offset);
@@ -38,6 +39,7 @@ public class Arm {
         position++;
     }
 
+    // Move the arm the down.
     public void MoveArmDown() {
         motor.setPower(1.0);
         motor.setTargetPosition(position+offset);
@@ -45,6 +47,7 @@ public class Arm {
         position--;
     }
 
+    // Stop the arm.
     public void StopArm() {
         motor.setPower(1.0);
         if (ikBenAanHetStoppen) {
