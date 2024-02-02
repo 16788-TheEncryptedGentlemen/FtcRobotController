@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.robotparts.Pusher;
 import org.firstinspires.ftc.teamcode.robotparts.TiltMechanism;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 import org.firstinspires.ftc.teamcode.robotparts.DroneLauncher;
+import org.firstinspires.ftc.teamcode.robotparts.PixelWheel;
 
 /** Contains all the robot parts. */
 public class CompetitionRobot {
@@ -28,6 +29,7 @@ public class CompetitionRobot {
     public TiltMechanism tiltMechanism;
     public Arm arm;
     public DroneLauncher droneLauncher;
+    public PixelWheel pixelWheel;
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
@@ -76,6 +78,8 @@ public class CompetitionRobot {
         display.showLoading("pixelGrabber");
         droneLauncher = new DroneLauncher(hardwaremap);
         display.showLoading("droneLauncher");
+        pixelWheel = new PixelWheel(hardwaremap);
+        display.showLoading("pixelWheel");
         display.showLoading("Done initializing! Press start to play");
     }
 }

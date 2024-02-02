@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 @TeleOp
 public class DriverControlled extends OpMode {
-    // TODO: Still need to test it!
 
     /** The robot */
     CompetitionRobot robot;
@@ -45,10 +44,10 @@ public class DriverControlled extends OpMode {
             controlArm();
         }
         controlDrivetrain();
-        controlTiltMechanism();
-        controlPusher();
+        controlTiltMechanism();     controlPusher();
         controlDroneLauncher();
         controlPixelProcess();
+        controlPixelWheel();
     }
 
     private void controlDrivetrain() {
@@ -93,7 +92,7 @@ public class DriverControlled extends OpMode {
 
         // The speed of turning between -1 (left) and 1 (right).
         double turnSpeed = gamepad1.right_stick_x;
-        // TODO: figure out what's going out here.
+        // Two of the speeds are reversed because they
         robot.drivetrain.addSpeed(-turnSpeed, -turnSpeed, turnSpeed, turnSpeed);
 
         // Correct the strafing angle when strafing and not rotating.
@@ -150,11 +149,11 @@ public class DriverControlled extends OpMode {
        if(gamepad2.back) {
         robot.droneLauncher.launch();
         telemetry.addLine("DroneLauncherLaunches");
-    }
+        }
        else if(gamepad2.b) {
         robot.droneLauncher.reverse();
         telemetry.addLine("DroneLauncherStop");
-    }
+        }
     }
     /** Controls of the arm that is attached to the grabber on the robot. */
     private void controlArm() {
@@ -166,13 +165,14 @@ public class DriverControlled extends OpMode {
         } else if (direction < -0.1) {
             telemetry.addLine("Arm Down");
             robot.arm.MoveArmDown();
+        } else if (gamepad2.left_bumper) {
+            robot.arm.ArmReset();
         } else {
             telemetry.addLine("Arm Stop");
             robot.arm.StopArm();
         }
         telemetry.addData("Angle Arm", robot.arm.motor.getCurrentPosition());
         telemetry.addData("Target Arm", robot.arm.position);
-
     }
 
     /** Controls of the grabber on the robot for the pixel. */
@@ -255,9 +255,16 @@ public class DriverControlled extends OpMode {
             State = PROCESSING_STATE.IDLE;
         }
     }
-    private void ArmReset() {
-        if (gamepad2.left_bumper){
-            robot.arm.ArmReset();
+    private void controlPixelWheel(){
+        if (gamepad2.left_stick_y > 0.1){
+            telemetry.addLine("PixelMover In");
+            robot.pixelWheel.PixelWheelIn();
+        } else if (gamepad2.left_stick_y < -0.1) {
+            telemetry.addLine("PixelMover Out");
+            robot.pixelWheel.PixelWheelOut();
+        } else {
+            telemetry.addLine("PixelMover Stop");
+            robot.pixelWheel.PixelWheelStop();
         }
     }
 }
