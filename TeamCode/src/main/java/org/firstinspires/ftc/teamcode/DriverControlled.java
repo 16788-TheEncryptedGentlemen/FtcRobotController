@@ -9,14 +9,19 @@ import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 @TeleOp
 public class DriverControlled extends OpMode {
 
-    /** The robot */
+    /**
+     * The robot
+     */
     CompetitionRobot robot;
 
-    /** The desired heading when strafing. */
+    /**
+     * The desired heading when strafing.
+     */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
     public Timer grabberTimer = new Timer();
+    public Timer hangTimer = new Timer();
     public final double grabposition = 0;
     public final double DefaultPosition = 0.8;
 
@@ -44,10 +49,12 @@ public class DriverControlled extends OpMode {
             controlArm();
         }
         controlDrivetrain();
-        controlTiltMechanism();     controlPusher();
+        controlTiltMechanism();
+        controlPusher();
         controlDroneLauncher();
         controlPixelProcess();
         controlPixelWheel();
+        controlHangMechanism();
     }
 
     private void controlDrivetrain() {
@@ -144,18 +151,22 @@ public class DriverControlled extends OpMode {
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
-    /** Controls of the paper drone launcher. */
+    /**
+     * Controls of the paper drone launcher.
+     */
     private void controlDroneLauncher() {
-       if(gamepad2.back) {
-        robot.droneLauncher.launch();
-        telemetry.addLine("DroneLauncherLaunches");
-        }
-       else if(gamepad2.b) {
-        robot.droneLauncher.reverse();
-        telemetry.addLine("DroneLauncherStop");
+        if (gamepad2.back) {
+            robot.droneLauncher.launch();
+            telemetry.addLine("DroneLauncherLaunches");
+        } else if (gamepad2.b) {
+            robot.droneLauncher.reverse();
+            telemetry.addLine("DroneLauncherStop");
         }
     }
-    /** Controls of the arm that is attached to the grabber on the robot. */
+
+    /**
+     * Controls of the arm that is attached to the grabber on the robot.
+     */
     private void controlArm() {
         // There is a minus because up is negative and down is positive on the controller.
         double direction = -gamepad2.right_stick_y;
@@ -175,7 +186,9 @@ public class DriverControlled extends OpMode {
         telemetry.addData("Target Arm", robot.arm.position);
     }
 
-    /** Controls of the grabber on the robot for the pixel. */
+    /**
+     * Controls of the grabber on the robot for the pixel.
+     */
     private void controlGrabber() {
         if (gamepad2.x) {
             telemetry.addLine("Grab");
@@ -186,7 +199,9 @@ public class DriverControlled extends OpMode {
         }
     }
 
-    /** Controls of the tilt mechanism on the robot supporting the grabber. */
+    /**
+     * Controls of the tilt mechanism on the robot supporting the grabber.
+     */
     private void controlTiltMechanism() {
         if (gamepad2.dpad_up) {
             robot.tiltMechanism.TiltMechanismUp();
@@ -197,7 +212,9 @@ public class DriverControlled extends OpMode {
         }
     }
 
-    /** Controls of the grabber/pusher under the robot. */
+    /**
+     * Controls of the grabber/pusher under the robot.
+     */
     private void controlPusher() {
         if (gamepad2.right_trigger >= 0.1) {
             telemetry.addLine("Grab");
@@ -217,46 +234,46 @@ public class DriverControlled extends OpMode {
 //            robot.pusher.preloadLeft();
 //        }
     }
-    /** Controls and code of the pixel grab processor. */
+
+    /**
+     * Controls and code of the pixel grab processor.
+     */
     private void controlPixelProcess() {
 
-        if(State == PROCESSING_STATE.IDLE)
-        {
+        if (State == PROCESSING_STATE.IDLE) {
             grabberTimer.Reset();
         }
 
-        if(State == PROCESSING_STATE.MOVING) {
+        if (State == PROCESSING_STATE.MOVING) {
 
             if (grabberTimer.isBetween(0, 0.7)) {
                 robot.pusher.grab();
                 robot.arm.ArmToLowestPosition();
                 robot.grabber.drop();
                 robot.tiltMechanism.TiltMechanismUp();
-            }
-            else if (grabberTimer.isBetween(0.7, 1.4)) {
+            } else if (grabberTimer.isBetween(0.7, 1.4)) {
                 robot.tiltMechanism.TiltMechanismDown();
 
-            } else if (grabberTimer.isBetween(1.4, 2.1)){
+            } else if (grabberTimer.isBetween(1.4, 2.1)) {
                 robot.grabber.grab();
                 robot.pusher.release();
-            }
-            else if (grabberTimer.isBetween(2.1, 2.8)) {
+            } else if (grabberTimer.isBetween(2.1, 2.8)) {
                 robot.arm.ArmToNeutralPosition();
                 robot.tiltMechanism.TiltMechanismUp();
-            }
-            else if (grabberTimer.getTime() > 2.8) {
+            } else if (grabberTimer.getTime() > 2.8) {
                 State = PROCESSING_STATE.FINISHED;
             }
         }
-    /** Controls of the pixel processor. */
-        if (gamepad2.right_bumper && State != PROCESSING_STATE.MOVING){
+        /** Controls of the pixel processor. */
+        if (gamepad2.right_bumper && State != PROCESSING_STATE.MOVING) {
             State = PROCESSING_STATE.MOVING;
         } else if (State == PROCESSING_STATE.FINISHED) {
             State = PROCESSING_STATE.IDLE;
         }
     }
-    private void controlPixelWheel(){
-        if (gamepad2.left_stick_y > 0.1){
+
+    private void controlPixelWheel() {
+        if (gamepad2.left_stick_y > 0.1) {
             telemetry.addLine("PixelMover In");
             robot.pixelWheel.PixelWheelIn();
         } else if (gamepad2.left_stick_y < -0.1) {
@@ -265,6 +282,15 @@ public class DriverControlled extends OpMode {
         } else {
             telemetry.addLine("PixelMover Stop");
             robot.pixelWheel.PixelWheelStop();
+        }
+    }
+    private void controlHangMechanism() {
+        if (gamepad2.a) {
+            robot.hangMechanism.open();
+        } else if (gamepad2.start) {
+            robot.hangMechanism.block();
+        } else {
+            robot.hangMechanism.stopMotor();
         }
     }
 }
