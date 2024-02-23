@@ -30,7 +30,6 @@ public class Arm {
         motor.setTargetPosition(0);
         motor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
-
     // Move the arm the up.
     public void MoveArmUp() {
         motor.setPower(1.0);
@@ -63,8 +62,8 @@ public class Arm {
     }
 
     public void AutoArmToBoardPosition(){
-        motor.setPower(1.0);
-        motor.setTargetPosition(100);
+        motor.setPower(0.3);
+        motor.setTargetPosition(170);
     }
 
     public void ArmToLowestPosition(){
@@ -77,6 +76,10 @@ public class Arm {
         position = 60 ;
         motor.setTargetPosition(position+offset);
     }
-
+    public void ArmToStageDoorPosition(){
+        motor.setPower(1.0);
+        position = 90 ;
+        motor.setTargetPosition(position+offset);
+    }
 
 }
