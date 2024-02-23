@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode.autonomousroutes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-//@Autonomous
+@Autonomous
 public class BlueStart2VisionPushBoardParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = true;
     private final boolean SKIP_VISION = false;
@@ -104,10 +105,7 @@ public class BlueStart2VisionPushBoardParkB extends LinearOpMode {
 
         // TODO: Hier 1 functie van maken.
         robot.grabber.grab();
-        sleep(1000);
-        robot.arm.AutoArmToBoardPosition();
-        sleep(1000);
-        robot.tiltMechanism.TiltMechanismStartPosition();
+
 
         while (!isStarted() && !isStopRequested()) {
             markerPosition = robot.webcam.getMarkerPosition(BLUE_SIDE);
@@ -138,84 +136,94 @@ public class BlueStart2VisionPushBoardParkB extends LinearOpMode {
     }
 
     private void middlePixelPlacement() {
-        //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(70, 0.4);
-        // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadRight();
-        //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-25, 0.4);
-        // Rij naar board.
-        case1Board1.executeWithPointSkip();
-        // Draai
-        robot.drivetrain.turnRobotAO(-90);
-        // Beweeg arm naar juiste positie.
         robot.arm.AutoArmToBoardPosition();
-        // Rij stukje naar voren.
-        robot.drivetrain.driveStraight(10, 0.4);
-        // laat pikel los.
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(70, 0.3);
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
+        robot.drivetrain.driveStraight(-20, 0.3);
+        sleep(100);
+        robot.drivetrain.turnRobotAO(-90);
+        sleep(100);
+        robot.drivetrain.driveStraight(70, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(10, 0.3, -90);
+        sleep(200);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(150);
+        robot.drivetrain.driveStraight(20, 0.3);
         robot.grabber.drop();
-        // rijd achteruit.
-        robot.drivetrain.driveStraight(-10,0.4);
-        // Beweeg arm terug.
-        robot.arm.MoveArmDown();
-        // Draai robot.
-        robot.drivetrain.turnRobotAO(0);
-        // Parkeer in backstage.
-        case1ParkB.executeWithPointSkip();
-
+        sleep(100);
+        robot.drivetrain.driveStraight(-10,0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-60,0.3,-90);
     }
 
     private void rightPixelPlacement() {
-        // Push pixel naar de rechter streep.
-        case2.executeWithPointSkip();
-        // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadRight();
-        // Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-10, 0.4);
-        // Rij naar board.
-        case2Board2.executeWithPointSkip();
-        // Draai
-        robot.drivetrain.turnRobotAO(-90);
-        // Beweeg arm naar juiste positie.
         robot.arm.AutoArmToBoardPosition();
-        // Rij stukje naar voren.
-        robot.drivetrain.driveStraight(10, 0.4);
-        // laat pikel los.
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(62, 0.3);
+        sleep(200);
+        robot.drivetrain.turnRobotAO(90);
+        sleep(200);
+        robot.drivetrain.driveStraight(5,0.3);
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
+        robot.drivetrain.driveStraight(-60,0.3);
+        sleep(200);
+        robot.drivetrain.turnRobotAO(-90);
+        sleep(200);
+        robot.drivetrain.driveStraight(30, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(5,0.3,-90);
+        sleep(200);
+        robot.drivetrain.driveStraight(7,0.3);
+        sleep(200);
         robot.grabber.drop();
-        // rijd achteruit.
-        robot.drivetrain.driveStraight(-10,0.4);
-        // Beweeg arm terug.
-        robot.arm.MoveArmDown();
-        // Draai robot.
-        robot.drivetrain.turnRobotAO(0);
-        // Parkeer in backstage.
-        case2ParkB.executeWithPointSkip();
+        sleep(200);
+        robot.drivetrain.driveStraight(-10, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-80,0.3,-90);
     }
 
     private void leftPixelPlacement() {
-        // Push pixel naar de rechter streep.
-        case0.executeWithPointSkip();
-        // Laat pixel in pusher los.
-        robot.pusher.releasePreLoadRight();
-        // Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-10, 0.4);
-        // Rij naar board.
-        case0Board0.executeWithPointSkip();
-        // Draai
-        robot.drivetrain.turnRobotAO(-90);
-        // Beweeg arm naar juiste positie.
         robot.arm.AutoArmToBoardPosition();
-        // Rij stukje naar voren.
-        robot.drivetrain.driveStraight(10, 0.4);
-        // laat pikel los.
+        sleep(1000);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(10, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-25, 0.3, 0);
+        sleep(200);
+        robot.drivetrain.driveStraight(50, 0.3);
+        sleep(200);
+        robot.pusher.release();
+        sleep(200);
+        robot.drivetrain.driveStraight(-20,0.3);
+        sleep(200);
+        robot.drivetrain.turnRobotAO(-90);
+        sleep(200);
+        robot.drivetrain.driveStraight(30, 0.3);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(200);
+        robot.drivetrain.driveStraight(25,0.3);
+        sleep(200);
         robot.grabber.drop();
-        // rijd achteruit.
-        robot.drivetrain.driveStraight(-10,0.4);
-        // Beweeg arm terug.
-        robot.arm.MoveArmDown();
-        // Draai robot.
-        robot.drivetrain.turnRobotAO(0);
-        // Parkeer in backstage.
-        case0ParkB.executeWithPointSkip();
+        sleep(100);
+        robot.drivetrain.driveStraight(-10,0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-30,0.3,-90);
     }
 }

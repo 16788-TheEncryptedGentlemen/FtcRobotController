@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-@Autonomous
+//@Autonomous
 public class BlueStart2VisionPushParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = true;
     private final boolean SKIP_VISION = false;
@@ -56,6 +56,8 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
                 BezierCurveRoute.DRIVE_METHOD.STRAFE, //STRAFE or FOLLOW
                 this
         );
+
+
     }
 
     @Override
@@ -102,12 +104,12 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         sleep(1000);
         robot.tiltMechanism.TiltMechanismStartPosition();
         sleep(200);
-        robot.drivetrain.driveStraight(65, 0.4);
+        robot.drivetrain.driveStraight(65, 0.3);
         sleep(200);
         robot.pusher.release();
         sleep(200);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-25, 0.4);
+        robot.drivetrain.driveStraight(-40, 0.3);
         //Rij naar de backstage en parkeer.
         case1ParkB.executeWithPointSkip();
     }
@@ -117,14 +119,15 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         sleep(1000);
         robot.tiltMechanism.TiltMechanismStartPosition();
         sleep(200);
-        robot.drivetrain.driveStraight(50, 0.4);
+        robot.drivetrain.driveStraight(40, 0.3);
         robot.drivetrain.turnRobotAO(45);
-        robot.drivetrain.driveStraight(20, 0.4);
+        robot.drivetrain.driveStraight(15, 0.3);
         sleep(200);
         robot.pusher.release();
         sleep(200);
-        robot.drivetrain.driveStraight(-20, 0.4);
+        robot.drivetrain.driveStraight(-20, 0.3);
         robot.drivetrain.turnRobotAO(0);
+        robot.drivetrain.driveStraight(-10, 0.3);
         //Rij naar de backstage en parkeer.
         case2ParkB.executeWithPointSkip();
     }
@@ -140,7 +143,7 @@ public class BlueStart2VisionPushParkB extends LinearOpMode {
         robot.pusher.release();
         sleep(200);
         //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-10, 0.4);
+        robot.drivetrain.driveStraight(-45, 0.3);
         //Rij naar de backstage en parkeer.
         case0ParkB.executeWithPointSkip();
     }

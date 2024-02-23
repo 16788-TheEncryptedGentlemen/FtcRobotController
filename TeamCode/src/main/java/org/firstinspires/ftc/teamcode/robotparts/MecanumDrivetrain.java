@@ -273,6 +273,20 @@ public class MecanumDrivetrain {
         setPower();
     }
 
+    /** Drives the robot sideways a certain amount of cm with a given Power. Positive Distance == right, lookingDirection == absolute front angle*/
+    public void strafeStraight(double Distance, double Power, double lookingDirection) {
+        odometry.reset();
+        double direction = Math.signum(Distance);
+
+        double originXPos = odometry.getX();
+        double endDistance = Math.abs(Distance + originXPos);
+
+        while (Math.abs(odometry.getX()) < endDistance && !runningOpMode.isStopRequested()){
+              powerStrafeValues(direction*90, Power, lookingDirection);
+        }
+        setPower(0);
+    }
+
 
     /** Decreases all values to be under a value of 1 if needed. */
     public void fixMotorSpeedOverflow() {
