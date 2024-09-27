@@ -2,7 +2,10 @@ package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.otherclasses.Display;
 
 public class MecanumDrivetrain {
 
@@ -23,7 +26,6 @@ public class MecanumDrivetrain {
     /** The Integrated Measurement Unit of the robot. */
     public Imu imu;
 
-
     /** The default MecanumDrivetrain constructor. */ //TODO: Figure out how to simplify this constructor.
     public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
         odometry = _odometry;
@@ -34,9 +36,9 @@ public class MecanumDrivetrain {
         backLeft = hardwareMap.get(DcMotorEx.class, "BackLeft");
 
         /** Reversing motors because they are mirrored. */
-        frontRight.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRight.setDirection(DcMotorEx.Direction.FORWARD);
         backRight.setDirection(DcMotorEx.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
+        frontLeft.setDirection(DcMotorEx.Direction.REVERSE);
         backLeft.setDirection(DcMotorEx.Direction.FORWARD);
 
         /** Sets power of encoders to zero. */ // TODO: figure out why we use this. (Is it so the encoders don"t break and the wheels just roll?)
@@ -179,16 +181,34 @@ public class MecanumDrivetrain {
 
 
     /** Drives the robot forward a certain amount of cm with a given Speed. */
-    public void driveStraight(double Distance, double Power) {
+    public void driveStraight(double distance, double power) {
         odometry.reset();
 
-        double originYPos = odometry.getY();
-        double endDistance = Math.abs(Distance + originYPos);
-
-        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested())
-            setPower(Power * Math.signum(Distance));
+        driveStraightDirect(distance, power);
 
         setPower(0);
+    }
+
+    /** Drives the robot forward a certain amount of cm with a given Speed. */
+    public void driveStraightDirect(double distance, double power) {
+        double originYPos = odometry.getY();
+        double endDistance = Math.abs(distance + originYPos);
+
+        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()) {
+            setPower(power * Math.signum(distance));
+        }
+    }
+
+    /** Start op power en vertraag naar power 0.1 over distance cm. */
+    public void driveStraightEnd(double distance, double power) {
+        double originYPos = odometry.getY();
+        double endDistance = Math.abs(distance + originYPos);
+
+        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()) {
+            double fraction = (endDistance - Math.abs(odometry.getY()))/endDistance;
+            double scaledPower = (power-0.1) * fraction + 0.1;
+            setPower(scaledPower * Math.signum(distance));
+        }
     }
 
     /** Sets speed values to the robot for turning a certain amount of degrees in the absolute orientation plane. */
@@ -212,12 +232,17 @@ public class MecanumDrivetrain {
     }
 
     /** Turns the robot on the absolute orientation plane with a certain angle. */
-    public void turnRobotAO(double Angle) {
+    public void turnRobotAO(double angle) {
+        turnRobotAO(angle, 0.3);
+        stop();
+    }
+
+    /** Turns the robot on the absolute orientation plane with a certain angle. */
+    public void turnRobotAO(double Angle, double speed) {
         while (Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested()) {
-            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20, 0.3);
+            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20, speed);
             setPower(SpeedValues);
         }
-        stop();
     }
 
 

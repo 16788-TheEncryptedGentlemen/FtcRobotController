@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-@Autonomous
+//@Autonomous
 public class RedStart2VisionPushParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = false;
     private final boolean SKIP_VISION = false;

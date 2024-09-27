@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.autonomousclasses.BezierCurveRoute;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-//@Autonomous
-public class RedStart1VisionPushParkB extends LinearOpMode {
+@Autonomous
+public class RedStart1VisionPushBoardParkB extends LinearOpMode {
     private final boolean BLUE_SIDE = false;
     private final boolean SKIP_VISION = false;
     private BezierCurveRoute case0;
@@ -74,9 +74,6 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         initAutonomous();
 
         robot.grabber.grab();
-        sleep(1000);
-        // TODO: Hier 1 functie van maken.
-
 
         while (!isStarted() && !isStopRequested()) {
             markerPosition = robot.webcam.getMarkerPosition(BLUE_SIDE);
@@ -111,34 +108,65 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         sleep(1000);
         robot.tiltMechanism.TiltMechanismStartPosition();
         sleep(200);
-        //Push pixel naar de middelste streep.
-        robot.drivetrain.driveStraight(65, 0.4);
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(70, 0.3);
         sleep(200);
         robot.pusher.release();
         sleep(200);
-        robot.tiltMechanism.TiltMechanismDown();
-        //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-25, 0.4);
-        //Rij naar de backstage en parkeer.
-        case1ParkB.executeWithPointSkip();
-        robot.drivetrain.driveStraight(-5, 0.4);
+        robot.drivetrain.driveStraight(-20, 0.3);
+        sleep(100);
+        robot.drivetrain.turnRobotAO(90);
+        sleep(100);
+        robot.drivetrain.driveStraight(-30,0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-70, 0.3,90);
+        sleep(200);
+        robot.arm.ArmToStageDoorPosition();
+        robot.drivetrain.turnRobotAO(85);
+        robot.drivetrain.driveStraight(220, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(60, 0.3, 90);
+        sleep(200);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(200);
+        robot.drivetrain.driveStraight(23, 0.3);
+        robot.grabber.drop();
+        sleep(100);
+        robot.drivetrain.driveStraight(-10,0.3);
     }
 
     private void rightPixelPlacement() {
         robot.arm.AutoArmToBoardPosition();
         sleep(1000);
-        robot.drivetrain.driveStraight(45, 0.4);
-        robot.drivetrain.turnRobotAO(45);
-        robot.drivetrain.driveStraight(20, 0.4);
+        robot.tiltMechanism.TiltMechanismStartPosition();
+        sleep(200);
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(62, 0.3);
+        sleep(200);
+        robot.drivetrain.turnRobotAO(90);
+        sleep(200);
+        robot.drivetrain.driveStraight(5,0.3);
         sleep(200);
         robot.pusher.release();
         sleep(200);
-        robot.drivetrain.driveStraight(-20, 0.4);
-        robot.drivetrain.turnRobotAO(0);
-        robot.drivetrain.driveStraight(10, 0.4);
-        //Rij naar de backstage en parkeer.
-        case2ParkB.executeWithPointSkip();
-        robot.drivetrain.driveStraight(-5, 0.4);
+        robot.drivetrain.driveStraight(-20,0.3);
+        sleep(200);
+        robot.arm.ArmToStageDoorPosition();
+        robot.drivetrain.strafeStraight(-50,0.3,90);
+        sleep(200);
+        robot.drivetrain.turnRobotAO(85);
+        robot.drivetrain.driveStraight(180, 0.3);
+        sleep(200);
+        robot.arm.AutoArmToBoardPosition();
+        robot.drivetrain.strafeStraight(80,0.3,90);
+        sleep(200);
+        robot.drivetrain.driveStraight(35,0.3);
+        sleep(200);
+        robot.grabber.drop();
+        sleep(200);
+        robot.drivetrain.driveStraight(-10, 0.3);
     }
 
     private void leftPixelPlacement() {
@@ -146,16 +174,34 @@ public class RedStart1VisionPushParkB extends LinearOpMode {
         sleep(1000);
         robot.tiltMechanism.TiltMechanismStartPosition();
         sleep(200);
-        //Push pixel naar de linker streep.
-        case0.executeWithPointSkip();
+        robot.pusher.grab();
+        sleep(200);
+        robot.drivetrain.driveStraight(10, 0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(-25, 0.3, 0);
+        sleep(200);
+        robot.drivetrain.driveStraight(50, 0.3);
         sleep(200);
         robot.pusher.release();
         sleep(200);
-        //Rij een stuk naar achter zodat de pixel niet meer onder de robot ligt.
-        robot.drivetrain.driveStraight(-10, 0.4);
-        robot.tiltMechanism.TiltMechanismDown();
-        //Rij naar de backstage en parkeer.
-        case0ParkB.executeWithPointSkip();
-        robot.drivetrain.driveStraight(-5, 0.4);
+        robot.drivetrain.driveStraight(-20,0.3);
+        sleep(200);
+        robot.drivetrain.strafeStraight(30,0.3,0);
+        sleep(200);
+        robot.arm.ArmToStageDoorPosition();
+        robot.drivetrain.driveStraight(75,0.3);
+        robot.drivetrain.turnRobotAO(85);
+        sleep(200);
+        robot.drivetrain.driveStraight(180,0.3);
+        sleep(200);
+        robot.arm.AutoArmToBoardPosition();
+        sleep(200);
+        robot.drivetrain.strafeStraight(35,0.3,90);
+        sleep(200);
+        robot.drivetrain.driveStraight(23,0.3);
+        sleep(200);
+        robot.grabber.drop();
+        sleep(100);
+        robot.drivetrain.driveStraight(-10,0.3);
     }
 }
