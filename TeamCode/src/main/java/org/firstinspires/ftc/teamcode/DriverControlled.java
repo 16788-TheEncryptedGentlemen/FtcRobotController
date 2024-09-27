@@ -54,7 +54,6 @@ public class DriverControlled extends OpMode {
         controlDroneLauncher();
         controlPixelProcess();
         controlPixelWheel();
-        controlHangMechanism();
     }
 
     private void controlDrivetrain() {
@@ -282,15 +281,6 @@ public class DriverControlled extends OpMode {
         } else {
             telemetry.addLine("PixelMover Stop");
             robot.pixelWheel.PixelWheelStop();
-        }
-    }
-    private void controlHangMechanism() {
-        if (gamepad2.a) {
-            robot.hangMechanism.open();
-        } else if (gamepad2.start) {
-            robot.hangMechanism.block();
-        } else {
-            robot.hangMechanism.stopMotor();
         }
     }
 }

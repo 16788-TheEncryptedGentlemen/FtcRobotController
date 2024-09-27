@@ -31,7 +31,6 @@ public class CompetitionRobot {
     public Arm arm;
     public DroneLauncher droneLauncher;
     public PixelWheel pixelWheel;
-    public HangMechanism hangMechanism;
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
@@ -82,8 +81,6 @@ public class CompetitionRobot {
         display.showLoading("droneLauncher");
         pixelWheel = new PixelWheel(hardwaremap);
         display.showLoading("pixelWheel");
-        hangMechanism = new HangMechanism(hardwaremap);
-        display.showLoading("hangMechanism");
         display.showLoading("Done initializing! Press start to play");
     }
 }
