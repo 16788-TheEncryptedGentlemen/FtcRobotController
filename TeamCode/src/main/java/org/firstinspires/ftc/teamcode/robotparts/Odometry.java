@@ -28,25 +28,19 @@ public class Odometry {
      * @param hardwareMap The hardware map of the robot.
      */
     public Odometry(HardwareMap hardwareMap) {
-        xWheel = hardwareMap.get(DcMotorEx.class, "EncoderX");
-        yWheel = hardwareMap.get(DcMotorEx.class, "EncoderY");
+        xWheel = hardwareMap.get(DcMotorEx.class, "FrontRight");
+        yWheel = hardwareMap.get(DcMotorEx.class, "FrontLeft");
 
-        /** Resets encoders. */
-        xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-
-        /** Runs encoders on both wheels. */
-        xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        reset();
 
         /** Reverses yWheel, because the encoder is mounted in reverse. */
-        yWheel.setDirection(DcMotorEx.Direction.FORWARD);
+//        yWheel.setDirection(DcMotorEx.Direction.FORWARD);
     }
 
     /** Returns the x position of the odometry. */
     public double getX() {
-        // TODO: Minus cmPerCount because
-        return cmPerCount * xWheel.getCurrentPosition() * horizontalCorrection;
+        // Minus cmPerCount because the values are revered. Drive to left= - and drive to right = +.
+        return -cmPerCount * xWheel.getCurrentPosition() * horizontalCorrection;
     }
 
     /** Returns the y position of the odometry. */
@@ -62,10 +56,10 @@ public class Odometry {
 
     /** Resets the encoders. */
     public void reset() {
-        xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+//        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+ //       xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+ //       yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 }
