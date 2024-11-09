@@ -5,17 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
-import org.firstinspires.ftc.teamcode.robotparts.Arm;
-import org.firstinspires.ftc.teamcode.robotparts.Grabber;
+import org.firstinspires.ftc.teamcode.robotparts.Arm2Motor;
+import org.firstinspires.ftc.teamcode.robotparts.BlockGrabber;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
-import org.firstinspires.ftc.teamcode.robotparts.Pusher;
-import org.firstinspires.ftc.teamcode.robotparts.TiltMechanism;
 import org.firstinspires.ftc.teamcode.robotparts.Webcam;
-import org.firstinspires.ftc.teamcode.robotparts.DroneLauncher;
-import org.firstinspires.ftc.teamcode.robotparts.PixelWheel;
-import org.firstinspires.ftc.teamcode.robotparts.HangMechanism;
+import org.firstinspires.ftc.teamcode.robotparts.SliderGrabber;
 
 /** Contains all the robot parts. */
 public class CompetitionRobot {
@@ -25,12 +21,10 @@ public class CompetitionRobot {
     public Imu imu;
     public Odometry odometry;
     public MecanumDrivetrain drivetrain;
-    public Grabber grabber;
-    public Pusher pusher;
-    public TiltMechanism tiltMechanism;
-    public Arm arm;
-    public DroneLauncher droneLauncher;
-    public PixelWheel pixelWheel;
+    public BlockGrabber grabber;
+    public SliderGrabber sliderGrabber;
+    public Arm2Motor arm;
+
 
     /** The constructor for a LinearOpMode program. */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
@@ -46,13 +40,11 @@ public class CompetitionRobot {
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
         display.showLoading("grabber");
-        grabber = new Grabber(hardwaremap);
-        display.showLoading("pusher");
-        pusher = new Pusher(hardwaremap);
-        display.showLoading("tiltMechanism");
-        tiltMechanism = new TiltMechanism(hardwaremap);
+        grabber = new BlockGrabber(hardwaremap);
         display.showLoading("arm");
-        arm = new Arm(hardwaremap);
+        arm = new Arm2Motor(hardwaremap);
+        display.showLoading("slidergrabber");
+        sliderGrabber = new SliderGrabber(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -69,18 +61,11 @@ public class CompetitionRobot {
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("grabber");
-        grabber = new Grabber(hardwaremap);
-        display.showLoading("pusher");
-        pusher = new Pusher(hardwaremap);
-        display.showLoading("tiltMechanism");
-        tiltMechanism = new TiltMechanism(hardwaremap);
+        grabber = new BlockGrabber(hardwaremap);
         display.showLoading("arm");
-        arm = new Arm(hardwaremap);
-        display.showLoading("pixelGrabber");
-        droneLauncher = new DroneLauncher(hardwaremap);
-        display.showLoading("droneLauncher");
-        pixelWheel = new PixelWheel(hardwaremap);
-        display.showLoading("pixelWheel");
+        arm = new Arm2Motor(hardwaremap);
+        display.showLoading("slidergrabber");
+        sliderGrabber = new SliderGrabber(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 }
