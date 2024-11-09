@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
@@ -32,28 +33,31 @@ public class DriverControlled extends OpMode {
     }
 
     public PROCESSING_STATE State = PROCESSING_STATE.IDLE;
-
+    public DigitalChannel encoderA;
+    public DigitalChannel encoderB;
+    public int position = 0;
+    public boolean lastA;
     @Override
     /** Initialisation */
     public void init() {
         robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
-        robot.tiltMechanism.TiltMechanismStartPosition();
     }
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
-        controlGrabber();
-        if (State != PROCESSING_STATE.MOVING) {
-            controlArm();
-        }
+
+//        controlGrabber();
+//        if (State != PROCESSING_STATE.MOVING) {
+//            controlArm();
+//        }
         controlDrivetrain();
-        controlTiltMechanism();
-        controlPusher();
-        controlDroneLauncher();
-        controlPixelProcess();
-        controlPixelWheel();
+        telemetry.addData("A", robot.drivetrain.frontRight.getCurrentPosition());
+        telemetry.addData("B", robot.drivetrain.frontLeft.getCurrentPosition());
+        controlArm();
+        controlSlider();
+        controlGrabber();
     }
 
     private void controlDrivetrain() {
@@ -149,21 +153,7 @@ public class DriverControlled extends OpMode {
         robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
-
-    /**
-     * Controls of the paper drone launcher.
-     */
-    private void controlDroneLauncher() {
-        if (gamepad2.back) {
-            robot.droneLauncher.launch();
-            telemetry.addLine("DroneLauncherLaunches");
-        } else if (gamepad2.b) {
-            robot.droneLauncher.reverse();
-            telemetry.addLine("DroneLauncherStop");
-        }
-    }
-
-    /**
+        /**
      * Controls of the arm that is attached to the grabber on the robot.
      */
     private void controlArm() {
@@ -181,7 +171,8 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("Arm Stop");
             robot.arm.StopArm();
         }
-        telemetry.addData("Angle Arm", robot.arm.motor.getCurrentPosition());
+//        telemetry.addData("Angle Arm1", robot.arm.motor1.getCurrentPosition());
+        telemetry.addData("Angle Arm2", robot.arm.motor2.getCurrentPosition());
         telemetry.addData("Target Arm", robot.arm.position);
     }
 
@@ -198,29 +189,14 @@ public class DriverControlled extends OpMode {
         }
     }
 
-    /**
-     * Controls of the tilt mechanism on the robot supporting the grabber.
-     */
-    private void controlTiltMechanism() {
+    private void controlSlider() {
         if (gamepad2.dpad_up) {
-            robot.tiltMechanism.TiltMechanismUp();
-            telemetry.addLine("TiltMechanismUp");
-        } else if (gamepad2.dpad_down) {
-            robot.tiltMechanism.TiltMechanismDown();
-            telemetry.addLine("TiltMechanismDown");
-        }
+        telemetry.addLine("In");
+        robot.sliderGrabber.out();
+    } else if (gamepad2.dpad_down) {
+        telemetry.addLine("Out");
+        robot.sliderGrabber.in();
     }
-
-    /**
-     * Controls of the grabber/pusher under the robot.
-     */
-    private void controlPusher() {
-        if (gamepad2.right_trigger >= 0.1) {
-            telemetry.addLine("Grab");
-            robot.pusher.grab();
-        } else if (gamepad2.left_trigger >= 0.1) {
-            telemetry.addLine("Release");
-            robot.pusher.release();
         }
 //        // Just for testing autonomous positions.
 //        else if (gamepad1.b) {
@@ -233,54 +209,3 @@ public class DriverControlled extends OpMode {
 //            robot.pusher.preloadLeft();
 //        }
     }
-
-    /**
-     * Controls and code of the pixel grab processor.
-     */
-    private void controlPixelProcess() {
-
-        if (State == PROCESSING_STATE.IDLE) {
-            grabberTimer.Reset();
-        }
-
-        if (State == PROCESSING_STATE.MOVING) {
-
-            if (grabberTimer.isBetween(0, 0.7)) {
-                robot.pusher.grab();
-                robot.arm.ArmToLowestPosition();
-                robot.grabber.drop();
-                robot.tiltMechanism.TiltMechanismUp();
-            } else if (grabberTimer.isBetween(0.7, 1.4)) {
-                robot.tiltMechanism.TiltMechanismDown();
-
-            } else if (grabberTimer.isBetween(1.4, 2.1)) {
-                robot.grabber.grab();
-                robot.pusher.release();
-            } else if (grabberTimer.isBetween(2.1, 2.8)) {
-                robot.arm.ArmToNeutralPosition();
-                robot.tiltMechanism.TiltMechanismUp();
-            } else if (grabberTimer.getTime() > 2.8) {
-                State = PROCESSING_STATE.FINISHED;
-            }
-        }
-        /** Controls of the pixel processor. */
-        if (gamepad2.right_bumper && State != PROCESSING_STATE.MOVING) {
-            State = PROCESSING_STATE.MOVING;
-        } else if (State == PROCESSING_STATE.FINISHED) {
-            State = PROCESSING_STATE.IDLE;
-        }
-    }
-
-    private void controlPixelWheel() {
-        if (gamepad2.left_stick_y > 0.1) {
-            telemetry.addLine("PixelMover In");
-            robot.pixelWheel.PixelWheelIn();
-        } else if (gamepad2.left_stick_y < -0.1) {
-            telemetry.addLine("PixelMover Out");
-            robot.pixelWheel.PixelWheelOut();
-        } else {
-            telemetry.addLine("PixelMover Stop");
-            robot.pixelWheel.PixelWheelStop();
-        }
-    }
-}
