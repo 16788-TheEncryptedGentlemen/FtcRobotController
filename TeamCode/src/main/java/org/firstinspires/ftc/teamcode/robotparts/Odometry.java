@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -56,10 +57,10 @@ public class Odometry {
 
     /** Resets the encoders. */
     public void reset() {
-//        xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-//        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
- //       xWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
- //       yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        xWheel.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        yWheel.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
