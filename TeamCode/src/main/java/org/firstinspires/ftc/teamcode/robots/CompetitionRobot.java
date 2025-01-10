@@ -10,29 +10,30 @@ import org.firstinspires.ftc.teamcode.robotparts.BlockGrabber;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
-import org.firstinspires.ftc.teamcode.robotparts.Webcam;
-import org.firstinspires.ftc.teamcode.robotparts.SliderGrabber;
+import org.firstinspires.ftc.teamcode.robotparts.SliderGrabber2;
 
-/** Contains all the robot parts. */
+/**
+ * Contains all the robot parts.
+ */
 public class CompetitionRobot {
 
     public Display display;
-    public Webcam webcam;
     public Imu imu;
     public Odometry odometry;
     public MecanumDrivetrain drivetrain;
     public BlockGrabber grabber;
-    public SliderGrabber sliderGrabber;
+    public SliderGrabber2 sliderGrabber2;
     public Arm2Motor arm;
 
 
-    /** The constructor for a LinearOpMode program. */
+    /**
+     * The constructor for a LinearOpMode program.
+     */
     public CompetitionRobot(LinearOpMode runningLinearOpMode) {
         display = new Display(runningLinearOpMode.telemetry);
         HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
 
-        display.showLoading("webcam");
-        webcam = new Webcam(hardwaremap);
+
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("odometry");
@@ -43,8 +44,8 @@ public class CompetitionRobot {
         grabber = new BlockGrabber(hardwaremap);
         display.showLoading("arm");
         arm = new Arm2Motor(hardwaremap);
-        display.showLoading("slidergrabber");
-        sliderGrabber = new SliderGrabber(hardwaremap);
+        display.showLoading("slidergrabber2");
+        sliderGrabber2 = new SliderGrabber2(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -52,8 +53,7 @@ public class CompetitionRobot {
         display = new Display(opMode.telemetry);
         HardwareMap hardwaremap = opMode.hardwareMap;
 
-        display.showLoading("webcam");
-        webcam = new Webcam(hardwaremap);
+
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("odometry");
@@ -65,7 +65,7 @@ public class CompetitionRobot {
         display.showLoading("arm");
         arm = new Arm2Motor(hardwaremap);
         display.showLoading("slidergrabber");
-        sliderGrabber = new SliderGrabber(hardwaremap);
+        sliderGrabber2 = new SliderGrabber2(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
     }
 }
