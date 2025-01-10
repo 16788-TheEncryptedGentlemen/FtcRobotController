@@ -12,11 +12,11 @@ public class BlockGrabber {
     }
 
     public void grab() {
-       servo.setPosition(0.8);
+       servo.setPosition(0.9);
     }
 
     public void drop() {
-        servo.setPosition(-0.2);
+        servo.setPosition(0.3);
     }
     public void stop(){
         servo.setPosition(0.0);
