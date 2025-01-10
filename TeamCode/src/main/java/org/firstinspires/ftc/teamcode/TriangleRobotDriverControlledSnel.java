@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.teamcode.robots.TriangleRobot;
 
 @TeleOp
-public class TriangleRobotDriverControlled extends OpMode
+public class TriangleRobotDriverControlledSnel extends OpMode
 {
     TriangleRobot triangle;
 
@@ -21,7 +22,7 @@ public class TriangleRobotDriverControlled extends OpMode
         double leftJoyY = -gamepad1.left_stick_y;
         double leftJoyX = gamepad1 .left_stick_x;
 
-        triangle.drivetrain.calculateMotorValues(leftJoyX, leftJoyY, rightJoyX);
+        triangle.drivetrainsnel.calculateMotorValues(leftJoyX, leftJoyY, rightJoyX);
 
     }
 
