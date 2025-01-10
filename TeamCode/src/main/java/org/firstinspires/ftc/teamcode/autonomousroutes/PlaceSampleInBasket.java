@@ -17,7 +17,7 @@ public class PlaceSampleInBasket extends LinearOpMode {
     private static final int ARMPOSITIONLOWERBASKET = 250;
     private static final int ARMPOSITIONMIDDLEBASKET = 500;
 
-    final double POWER = 0.4;
+    final double POWER = 0.5;
 
     public void runOpMode() {
 
@@ -27,65 +27,66 @@ public class PlaceSampleInBasket extends LinearOpMode {
 
         driveToBasket();
         dropSampleInLowerBasket();
-        driveToSecondSample();
-        driveToSubmisibleZone();
+        drivePlaceSample();
+       // driveToSubmisibleZone();
 
     }
 
     /**
      * Drive to the basket from left start position.
      */
-   /* public void driveToBasket() {
+ /*   public void driveToBasket() {
         robot.drivetrain.driveStraight(100, POWER);
         robot.drivetrain.turnRobotAO(-125, POWER);
         robot.drivetrain.driveStraight(130, POWER);
-    }*/
-    public void driveToBasket() {
-        robot.drivetrain.driveStraight(25, POWER);
-        robot.drivetrain.turnRobotAO(-90, POWER);
-        robot.drivetrain.driveStraight(87, POWER);
-        robot.drivetrain.turnRobotAO(-120, POWER);
-    }
+    } */
+
     /**
      * Place sample in the lower basket.
      */
     public void dropSampleInLowerBasket(){
+        robot.arm.MoveArmUp();
+        robot.sliderGrabber2.SliderToOutPosition();
+        armToGroundPosition();
+        robot.grabber.grab();
         armToLowerBasket();
-        sleep(1000);
-        robot.grabber.drop();
-        sleep (1000);
     }
-
+    public void driveToBasket() {
+        robot.drivetrain.driveStraight(25, POWER);
+        robot.drivetrain.turnRobotAO(-90, POWER);
+        robot.drivetrain.driveStraight(50, POWER);
+        robot.drivetrain.turnRobotAO(-120, POWER);
+        robot.drivetrain.driveStraight(40, POWER);
+        telemetry.addLine("Rechtsvoor");
+        telemetry.addLine("Linksvoor");
+        telemetry.addLine("Rechtachter");
+        telemetry.addLine("Rechtsvoor");
+    }
     /**
      * Drives to pick up second sample
      */
-    public void driveToSecondSample() {
-        armToGroundPosition();
+  public void drivePlaceSample() {
+      robot.sliderGrabber2.MoveSliderOut();
+      robot.grabber.drop();
         sleep(1000);
         robot.drivetrain.turnRobotAO(0, POWER);
         sleep(1000);
-        robot.grabber.grab();
-        sleep(1000);
-        robot.drivetrain.driveStraight(10,POWER);
-        sleep(1000);
-        robot.drivetrain.turnRobotAO(120, POWER);
-        sleep(1000);
-        robot.grabber.drop();
+      robot.drivetrain.strafeStraight(210,POWER,0);
     }
 
-    public void driveToSubmisibleZone(){
+  /*  public void driveToSubmisibleZone(){
         robot.drivetrain.turnRobotAO(120,POWER);
         robot.drivetrain.driveStraight(60,POWER);
-    }
+    }*/
 
     public void armToGroundPosition() {
         robot.arm.ToPosition(ARMPOSITIONGROUND);
-        robot.sliderGrabber.in();
+        robot.sliderGrabber2.SliderToInPosition();
     }
 
     public void armToLowerBasket() {
         robot.arm.ToPosition(ARMPOSITIONLOWERBASKET);
-        robot.sliderGrabber.out();
+        robot.sliderGrabber2.SliderToOutPosition();
     }
 
     public void armToMiddleBasket() {
