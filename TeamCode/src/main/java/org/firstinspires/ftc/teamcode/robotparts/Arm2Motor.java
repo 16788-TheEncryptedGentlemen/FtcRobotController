@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+
+import org.checkerframework.checker.units.qual.Speed;
 
 
 public class Arm2Motor {
@@ -11,7 +15,7 @@ public class Arm2Motor {
      */
     public int position = 0;
     public int offset = 0;
-
+    public int SPEED = 3;
     /**
      * Ben ik al aan het stoppen?
      */
@@ -32,24 +36,34 @@ public class Arm2Motor {
 
         // onzin van bram
         motor1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        motor2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         /** Run all motors with encoders. */
         motor1.setTargetPosition(0);
-        motor2.setTargetPosition(0);
         motor1.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        motor2.setTargetPosition(0);
         motor2.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    }
+
+    public void setPidValues() {
+        // Get PID values
+        PIDFCoefficients pid = motor1.getPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION);
+        // Halve p value
+        pid.p = pid.p/2;
+        // Restore PID values
+        motor1.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, pid);
+        motor2.setPIDFCoefficients(DcMotorEx.RunMode.RUN_TO_POSITION, pid);
     }
 
     // Move the arm the up.
     public void MoveArmUp() {
-       motor1.setPower(1.0);
-       motor2.setPower(1.0);
-       motor1.setTargetPosition(position + offset);
-       motor2.setTargetPosition(position + offset);
+        motor1.setPower(1.0);
+        motor2.setPower(1.0);
+        motor1.setTargetPosition(position + offset);
+        motor2.setTargetPosition(position+offset);
         ikBenAanHetStoppen = false;
-        position++;
+        position+=SPEED;
     }
 
     // Move the arm the down.
@@ -59,7 +73,7 @@ public class Arm2Motor {
         motor1.setTargetPosition(position + offset);
         motor2.setTargetPosition(position + offset);
         ikBenAanHetStoppen = false;
-        position--;
+        position-=SPEED;
     }
 
     // Stop the arm.
