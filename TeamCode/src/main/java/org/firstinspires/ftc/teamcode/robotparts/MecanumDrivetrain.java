@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -36,9 +37,9 @@ public class MecanumDrivetrain {
         backLeft = hardwareMap.get(DcMotorEx.class, "BackLeft");
 
         /** Reversing motors because they are mirrored. */
-        frontRight.setDirection(DcMotorEx.Direction.FORWARD);
+        frontRight.setDirection(DcMotorEx.Direction.REVERSE);
         backRight.setDirection(DcMotorEx.Direction.REVERSE);
-        frontLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         backLeft.setDirection(DcMotorEx.Direction.FORWARD);
 
         /** Sets power of encoders to zero. */ // TODO: figure out why we use this. (Is it so the encoders don"t break and the wheels just roll?)
@@ -48,10 +49,15 @@ public class MecanumDrivetrain {
         backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
         /** Run all motors with encoders. */
-        frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        frontLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//        frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//        backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//        frontLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+//        backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        /** Run all motors without encoders. */
+        frontRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        frontLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
 
@@ -189,6 +195,23 @@ public class MecanumDrivetrain {
         setPower(0);
     }
 
+    // Testing to see if the robot can drive backwards.
+    public void driveBackwards(double distance, double power) {
+        odometry.reset(); // reset odometry to start from the current position
+
+        // set motor power backwards
+        setPower(-power);
+
+        while (odometry.getY() > -distance && !runningOpMode.isStopRequested()) {
+            runningOpMode.telemetry.addData("Odometry x", odometry.getX());
+            runningOpMode.telemetry.addData("Odometry y", odometry.getY());
+            runningOpMode.telemetry.update();
+        }
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
     /** Drives the robot forward a certain amount of cm with a given Speed. */
     public void driveStraightDirect(double distance, double power) {
         double originYPos = odometry.getY();
@@ -196,6 +219,9 @@ public class MecanumDrivetrain {
 
         while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()) {
             setPower(power * Math.signum(distance));
+            runningOpMode.telemetry.addData("Odometry x", odometry.getX());
+            runningOpMode.telemetry.addData("Odometry y", odometry.getY());
+            runningOpMode.telemetry.update();
         }
     }
 
@@ -322,11 +348,9 @@ public class MecanumDrivetrain {
         }
         multiplySpeed(1.0 / max);
     }
-
-    /** Sets all values in MotorSpeed to 0 */
-    public void emptyMotorSpeedValues() {
-        motorSpeed = new double[4];
-    }
-
+        /** Sets all values in MotorSpeed to 0 */
+   //     public void emptyMotorSpeedValues () {
+     //     motorSpeed = new double[4];
 
 }
+
