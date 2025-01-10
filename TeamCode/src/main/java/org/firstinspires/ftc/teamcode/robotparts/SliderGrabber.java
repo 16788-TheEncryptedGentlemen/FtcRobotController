@@ -1,23 +1,25 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
 public class SliderGrabber {
     /** Servo of the grabber.*/
-    public DcMotorEx motorSlider;
+    public DcMotor motorSlider;
 
     public SliderGrabber(HardwareMap hardwareMap) {
-        motorSlider = hardwareMap.get(DcMotorEx.class, "Slider");    }
+        motorSlider = hardwareMap.get(DcMotor.class, "Slider");
+        motorSlider.getTargetPosition();
+    }
 
     public void out() {
-       motorSlider.setTargetPosition(100);
+       motorSlider.setPower(1.0);
     }
 
     public void in() {
-        motorSlider.setTargetPosition(0);
+        motorSlider.setPower(-1.0);
     }
 
     private void ToPosition(int sliderPosition) {
