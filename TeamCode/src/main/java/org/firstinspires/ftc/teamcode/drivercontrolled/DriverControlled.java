@@ -171,9 +171,6 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("Arm Stop");
             robot.arm.StopArm();
         }
-//        telemetry.addData("Angle Arm1", robot.arm.motor1.getCurrentPosition());
-        telemetry.addData("Angle Arm2", robot.arm.motor2.getCurrentPosition());
-        telemetry.addData("Target Arm", robot.arm.position);
     }
 
     /**
@@ -190,14 +187,17 @@ public class DriverControlled extends OpMode {
     }
 
     private void controlSlider() {
-        if (gamepad2.dpad_up) {
+        if (gamepad2.dpad_down) {
         telemetry.addLine("In");
-        robot.sliderGrabber.out();
-    } else if (gamepad2.dpad_down) {
+        robot.sliderGrabber2.SliderToInPosition();
+    } else if (gamepad2.dpad_up) {
         telemetry.addLine("Out");
-        robot.sliderGrabber.in();
-    }
+        robot.sliderGrabber2.SliderToOutPosition();
+    } else {
+            robot.sliderGrabber2.StopSlider();
+            telemetry.addLine("Stopped");
         }
+    }
 //        // Just for testing autonomous positions.
 //        else if (gamepad1.b) {
 //            telemetry.addLine("Right");
