@@ -38,15 +38,15 @@ public class CompetitionRobot {
         display = new Display(runningLinearOpMode.telemetry);
 
         display.showLoading("odometry");
-      //  odometry = new Odometry(hardwaremap);
+        odometry = new Odometry(hardwaremap);
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
-        display.showLoading("webcam");
-        webcam = new Webcam(hardwaremap);
         display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
+        display.showLoading("webcam");
+        webcam = new Webcam(hardwaremap);
         display.showLoading("lift");
         autolift = new AutoLift(hardwaremap, runningLinearOpMode);
         display.showLoading("Done initializing! Press start to play");
