@@ -18,13 +18,13 @@ public class PlaceSampleInBasket extends LinearOpMode {
         robot = new CompetitionRobot(this);
         waitForStart();
 
-        robot.drivetrain.driveStraight(100, POWER);
-        robot.drivetrain.turnRobotAO(-90, POWER);
-        robot.drivetrain.driveStraight(70, POWER);
+        //robot.drivetrain.driveStraight(100, POWER);
+        //robot.drivetrain.turnRobotAO(-90, POWER);
+        //robot.drivetrain.driveStraight(70, POWER);
         robot.autolift.liftMidPole();
         robot.drivetrain.driveStraight(5, POWER);
         robot.grabber.drop();
         robot.autolift.liftGroundLevel();
-        robot.drivetrain.driveBackwards(180, POWER);
+        //robot.drivetrain.driveBackwards(180, POWER);
     }
 }

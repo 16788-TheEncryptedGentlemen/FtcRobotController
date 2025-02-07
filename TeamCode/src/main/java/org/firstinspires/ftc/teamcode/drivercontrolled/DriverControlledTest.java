@@ -4,34 +4,42 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Timer;
+import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 import org.firstinspires.ftc.teamcode.robot.TestRobot;
 
 @TeleOp
 public class DriverControlledTest extends OpMode {
     // TODO: Still need to test it!
 
-    /** The robot */
-    TestRobot robot;
+    /**
+     * The robot
+     */
+    CompetitionRobot robot;
 
-    /** The desired heading when strafing. */
+    /**
+     * The desired heading when strafing.
+     */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
 
-    /** Initialisation */
+    /**
+     * Initialisation
+     */
     @Override
     public void init() {
-        robot = new TestRobot(this);
+        robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
     }
 
-    /** Repeats program until program is stopped */
+    /**
+     * Repeats program until program is stopped
+     */
     @Override
     public void loop() {
 
-        telemetry.addData("encoder", robot.lift.lift.getCurrentPosition());
+        telemetry.addData("encoderX", robot.odometry.getX());
+        telemetry.addData("encoderY", robot.odometry.getY());
 
-        controlGrabber();
-        controlLift();
         controlDrivetrain();
     }
 
@@ -127,37 +135,7 @@ public class DriverControlledTest extends OpMode {
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
-    /** Controls of the grabber on the robot for the beacon. */
-    private void controlGrabber() {
-        if (gamepad2.x) {
-            telemetry.addLine("Grab");
-            robot.grabber.grab();
-        } else if (gamepad2.b) {
-            telemetry.addLine("Drop");
-            robot.grabber.drop();
-        }
-    }
-
-    /** Controls of the lift on the robot. */
-    private void controlLift() {
-        telemetry.addData("Left stick y:", gamepad2.left_stick_y);
-        if (gamepad2.left_stick_y > 0.1) {
-            telemetry.addLine("Up");
-            robot.lift.up();
-        } else if (gamepad2.left_stick_y < -0.1) {
-            telemetry.addLine("Down");
-            robot.lift.down();
-        } else {
-            telemetry.addLine("StopLift");
-            robot.lift.stop();
-        }
-    }
-
-    //--------------------------------------------------------------------
-    //Final calculations for the Drivetrain
-    //--------------------------------------------------------------------
 }
-
 //--------------------------------------------------------------------
 //Loop
 //--------------------------------------------------------------------
