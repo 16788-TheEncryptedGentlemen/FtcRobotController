@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Odometry {
     /** Counts per rotation of the encoder. */
@@ -39,7 +40,8 @@ public class Odometry {
         yWheel.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         /** Reverses yWheel, because the encoder is mounted in reverse. */
-        yWheel.setDirection(DcMotorEx.Direction.REVERSE);
+        xWheel.setDirection(DcMotorEx.Direction.REVERSE);
+        yWheel.setDirection(DcMotorEx.Direction.FORWARD);
     }
 
     /** Returns the x position of the odometry. */
