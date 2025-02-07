@@ -329,10 +329,10 @@ public class MecanumDrivetrain {
         odometry.reset();
         double direction = Math.signum(Distance);
 
-        double originXPos = odometry.getX();
-        double endDistance = Math.abs(Distance + originXPos);
+        double originYPos = odometry.getY();
+        double endDistance = Math.abs(Distance + originYPos);
 
-        while (Math.abs(odometry.getX()) < endDistance && !runningOpMode.isStopRequested()){
+        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()){
             powerStrafeValues(direction*90, Power, lookingDirection);
         }
         setPower(0);
