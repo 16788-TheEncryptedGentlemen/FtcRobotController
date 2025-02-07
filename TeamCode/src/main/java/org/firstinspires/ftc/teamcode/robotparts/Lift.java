@@ -22,8 +22,8 @@ public class Lift {
     /** The lift has a right and left DCMotor. */
     public Lift(HardwareMap hardwareMap)
     {
-        left = hardwareMap.get(DcMotorEx.class, "leftLift");
-        right = hardwareMap.get(DcMotorEx.class, "rightLift");
+        left = hardwareMap.get(DcMotorEx.class, "LeftLift");
+        right = hardwareMap.get(DcMotorEx.class, "RightLift");
         left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
