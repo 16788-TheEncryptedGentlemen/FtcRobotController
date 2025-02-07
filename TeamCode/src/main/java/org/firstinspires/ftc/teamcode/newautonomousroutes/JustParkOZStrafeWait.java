@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class JustParkOZStrafe extends LinearOpMode {
+public class JustParkOZStrafeWait extends LinearOpMode {
     CompetitionRobot robot;
 
     final double POWER = 0.5;

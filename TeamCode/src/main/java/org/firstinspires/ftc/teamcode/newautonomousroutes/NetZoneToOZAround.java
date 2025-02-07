@@ -17,7 +17,7 @@ public class NetZoneToOZAround extends LinearOpMode {
         robot = new CompetitionRobot(this);
         waitForStart();
 
-        robot.drivetrain.strafeStraight(-10,POWER,0);
+        robot.drivetrain.strafeStraight(-5,POWER,0);
         sleep(15000);
         robot.drivetrain.strafeStraight(10,POWER,0);
         robot.drivetrain.driveStraight(45,POWER);
