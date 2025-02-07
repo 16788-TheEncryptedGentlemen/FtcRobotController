@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.Lift;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
-import org.firstinspires.ftc.teamcode.robotparts.Webcam;
 
 /** Contains all the robot parts. */
 public class CompetitionRobot {
@@ -23,8 +22,6 @@ public class CompetitionRobot {
     public Imu imu;
     /** The display of the robot. */
     public Display display;
-    /** The webcam of the robot. */
-    public Webcam webcam;
     /** The grabber of the robot. */
     public Grabber grabber;
     /** The lift of the robot */
@@ -45,8 +42,6 @@ public class CompetitionRobot {
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
         display.showLoading("grabber");
         grabber = new Grabber(hardwaremap);
-        display.showLoading("webcam");
-        webcam = new Webcam(hardwaremap);
         display.showLoading("lift");
         autolift = new AutoLift(hardwaremap, runningLinearOpMode);
         display.showLoading("Done initializing! Press start to play");
