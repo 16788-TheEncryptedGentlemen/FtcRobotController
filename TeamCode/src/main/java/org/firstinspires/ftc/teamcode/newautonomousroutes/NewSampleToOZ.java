@@ -7,25 +7,24 @@ import org.firstinspires.ftc.teamcode.robot.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
 @Autonomous
-public class PlaceSampleInBasket extends LinearOpMode {
+public class NewSampleToOZ extends LinearOpMode {
     CompetitionRobot robot;
 
     final double POWER = 0.5;
 
     public void runOpMode() {
-
         // Initialisation.
         robot = new CompetitionRobot(this);
         waitForStart();
 
-       // robot.drivetrain.driveStraight(5, POWER);
-       // sleep (1000);
-       // robot.drivetrain.turnRobotAO(-120, POWER);
-       // robot.drivetrain.driveStraight(20, POWER);
-        robot.autolift.liftMidPole();
-       // robot.drivetrain.driveStraight(5, POWER);
+        robot.drivetrain.strafeStraight(-5,POWER,0);
+        robot.drivetrain.driveStraight(70,POWER);
+        robot.grabber.grab();
+        robot.drivetrain.turnRobotAO(-180,POWER);
         robot.grabber.drop();
-        robot.autolift.liftGroundLevel();
-        robot.drivetrain.driveBackwards(180, POWER);
+        //sleep(5000);
+        robot.drivetrain.strafeStraight(100,POWER,0);
+
+        // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }
 }
