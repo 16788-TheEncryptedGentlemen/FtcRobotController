@@ -23,7 +23,7 @@ public class AutoLift {
     private int groundPos = 80;
     private int groundJunctionPos = 700;
     private int lowPolePos = 3800;
-    private int midPolePos = -5800; // was 5300
+    private int midPolePos = -500; // was 5300
     private int highPolePos = 4100;
 
 
