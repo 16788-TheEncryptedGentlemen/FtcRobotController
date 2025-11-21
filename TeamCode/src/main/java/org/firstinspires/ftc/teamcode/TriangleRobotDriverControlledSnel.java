@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robots.TriangleRobot;
 
-@TeleOp
+//@TeleOp
 public class TriangleRobotDriverControlledSnel extends OpMode
 {
     TriangleRobot triangle;
