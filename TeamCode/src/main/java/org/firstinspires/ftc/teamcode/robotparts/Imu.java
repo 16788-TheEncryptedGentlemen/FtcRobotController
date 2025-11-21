@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -11,26 +12,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Imu {
     /** The actual IMU in this object. */
-    private BNO055IMU imu;
+    private IMU imu;
     /** The parameters of the IMU. */
-    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-    /** The offset from the absolute orienation plane. */
-    private double angularOffset = 0;
+    IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+    ));
 
 
     public Imu(HardwareMap hardwareMap) {
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.loggingTag = "IMU";  //Loggin tag and config name ARE NOT THE SAME (I think) TODO: Figure out if luc was correct
-
-        imu = hardwareMap.get(BNO055IMU.class, "IMU");
+        imu = hardwareMap.get(IMU.class, "IMU");
         imu.initialize(parameters);
     }
 
 
     /** Gets the angle of the robot on the absolute orientation plane from -180 to 180 degrees. */
     public double getAngle() {
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        double angle = -angles.firstAngle - angularOffset;
+        double angle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
 
         if (angle > 180) {
             angle -= 360;
@@ -77,11 +75,4 @@ public class Imu {
     public void reset() {
         imu.initialize(parameters);
     }
-
-    /** Sets AngularOffset, which will result in a resetted angular orientation. */
-    public void resetAngularOrientation() {
-        angularOffset = getAngle();
-    }
-
-
 }
