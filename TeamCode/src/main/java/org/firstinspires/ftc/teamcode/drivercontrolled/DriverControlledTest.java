@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
 
+import org.firstinspires.ftc.teamcode.robotparts.Intake;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
 
 @TeleOp
 public class DriverControlledTest extends OpMode {
@@ -13,7 +15,7 @@ public class DriverControlledTest extends OpMode {
     /**
      * The robot
      */
-    CompetitionRobot robot;
+    DrivetrainTest robot;
 
     /**
      * The desired heading when strafing.
@@ -25,7 +27,7 @@ public class DriverControlledTest extends OpMode {
     @Override
     /** Initialisation */
     public void init() {
-        robot = new CompetitionRobot(this);
+        robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
     }
 
@@ -35,9 +37,11 @@ public class DriverControlledTest extends OpMode {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
-        controlSlider();
-        telemetry.addData("slider", robot.sliderGrabber2.motorSlider2.getCurrentPosition());
-        controlArm();
+        controlShooter();
+        BallDelivery();
+        Intake();
+
+
     }
 
     private void controlDrivetrain() {
@@ -130,43 +134,41 @@ public class DriverControlledTest extends OpMode {
             correctionFactor = Math.signum(deviationAngle);
         }
 
+
         robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
+    //controles shooter
+   private void controlShooter(){
 
-    private void controlSlider() {
-        if (gamepad2.dpad_up) {
-            telemetry.addLine("In");
-            robot.sliderGrabber2.SliderToInPosition();
-        } else if (gamepad2.dpad_down) {
-            telemetry.addLine("Out");
-            robot.sliderGrabber2.SliderToOutPosition();
-        }else if (gamepad2.a){
-            telemetry.addLine("InIn");
-            robot.sliderGrabber2.MoveSliderIn();
-        }else if (gamepad2.b){
-            telemetry.addLine("OutOut");
-            robot.sliderGrabber2.MoveSliderOut();
-        }else{
-            robot.sliderGrabber2.StopSlider();
+        if (gamepad2.x) {
+            telemetry.addLine("Shooting");
+            robot.shooter.shoot(0.0);
+        }
+        else{
+            telemetry.addLine("Don't shoot");
+            robot.shooter.stopMotor();
         }
     }
-
-    private void controlArm() {
-        // There is a minus because up is negative and down is positive on the controller.
-        double direction = -gamepad2.right_stick_y;
-        if (direction > 0.1) {
-            telemetry.addLine("Arm Up");
-            robot.arm.MoveArmUp();
-        } else if (direction < -0.1) {
-            telemetry.addLine("Arm Down");
-            robot.arm.MoveArmDown();
-        } else if (gamepad2.left_bumper) {
-            robot.arm.ArmReset();
-        } else {
-            telemetry.addLine("Arm Stop");
-            robot.arm.StopArm();
+    private void BallDelivery(){
+        if (gamepad2.a){
+            telemetry.addLine("Give Ball");
+            robot.shooter.DeliverBall();
         }
-
+        else{
+            telemetry.addLine("New Ball");
+            robot.shooter.NewBall();
+        }
     }
+    private void Intake(){
+       if (gamepad2.y) {
+           telemetry.addLine("Taking ball in");
+           robot.intake.IntakeStart(0.0);
+       }
+       else{
+           telemetry.addLine("No taking in");
+           robot.intake.IntakeStop();
+       }
+    }
+
 }
