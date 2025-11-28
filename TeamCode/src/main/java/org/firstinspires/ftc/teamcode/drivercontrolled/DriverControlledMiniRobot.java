@@ -7,17 +7,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
 @TeleOp
-public class DriverControlledTest extends OpMode {
+public class DriverControlledMiniRobot extends OpMode {
 
     /**
      * The robot
      */
-    DrivetrainTest robot;
+    DrivetrainOnly robot;
 
     /**
      * The desired heading when strafing.
@@ -29,7 +29,7 @@ public class DriverControlledTest extends OpMode {
     @Override
     /** Initialisation */
     public void init() {
-        robot = new DrivetrainTest(this);
+        robot = new DrivetrainOnly(this);
         antiJerkTimer = new Timer();
     }
 
@@ -39,9 +39,7 @@ public class DriverControlledTest extends OpMode {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
-        controlShooter();
-        BallDelivery();
-        Intake();
+       
 
 
     }
@@ -145,74 +143,39 @@ public class DriverControlledTest extends OpMode {
         }
     }
 
-   /* private void correctHeading() {
-        // The measured robot angle, from the IMU.
-        double robotAngle = robot.imu.getAngle();
-
-        // Only update the correction angle during the first 0.5s of strafing.
-        if (antiJerkTimer.getTime() < 0.1) {
-            desiredHeading = robotAngle;
-            // This also means deviationAngle will be 0, so we can skip the rest.
-            return;
-        }
-
-        // Compute the deviation from the desired angle.
-        double deviationAngle = robotAngle - desiredHeading;
-        telemetry.addData("DeviationAngle", deviationAngle);
-
-        // Do not correct the angle if there is a big jump in angle.
-        if (Math.abs(deviationAngle) >= 90) {
-            return;
-        }
-
-        // Correct small angles proportional to the angle, capped at +/-1.
-        double correctionFactor = 0;
-        if (deviationAngle > -30 && deviationAngle < 30) {
-            correctionFactor = deviationAngle / 30;
-        } else {
-            correctionFactor = Math.signum(deviationAngle);
-        }
-
-
-        robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
-        telemetry.addData("GyroCorrectionFactor", correctionFactor);
-    }*/
+    /* private void correctHeading() {
+         // The measured robot angle, from the IMU.
+         double robotAngle = robot.imu.getAngle();
+ 
+         // Only update the correction angle during the first 0.5s of strafing.
+         if (antiJerkTimer.getTime() < 0.1) {
+             desiredHeading = robotAngle;
+             // This also means deviationAngle will be 0, so we can skip the rest.
+             return;
+         }
+ 
+         // Compute the deviation from the desired angle.
+         double deviationAngle = robotAngle - desiredHeading;
+         telemetry.addData("DeviationAngle", deviationAngle);
+ 
+         // Do not correct the angle if there is a big jump in angle.
+         if (Math.abs(deviationAngle) >= 90) {
+             return;
+         }
+ 
+         // Correct small angles proportional to the angle, capped at +/-1.
+         double correctionFactor = 0;
+         if (deviationAngle > -30 && deviationAngle < 30) {
+             correctionFactor = deviationAngle / 30;
+         } else {
+             correctionFactor = Math.signum(deviationAngle);
+         }
+ 
+ 
+         robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
+         telemetry.addData("GyroCorrectionFactor", correctionFactor);
+     }*/
     //controles shooter
-  private void controlShooter(){
-
-        if (gamepad2.right_bumper) {
-            telemetry.addLine("Shooting");
-            robot.shooter.shoot(0);
-        }
-        else{
-            telemetry.addLine("Don't shoot");
-            robot.shooterV.StopMotor();
-        }
-    }
-    private void BallDelivery(){
-        if (gamepad2.left_stick_y > 0.5){
-            telemetry.addLine("Give Ball");
-            robot.shooter.DeliverBall();
-        }
-        else if(gamepad2.left_stick_y < -0.5){
-            telemetry.addLine("Reverse Ball");
-            robot.shooter.ReverseBall();
-        }
-        else{
-            telemetry.addLine("New Ball");
-            robot.shooter.NewBall();
-        }
-    }
-
-    private void Intake(){
-       if (gamepad2.left_bumper) {
-           telemetry.addLine("Taking ball in");
-           robot.intake.IntakeStart(0.0);
-       }
-       else{
-           telemetry.addLine("No taking in");
-           robot.intake.IntakeStop();
-       }
-    }
+   
 
 }

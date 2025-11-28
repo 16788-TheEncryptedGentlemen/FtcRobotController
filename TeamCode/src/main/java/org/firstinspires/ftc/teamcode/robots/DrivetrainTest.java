@@ -10,6 +10,8 @@ import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Shooter;
 import org.firstinspires.ftc.teamcode.robotparts.Intake;
+import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
+
 public class DrivetrainTest {
 
     public Display display;
@@ -18,6 +20,7 @@ public class DrivetrainTest {
     public MecanumDrivetrain drivetrain;
     public Shooter shooter;
     public Intake intake;
+    public ShooterV shooterV;
 
     /**
      * The constructor for a LinearOpMode program.
@@ -50,6 +53,7 @@ public class DrivetrainTest {
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
         display.showLoading("intake");
+        shooterV = new ShooterV(hardwaremap);
         intake = new Intake(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
 
