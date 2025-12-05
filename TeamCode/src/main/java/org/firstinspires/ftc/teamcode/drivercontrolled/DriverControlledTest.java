@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
 @TeleOp
@@ -17,7 +17,7 @@ public class DriverControlledTest extends OpMode {
     /**
      * The robot
      */
-    DrivetrainTest robot;
+    DrivetrainOnly robot;
 
     /**
      * The desired heading when strafing.
@@ -29,7 +29,7 @@ public class DriverControlledTest extends OpMode {
     @Override
     /** Initialisation */
     public void init() {
-        robot = new DrivetrainTest(this);
+        robot = new DrivetrainOnly(this);
         antiJerkTimer = new Timer();
     }
 
@@ -39,9 +39,9 @@ public class DriverControlledTest extends OpMode {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
-        controlShooter();
-        BallDelivery();
-        Intake();
+//        controlShooter();
+//        BallDelivery();
+//        Intake();
 
 
     }
@@ -51,6 +51,7 @@ public class DriverControlledTest extends OpMode {
         if (gamepad1.start) {
             robot.imu.reset();
         }
+
 
         // The up and down movements of the left joystick on the gamepad of player 1.
         // There is a minus because up is negative and down is positive on the controller.
@@ -92,12 +93,12 @@ public class DriverControlledTest extends OpMode {
         robot.drivetrain.addSpeed(-turnSpeed, -turnSpeed, turnSpeed, turnSpeed);
 
         // Correct the strafing angle when strafing and not rotating.
-       /* if (strafeSpeed > 0 && turnSpeed == 0) {
+        if (strafeSpeed > 0 && turnSpeed == 0) {
             correctHeading();
         } else {
-             Otherwise, keep the timer at 0.
+           // Otherwise, keep the timer at 0.
            antiJerkTimer.Reset();
-        }*/
+        }
 
         robot.drivetrain.fixMotorSpeedOverflow();
 
@@ -145,9 +146,11 @@ public class DriverControlledTest extends OpMode {
         }
     }
 
-   /* private void correctHeading() {
+   private void correctHeading() {
         // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
+       telemetry.addData("robot angle", robotAngle);
+       telemetry.addData("desired heading", desiredHeading);
 
         // Only update the correction angle during the first 0.5s of strafing.
         if (antiJerkTimer.getTime() < 0.1) {
@@ -174,21 +177,45 @@ public class DriverControlledTest extends OpMode {
         }
 
 
-        robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
+        robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
-    }*/
-    //controles shooter
-  private void controlShooter(){
+    }
 
-        if (gamepad2.right_bumper) {
-            telemetry.addLine("Shooting");
-            robot.shooter.shoot(0);
-        }
-        else{
-            telemetry.addLine("Don't shoot");
-            robot.shooterV.StopMotor();
+
+    //:todo makeshure it works with the shooter after the bois reassembled the robot
+    /*public void runOpMode() throw InterruptedException
+{
+    ElapsedTime mStateTime = new ElapsedTime();
+    int v_state = 0;
+    ...
+    waitForStart();
+    while (opModeIsActive())
+    {
+        switch (v_state)
+        {
+            case 0:
+                // set the arm servo to the up position.
+                servo.setPosition(UP_POSITION);
+                // The servo needs 2 seconds to be in the UP position.
+                // So set up the timer and move to the next state.
+                mStateTime.reset();
+                v_state++;
+                break;
+            case 1:
+                // check if 2 seconds has past and move on
+                if (mStateTime.time() >= 2.0)
+                {
+                    // do whatever you want to do when times up.
+                    ...
+                    v_state++;
+                }
+                break;
+             ...
         }
     }
+}*/
+
+ /*   //controles shooter
     private void BallDelivery(){
         if (gamepad2.left_stick_y > 0.5){
             telemetry.addLine("Give Ball");
@@ -203,6 +230,20 @@ public class DriverControlledTest extends OpMode {
             robot.shooter.NewBall();
         }
     }
+    private void controlShooter(){
+
+        if (gamepad2.right_bumper) {
+            telemetry.addLine("Shooting");
+            robot.shooterV.shootV(0);
+        } else if (gamepad2.left_trigger > 0.5) {
+            telemetry.addLine("Shooting faster");
+            robot.shooter.shootFaster(0);
+        }
+        else{
+            telemetry.addLine("Don't shoot");
+            robot.shooter.stopMotor();
+        }
+    }
 
     private void Intake(){
        if (gamepad2.left_bumper) {
@@ -214,5 +255,5 @@ public class DriverControlledTest extends OpMode {
            robot.intake.IntakeStop();
        }
     }
-
+*/
 }
