@@ -194,10 +194,6 @@ public class DriverControlledTest extends OpMode {
             telemetry.addLine("Give Ball");
             robot.shooter.DeliverBall();
         }
-        else if(gamepad2.left_stick_y < -0.5){
-            telemetry.addLine("Reverse Ball");
-            robot.shooter.ReverseBall();
-        }
         else{
             telemetry.addLine("New Ball");
             robot.shooter.NewBall();
