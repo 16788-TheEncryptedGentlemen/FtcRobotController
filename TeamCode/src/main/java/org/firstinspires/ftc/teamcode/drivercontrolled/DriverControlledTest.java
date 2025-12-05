@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
 @TeleOp
@@ -183,10 +182,13 @@ public class DriverControlledTest extends OpMode {
         if (gamepad2.right_bumper) {
             telemetry.addLine("Shooting");
             robot.shooter.shoot(0);
+        } else if (gamepad2.left_trigger > 0.5) {
+            telemetry.addLine("Shooting faster");
+            robot.shooter.shootFaster(0);
         }
         else{
             telemetry.addLine("Don't shoot");
-            robot.shooterV.StopMotor();
+            robot.shooter.stopMotor();
         }
     }
     private void BallDelivery(){
