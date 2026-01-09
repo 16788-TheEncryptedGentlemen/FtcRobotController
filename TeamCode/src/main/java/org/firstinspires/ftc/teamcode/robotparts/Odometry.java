@@ -8,14 +8,14 @@ public class Odometry {
     /** Counts per rotation of the encoder. */
     public final static int countsPerRotation = 2000;
     /** Diameter of the odometry wheels in cm. */
-    public final static double diameterOdometryWheel = 3.1;
+    public final static double diameterOdometryWheel = 3.2;
     /** Amount of cm that the robot drives in one count. */
     public final static double cmPerCount = (diameterOdometryWheel * Math.PI) / countsPerRotation;
 
     /** A correction value for the vertical odometry wheel. */
-    public final double verticalCorrection = 1.055;
+    public final double verticalCorrection = 1.0;
     /** A correction value for the horizontal odometry wheel. */
-    public final double horizontalCorrection = 1.02967;
+    public final double horizontalCorrection = 1.0;
 
     /** The odometry wheel in the horizontal direction. */
     private final DcMotorEx xWheel;
@@ -30,7 +30,7 @@ public class Odometry {
      */
     public Odometry(HardwareMap hardwareMap) {
         xWheel = hardwareMap.get(DcMotorEx.class, "CoreHexMotor");
-        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor");
+        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor ");
 
         reset();
 
