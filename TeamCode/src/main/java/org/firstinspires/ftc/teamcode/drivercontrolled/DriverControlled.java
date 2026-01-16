@@ -1,11 +1,15 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
+
+
 
 @TeleOp
 public class DriverControlled extends OpMode {
@@ -13,51 +17,33 @@ public class DriverControlled extends OpMode {
     /**
      * The robot
      */
-    CompetitionRobot robot;
+    DrivetrainTest robot;
 
     /**
      * The desired heading when strafing.
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
-
-    public Timer grabberTimer = new Timer();
-    public Timer hangTimer = new Timer();
-    public final double grabposition = 0;
     public final double DefaultPosition = 0.8;
 
-    public enum PROCESSING_STATE {
-        IDLE,
-        MOVING,
-        FINISHED
-    }
-
-    public PROCESSING_STATE State = PROCESSING_STATE.IDLE;
-    public DigitalChannel encoderA;
-    public DigitalChannel encoderB;
-    public int position = 0;
-    public boolean lastA;
     @Override
     /** Initialisation */
     public void init() {
-        robot = new CompetitionRobot(this);
+        robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
     }
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
-
-//        controlGrabber();
-//        if (State != PROCESSING_STATE.MOVING) {
-//            controlArm();
-//        }
         controlDrivetrain();
-        telemetry.addData("A", robot.drivetrain.frontRight.getCurrentPosition());
-        telemetry.addData("B", robot.drivetrain.frontLeft.getCurrentPosition());
-        controlArm();
-        controlSlider();
-        controlGrabber();
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
+        controlShooter();
+        BallDelivery();
+        Intake();
+
+
     }
 
     private void controlDrivetrain() {
@@ -65,6 +51,7 @@ public class DriverControlled extends OpMode {
         if (gamepad1.start) {
             robot.imu.reset();
         }
+
 
         // The up and down movements of the left joystick on the gamepad of player 1.
         // There is a minus because up is negative and down is positive on the controller.
@@ -122,9 +109,12 @@ public class DriverControlled extends OpMode {
         robot.drivetrain.setPower();
     }
 
+
     private void correctHeading() {
         // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
+        telemetry.addData("robot angle", robotAngle);
+        telemetry.addData("desired heading", desiredHeading);
 
         // Only update the correction angle during the first 0.5s of strafing.
         if (antiJerkTimer.getTime() < 0.1) {
@@ -150,62 +140,54 @@ public class DriverControlled extends OpMode {
             correctionFactor = Math.signum(deviationAngle);
         }
 
-        robot.drivetrain.addSpeed(correctionFactor, correctionFactor, -correctionFactor, -correctionFactor);
+
+        robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
-        /**
-     * Controls of the arm that is attached to the grabber on the robot.
-     */
-    private void controlArm() {
-        // There is a minus because up is negative and down is positive on the controller.
-        double direction = -gamepad2.right_stick_y;
-        if (direction > 0.1) {
-            telemetry.addLine("Arm Up");
-            robot.arm.MoveArmUp();
-        } else if (direction < -0.1) {
-            telemetry.addLine("Arm Down");
-            robot.arm.MoveArmDown();
-        } else if (gamepad2.left_bumper) {
-            robot.arm.ArmReset();
-        } else {
-            telemetry.addLine("Arm Stop");
-            robot.arm.StopArm();
+
+
+    //:todo makeshure it works with the shooter after the bois reassembled the robot
+
+
+    //controles shooter
+    private void BallDelivery(){
+        if (gamepad2.left_stick_y > 0.5){
+            telemetry.addLine("Give Ball");
+            robot.shooter.DeliverBall();
+        }
+        else if(gamepad2.left_stick_y < -0.5){
+            telemetry.addLine("Reverse Ball");
+            robot.shooter.ReverseBall();
+        }
+        else{
+            telemetry.addLine("New Ball");
+            robot.shooter.NewBall();
+        }
+    }
+    private void controlShooter(){
+
+        if (gamepad2.right_bumper) {
+            telemetry.addLine("Shooting");
+            robot.shooterV.shootV(0);
+        } else if (gamepad2.a && gamepad2.right_trigger > 0.4) {
+            telemetry.addLine("Shooting further");
+            robot.shooter.shootFaster(0);
+        }
+        else{
+            telemetry.addLine("Don't shoot");
+            robot.shooter.stopMotor();
         }
     }
 
-    /**
-     * Controls of the grabber on the robot for the pixel.
-     */
-    private void controlGrabber() {
-        if (gamepad2.x) {
-            telemetry.addLine("Grab");
-            robot.grabber.grab();
-        } else if (gamepad2.y) {
-            telemetry.addLine("Drop");
-            robot.grabber.drop();
+    private void Intake(){
+        if (gamepad2.left_bumper) {
+            telemetry.addLine("Taking ball in");
+            robot.intake.IntakeStart(0.0);
+        }
+        else{
+            telemetry.addLine("No taking in");
+            robot.intake.IntakeStop();
         }
     }
 
-    private void controlSlider() {
-        if (gamepad2.dpad_down) {
-        telemetry.addLine("In");
-        robot.sliderGrabber2.SliderToInPosition();
-    } else if (gamepad2.dpad_up) {
-        telemetry.addLine("Out");
-        robot.sliderGrabber2.SliderToOutPosition();
-    } else {
-            robot.sliderGrabber2.StopSlider();
-            telemetry.addLine("Stopped");
-        }
-    }
-//        // Just for testing autonomous positions.
-//        else if (gamepad1.b) {
-//            telemetry.addLine("Right");
-//            robot.pusher.preloadRight();
-//        }
-//        // Just for testing autonomous positions.
-//        else if (gamepad1.x) {
-//            telemetry.addLine("Left");
-//            robot.pusher.preloadLeft();
-//        }
-    }
+}

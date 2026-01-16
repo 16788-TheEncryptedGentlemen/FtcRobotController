@@ -15,8 +15,8 @@ public class Imu {
     private IMU imu;
     /** The parameters of the IMU. */
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+            RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+            RevHubOrientationOnRobot.UsbFacingDirection.UP
     ));
 
 
