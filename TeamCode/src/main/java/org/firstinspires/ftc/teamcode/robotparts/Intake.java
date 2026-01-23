@@ -11,7 +11,7 @@ public class Intake {
     public Intake(HardwareMap hardwareMap){
        Intake = hardwareMap.get(DcMotor.class, "IntakeMotor");
        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       Intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       Intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void IntakeStart(double power) {
         Intake.setPower(Power);

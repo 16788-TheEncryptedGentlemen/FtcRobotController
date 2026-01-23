@@ -151,11 +151,11 @@ public class DriverControlled extends OpMode {
 
     //controles shooter
     private void BallDelivery(){
-        if (gamepad2.left_stick_y > 0.5){
+        if (gamepad2.left_stick_y < -0.5){
             telemetry.addLine("Give Ball");
             robot.shooter.DeliverBall();
         }
-        else if(gamepad2.left_stick_y < -0.5){
+        else if(gamepad2.left_stick_y > 0.5){
             telemetry.addLine("Reverse Ball");
             robot.shooter.ReverseBall();
         }
@@ -168,7 +168,7 @@ public class DriverControlled extends OpMode {
 
         if (gamepad2.right_bumper) {
             telemetry.addLine("Shooting");
-            robot.shooterV.shootV(0);
+            robot.shooter.shoot(0);
         } else if (gamepad2.a && gamepad2.right_trigger > 0.4) {
             telemetry.addLine("Shooting further");
             robot.shooter.shootFaster(0);
