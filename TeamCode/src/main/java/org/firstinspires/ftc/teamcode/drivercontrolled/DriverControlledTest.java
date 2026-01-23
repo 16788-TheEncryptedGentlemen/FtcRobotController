@@ -28,6 +28,7 @@ public class DriverControlledTest extends OpMode {
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
+    private boolean Shoot = false;
     public final double DefaultPosition = 0.8;
 
     @Override
@@ -46,6 +47,7 @@ public class DriverControlledTest extends OpMode {
         controlShooter();
         BallDelivery();
         Intake();
+        SpeedChange();
 
 
     }
@@ -197,20 +199,41 @@ public class DriverControlledTest extends OpMode {
     }
     private void controlShooter(){
 
-        if (gamepad2.right_bumper) {
+        if(gamepad2.rightBumperWasPressed()){
+            Shoot = !Shoot; //On / Off toggel
+        }
+
+        if (Shoot) {
             telemetry.addLine("Shooting");
             robot.shooterV.shootV(0);
-        } /*else if (gamepad2.left_bumper && gamepad2.right_bumper) {
-            telemetry.addLine("Shooting faster");
-            robot.shooter.shootFaster(0);
-        }*/
-        else{
+        }
+        /*else if (gamepad2.left_bumper && gamepad2.right_bumper) {
+          telemetry.addLine("Shooting faster");
+          robot.shooter.shootFaster(0);
+      }*/
+
+        else {
             telemetry.addLine("Don't shoot");
             robot.shooter.stopMotor();
         }
     }
+    //todo: values must be checked
+    private void SpeedChange(){
 
-    private void Intake(){ 
+        telemetry.addData("Shoot speed: ", robot.shooterV.RPM);
+        if (gamepad2.dpadUpWasPressed()){
+           robot.shooterV.RPM= robot.shooterV.RPM +5;
+
+        } else if (gamepad2.dpadDownWasPressed()) {
+            robot.shooterV.RPM= robot.shooterV.RPM -5;
+        } else if (gamepad2.dpadRightWasPressed()) {
+            robot.shooterV.RPM= 1075;
+        } else if (gamepad2.dpadLeftWasPressed()) {
+            robot.shooterV.RPM = 1500;
+
+        }
+    }
+    private void Intake(){
        if (gamepad2.left_bumper) {
            telemetry.addLine("Taking ball in");
            robot.intake.IntakeStart(0.0);

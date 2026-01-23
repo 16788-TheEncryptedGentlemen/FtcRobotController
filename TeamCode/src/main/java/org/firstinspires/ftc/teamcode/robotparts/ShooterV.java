@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class ShooterV extends LinearOpMode {
     public DcMotorEx MotorL;
     public DcMotorEx MotorR;
+    public int RPM = 1075;
 
     public ShooterV(HardwareMap hardwareMap) {
         MotorL = hardwareMap.get(DcMotorEx.class, "ShooterL");
@@ -53,8 +54,8 @@ public class ShooterV extends LinearOpMode {
 
     public void shootV(double velocity) {
         //todo: check these values
-        MotorL.setVelocity(1500);
-        MotorR.setVelocity(-1500);
+        MotorL.setVelocity(RPM);
+        MotorR.setVelocity(-RPM);
     }
 
     public void StopMotor()
