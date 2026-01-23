@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 
 
 @TeleOp
@@ -17,19 +21,20 @@ public class DriverControlledTest extends OpMode {
     /**
      * The robot
      */
-    DrivetrainOnly robot;
+    DrivetrainTest robot;
 
     /**
      * The desired heading when strafing.
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
+    private boolean Shoot = false;
     public final double DefaultPosition = 0.8;
 
     @Override
     /** Initialisation */
     public void init() {
-        robot = new DrivetrainOnly(this);
+        robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
     }
 
@@ -39,9 +44,10 @@ public class DriverControlledTest extends OpMode {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
-//        controlShooter();
-//        BallDelivery();
-//        Intake();
+        controlShooter();
+        BallDelivery();
+        Intake();
+        SpeedChange();
 
 
     }
@@ -109,113 +115,74 @@ public class DriverControlledTest extends OpMode {
         robot.drivetrain.setPower();
     }
 
-    public class ShooterV extends LinearOpMode {
-        DcMotorEx MotorL;
-        DcMotorEx MotorR;
 
-
-        @Override
-        public void runOpMode() throws InterruptedException {
-
-            MotorL = hardwareMap.get(DcMotorEx.class, "Motor");
-            MotorR = hardwareMap.get(DcMotorEx.class, "Motor");
-
-            // Reset the encoder during initialization
-            MotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            MotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-            waitForStart();
-
-            // Switch to RUN_TO_POSITION mode
-            MotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            MotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            // Start the MotorL moving by setting the max velocity to 200 ticks per second
-            MotorL.setVelocity(200);
-            MotorR.setVelocity(200);
-
-            // While the Op Mode is running, show the MotorL's status via telemetry
-            while (opModeIsActive()) {
-                telemetry.addData("velocity", MotorL.getVelocity());
-                telemetry.addData("position", MotorL.getCurrentPosition());
-                telemetry.addData("is at target", !MotorL.isBusy());
-                telemetry.update();
-            }
-
-
-        }
-    }
 
    private void correctHeading() {
-        // The measured robot angle, from the IMU.
-        double robotAngle = robot.imu.getAngle();
+       // The measured robot angle, from the IMU.
+       double robotAngle = robot.imu.getAngle();
        telemetry.addData("robot angle", robotAngle);
        telemetry.addData("desired heading", desiredHeading);
 
-        // Only update the correction angle during the first 0.5s of strafing.
-        if (antiJerkTimer.getTime() < 0.1) {
-            desiredHeading = robotAngle;
-            // This also means deviationAngle will be 0, so we can skip the rest.
-            return;
-        }
+       // Only update the correction angle during the first 0.5s of strafing.
+       if (antiJerkTimer.getTime() < 0.1) {
+           desiredHeading = robotAngle;
+           // This also means deviationAngle will be 0, so we can skip the rest.
+           return;
+       }
 
-        // Compute the deviation from the desired angle.
-        double deviationAngle = robotAngle - desiredHeading;
-        telemetry.addData("DeviationAngle", deviationAngle);
+       // Compute the deviation from the desired angle.
+       double deviationAngle = robotAngle - desiredHeading;
+       telemetry.addData("DeviationAngle", deviationAngle);
 
-        // Do not correct the angle if there is a big jump in angle.
-        if (Math.abs(deviationAngle) >= 90) {
-            return;
-        }
+       // Do not correct the angle if there is a big jump in angle.
+       if (Math.abs(deviationAngle) >= 90) {
+           return;
+       }
 
-        // Correct small angles proportional to the angle, capped at +/-1.
-        double correctionFactor = 0;
-        if (deviationAngle > -30 && deviationAngle < 30) {
-            correctionFactor = deviationAngle / 30;
-        } else {
-            correctionFactor = Math.signum(deviationAngle);
-        }
-
-
-        robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
-        telemetry.addData("GyroCorrectionFactor", correctionFactor);
-    }
+       // Correct small angles proportional to the angle, capped at +/-1.
+       double correctionFactor = 0;
+       if (deviationAngle > -30 && deviationAngle < 30) {
+           correctionFactor = deviationAngle / 30;
+       } else {
+           correctionFactor = Math.signum(deviationAngle);
+       }
 
 
-    //:todo makeshure it works with the shooter after the bois reassembled the robot
-    /*public void runOpMode() throw InterruptedException
-{
-    ElapsedTime mStateTime = new ElapsedTime();
-    int v_state = 0;
-    ...
-    waitForStart();
-    while (opModeIsActive())
+       robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
+       telemetry.addData("GyroCorrectionFactor", correctionFactor);
+   }
+
+
+    //:todo make sure it works with the shooter after the bois reassembled the robot
+
+   /* ElapsedTime Timer = new ElapsedTime();
+    int shootProcess = 0;
+
     {
-        switch (v_state)
-        {
-            case 0:
-                // set the arm servo to the up position.
-                servo.setPosition(UP_POSITION);
-                // The servo needs 2 seconds to be in the UP position.
-                // So set up the timer and move to the next state.
-                mStateTime.reset();
-                v_state++;
-                break;
-            case 1:
-                // check if 2 seconds has past and move on
-                if (mStateTime.time() >= 2.0)
-                {
-                    // do whatever you want to do when times up.
-                    ...
-                    v_state++;
-                }
-                break;
-             ...
+        while (gamepad1.left_bumper) {
+            Timer.startTime();
+            switch (shootProcess) {// start of ball moving up.
+                case 0:
+                    telemetry.addLine("Give Ball");
+                    robot.shooter.DeliverBall();
+
+                    Timer.reset();
+                    shootProcess++;
+                case 1:
+                    // check if 2 seconds has past and move on
+                    if (Timer.time() >= 2.0) {
+                        // shooting
+                        telemetry.addLine("Shooting");
+                        robot.intake.IntakeStart(0);
+
+                        break;
+                    }
+            }
         }
     }
-}*/
 
- /*   //controles shooter
+
+*/   //controls shooter
     private void BallDelivery(){
         if (gamepad2.left_stick_y > 0.5){
             telemetry.addLine("Give Ball");
@@ -232,19 +199,40 @@ public class DriverControlledTest extends OpMode {
     }
     private void controlShooter(){
 
-        if (gamepad2.right_bumper) {
+        if(gamepad2.rightBumperWasPressed()){
+            Shoot = !Shoot; //On / Off toggel
+        }
+
+        if (Shoot) {
             telemetry.addLine("Shooting");
             robot.shooterV.shootV(0);
-        } else if (gamepad2.left_trigger > 0.5) {
-            telemetry.addLine("Shooting faster");
-            robot.shooter.shootFaster(0);
         }
-        else{
+        /*else if (gamepad2.left_bumper && gamepad2.right_bumper) {
+          telemetry.addLine("Shooting faster");
+          robot.shooter.shootFaster(0);
+      }*/
+
+        else {
             telemetry.addLine("Don't shoot");
             robot.shooter.stopMotor();
         }
     }
+    //todo: values must be checked
+    private void SpeedChange(){
 
+        telemetry.addData("Shoot speed: ", robot.shooterV.RPM);
+        if (gamepad2.dpadUpWasPressed()){
+           robot.shooterV.RPM= robot.shooterV.RPM +5;
+
+        } else if (gamepad2.dpadDownWasPressed()) {
+            robot.shooterV.RPM= robot.shooterV.RPM -5;
+        } else if (gamepad2.dpadRightWasPressed()) {
+            robot.shooterV.RPM= 1075;
+        } else if (gamepad2.dpadLeftWasPressed()) {
+            robot.shooterV.RPM = 1500;
+
+        }
+    }
     private void Intake(){
        if (gamepad2.left_bumper) {
            telemetry.addLine("Taking ball in");
@@ -255,5 +243,5 @@ public class DriverControlledTest extends OpMode {
            robot.intake.IntakeStop();
        }
     }
-*/
+
 }
