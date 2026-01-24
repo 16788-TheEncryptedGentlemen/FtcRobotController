@@ -2,24 +2,28 @@ package org.firstinspires.ftc.teamcode.autonomousroutes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
 /** Comment to make the program disappear from the driverstation app. */
-//@Autonomous
-public class TEST extends LinearOpMode {
-    CompetitionRobot robot;
+@Autonomous
+public class ShootBackwards extends LinearOpMode {
+    DrivetrainTest robot;
 
     final double POWER = 0.5;
 
     public void runOpMode() {
         // Initialisation.
-        robot = new CompetitionRobot(this);
+        robot = new DrivetrainTest(this);
         waitForStart();
-
-        robot.drivetrain.driveBackwards(10,POWER);
-        robot.drivetrain.stop();
+        robot.shooterV.shootV(1750);
+        sleep(500);
+        robot.intake.IntakeStart(1.0);
         sleep(3000);
+        robot.intake.IntakeStop();
+        robot.shooter.stopMotor();
+        robot.drivetrain.driveStraight(-30, POWER);
 
         // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }

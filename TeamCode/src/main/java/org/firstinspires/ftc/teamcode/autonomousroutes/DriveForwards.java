@@ -3,22 +3,20 @@ package org.firstinspires.ftc.teamcode.autonomousroutes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
+import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
 /** Comment to make the program disappear from the driverstation app. */
-//@Autonomous
-public class JustParkingObservationZoneStrafe extends LinearOpMode {
-    CompetitionRobot robot;
+@Autonomous
+public class DriveForwards extends LinearOpMode {
+    DrivetrainTest robot;
 
     final double POWER = 0.5;
 
     public void runOpMode() {
         // Initialisation.
-        robot = new CompetitionRobot(this);
+        robot = new DrivetrainTest(this);
         waitForStart();
-
-        sleep (10000);
-        robot.drivetrain.strafeStraight(120,POWER,0);
+        robot.drivetrain.driveStraight(30, POWER);
 
         // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }

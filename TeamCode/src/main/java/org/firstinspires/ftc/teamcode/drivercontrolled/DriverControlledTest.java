@@ -200,7 +200,8 @@ public class DriverControlledTest extends OpMode {
     private void controlShooter(){
 
         if(gamepad2.rightBumperWasPressed()){
-            Shoot = !Shoot; //On / Off toggel
+            Shoot = !Shoot; //On / Off toggle
+            telemetry.addData("Shoot",Shoot);
         }
 
         if (Shoot) {

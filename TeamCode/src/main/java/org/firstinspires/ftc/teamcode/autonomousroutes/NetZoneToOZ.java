@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 /** Comment to make the program disappear from the driverstation app. */
-@Autonomous
+//@Autonomous
 public class NetZoneToOZ extends LinearOpMode {
     CompetitionRobot robot;
 

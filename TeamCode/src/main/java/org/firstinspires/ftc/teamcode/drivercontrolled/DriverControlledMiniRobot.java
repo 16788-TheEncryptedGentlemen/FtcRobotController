@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
-@TeleOp
+//@TeleOp
 public class DriverControlledMiniRobot extends OpMode {
 
     /**

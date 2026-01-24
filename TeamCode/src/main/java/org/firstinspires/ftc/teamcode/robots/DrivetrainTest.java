@@ -53,7 +53,6 @@ public class DrivetrainTest {
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
         display.showLoading("intake");
-        shooterV = new ShooterV(hardwaremap);
         intake = new Intake(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
 

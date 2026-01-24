@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Odometry {
     /** Counts per rotation of the encoder. */
-    public final static int countsPerRotation = 8192;
+    public final static int countsPerRotation = 2000;
     /** Diameter of the odometry wheels in cm. */
-    public final static double diameterOdometryWheel = 5.0;
+    public final static double diameterOdometryWheel = 3.1;
     /** Amount of cm that the robot drives in one count. */
     public final static double cmPerCount = (diameterOdometryWheel * Math.PI) / countsPerRotation;
 
@@ -29,8 +29,8 @@ public class Odometry {
      * @param hardwareMap The hardware map of the robot.
      */
     public Odometry(HardwareMap hardwareMap) {
-        xWheel = hardwareMap.get(DcMotorEx.class, "FrontRight");
-        yWheel = hardwareMap.get(DcMotorEx.class, "FrontLeft");
+        xWheel = hardwareMap.get(DcMotorEx.class, "CoreHexMotor");
+        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor");
 
         reset();
 
