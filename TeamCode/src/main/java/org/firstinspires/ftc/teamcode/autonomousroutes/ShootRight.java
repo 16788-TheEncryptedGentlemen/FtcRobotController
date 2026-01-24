@@ -16,14 +16,13 @@ public class ShootRight extends LinearOpMode {
         // Initialisation.
         robot = new DrivetrainTest(this);
         waitForStart();
-        robot.shooter.shoot(0.5);
-        sleep(500);
-        robot.intake.IntakeStart(1.0);
+        robot.shooterV.shootV(0);
+        sleep(1000);
+        robot.shooter.DeliverBall();
         sleep(3000);
-        robot.intake.IntakeStop();
-        robot.shooter.stopMotor();
+        robot.shooter.NewBall();
+        robot.shooterV.StopMotor();
         robot.drivetrain.strafeStraight(30, POWER,0 );
 
-        // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }
 }

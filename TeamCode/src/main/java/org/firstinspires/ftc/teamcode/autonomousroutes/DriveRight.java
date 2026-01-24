@@ -17,7 +17,5 @@ public class DriveRight extends LinearOpMode {
         robot = new DrivetrainTest(this);
         waitForStart();
         robot.drivetrain.strafeStraight(30, POWER,0 );
-
-        // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }
 }

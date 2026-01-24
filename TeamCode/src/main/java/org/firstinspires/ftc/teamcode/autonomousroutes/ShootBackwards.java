@@ -17,14 +17,12 @@ public class ShootBackwards extends LinearOpMode {
         // Initialisation.
         robot = new DrivetrainTest(this);
         waitForStart();
-        robot.shooterV.shootV(1750);
-        sleep(500);
-        robot.intake.IntakeStart(1.0);
+        robot.shooterV.shootV(0);
+        sleep(1000);
+        robot.shooter.DeliverBall();
         sleep(3000);
-        robot.intake.IntakeStop();
-        robot.shooter.stopMotor();
+        robot.shooter.NewBall();
+        robot.shooterV.StopMotor();
         robot.drivetrain.driveStraight(-30, POWER);
-
-        // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }
 }

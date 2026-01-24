@@ -17,7 +17,5 @@ public class DriveForwards extends LinearOpMode {
         robot = new DrivetrainTest(this);
         waitForStart();
         robot.drivetrain.driveStraight(30, POWER);
-
-        // todo: checken of in ieder geval éen deel van éen wiel erin staat.
     }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
-@TeleOp
+//@TeleOp
 public class MecanumDriveTest extends OpMode {
 
     /**
