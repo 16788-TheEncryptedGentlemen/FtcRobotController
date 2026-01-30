@@ -1,18 +1,10 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad2;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
-import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
 
 
 @TeleOp
@@ -48,8 +40,6 @@ public class DriverControlledTest extends OpMode {
         BallDelivery();
         Intake();
         SpeedChange();
-
-
     }
 
     private void controlDrivetrain() {
@@ -102,8 +92,8 @@ public class DriverControlledTest extends OpMode {
         if (strafeSpeed > 0 && turnSpeed == 0) {
             correctHeading();
         } else {
-           // Otherwise, keep the timer at 0.
-           antiJerkTimer.Reset();
+            // Otherwise, keep the timer at 0.
+            antiJerkTimer.Reset();
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();
@@ -116,92 +106,90 @@ public class DriverControlledTest extends OpMode {
     }
 
 
+    private void correctHeading() {
+        // The measured robot angle, from the IMU.
+        double robotAngle = robot.imu.getAngle();
+        telemetry.addData("robot angle", robotAngle);
+        telemetry.addData("desired heading", desiredHeading);
 
-   private void correctHeading() {
-       // The measured robot angle, from the IMU.
-       double robotAngle = robot.imu.getAngle();
-       telemetry.addData("robot angle", robotAngle);
-       telemetry.addData("desired heading", desiredHeading);
+        // Only update the correction angle during the first 0.5s of strafing.
+        if (antiJerkTimer.getTime() < 0.1) {
+            desiredHeading = robotAngle;
+            // This also means deviationAngle will be 0, so we can skip the rest.
+            return;
+        }
 
-       // Only update the correction angle during the first 0.5s of strafing.
-       if (antiJerkTimer.getTime() < 0.1) {
-           desiredHeading = robotAngle;
-           // This also means deviationAngle will be 0, so we can skip the rest.
-           return;
-       }
+        // Compute the deviation from the desired angle.
+        double deviationAngle = robotAngle - desiredHeading;
+        telemetry.addData("DeviationAngle", deviationAngle);
 
-       // Compute the deviation from the desired angle.
-       double deviationAngle = robotAngle - desiredHeading;
-       telemetry.addData("DeviationAngle", deviationAngle);
+        // Do not correct the angle if there is a big jump in angle.
+        if (Math.abs(deviationAngle) >= 90) {
+            return;
+        }
 
-       // Do not correct the angle if there is a big jump in angle.
-       if (Math.abs(deviationAngle) >= 90) {
-           return;
-       }
-
-       // Correct small angles proportional to the angle, capped at +/-1.
-       double correctionFactor = 0;
-       if (deviationAngle > -30 && deviationAngle < 30) {
-           correctionFactor = deviationAngle / 30;
-       } else {
-           correctionFactor = Math.signum(deviationAngle);
-       }
+        // Correct small angles proportional to the angle, capped at +/-1.
+        double correctionFactor = 0;
+        if (deviationAngle > -30 && deviationAngle < 30) {
+            correctionFactor = deviationAngle / 30;
+        } else {
+            correctionFactor = Math.signum(deviationAngle);
+        }
 
 
-       robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
-       telemetry.addData("GyroCorrectionFactor", correctionFactor);
-   }
+        robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
+        telemetry.addData("GyroCorrectionFactor", correctionFactor);
+    }
 
 
     //:todo make sure it works with the shooter after the bois reassembled the robot
 
-   /* ElapsedTime Timer = new ElapsedTime();
-    int shootProcess = 0;
+    /* ElapsedTime Timer = new ElapsedTime();
+     int shootProcess = 0;
 
-    {
-        while (gamepad1.left_bumper) {
-            Timer.startTime();
-            switch (shootProcess) {// start of ball moving up.
-                case 0:
-                    telemetry.addLine("Give Ball");
-                    robot.shooter.DeliverBall();
+     {
+         while (gamepad1.left_bumper) {
+             Timer.startTime();
+             switch (shootProcess) {// start of ball moving up.
+                 case 0:
+                     telemetry.addLine("Give Ball");
+                     robot.shooter.DeliverBall();
 
-                    Timer.reset();
-                    shootProcess++;
-                case 1:
-                    // check if 2 seconds has past and move on
-                    if (Timer.time() >= 2.0) {
-                        // shooting
-                        telemetry.addLine("Shooting");
-                        robot.intake.IntakeStart(0);
+                     Timer.reset();
+                     shootProcess++;
+                 case 1:
+                     // check if 2 seconds has past and move on
+                     if (Timer.time() >= 2.0) {
+                         // shooting
+                         telemetry.addLine("Shooting");
+                         robot.intake.IntakeStart(0);
 
-                        break;
-                    }
-            }
-        }
-    }
+                         break;
+                     }
+             }
+         }
+     }
 
 
-*/   //controls shooter
-    private void BallDelivery(){
-        if (gamepad2.left_stick_y > 0.5){
+ */   //controls shooter
+    private void BallDelivery() {
+        if (gamepad2.left_stick_y > 0.5) {
             telemetry.addLine("Give Ball");
             robot.shooter.DeliverBall();
-        }
-        else if(gamepad2.left_stick_y < -0.5){
+        } else if (gamepad2.left_stick_y < -0.5) {
             telemetry.addLine("Reverse Ball");
             robot.shooter.ReverseBall();
-        }
-        else{
+        } else {
             telemetry.addLine("New Ball");
             robot.shooter.NewBall();
         }
     }
-    private void controlShooter(){
 
-        if(gamepad2.rightBumperWasPressed()){
+    private void controlShooter() {
+
+        if (gamepad2.rightBumperWasPressed()) {
             Shoot = !Shoot; //On / Off toggle
-            telemetry.addData("Shoot",Shoot);
+            telemetry.addData("Shoot", Shoot);
         }
 
         if (Shoot) {
@@ -218,31 +206,32 @@ public class DriverControlledTest extends OpMode {
             robot.shooter.stopMotor();
         }
     }
+
     //todo: values must be checked
-    private void SpeedChange(){
+    private void SpeedChange() {
 
         telemetry.addData("Shoot speed: ", robot.shooterV.RPM);
-        if (gamepad2.dpadUpWasPressed()){
-           robot.shooterV.RPM= robot.shooterV.RPM +5;
+        if (gamepad2.dpadUpWasPressed()) {
+            robot.shooterV.RPM = robot.shooterV.RPM + 5;
 
         } else if (gamepad2.dpadDownWasPressed()) {
-            robot.shooterV.RPM= robot.shooterV.RPM -5;
+            robot.shooterV.RPM = robot.shooterV.RPM - 5;
         } else if (gamepad2.dpadRightWasPressed()) {
-            robot.shooterV.RPM= 1075;
+            robot.shooterV.RPM = 1075;
         } else if (gamepad2.dpadLeftWasPressed()) {
             robot.shooterV.RPM = 1500;
 
         }
     }
-    private void Intake(){
-       if (gamepad2.left_bumper) {
-           telemetry.addLine("Taking ball in");
-           robot.intake.IntakeStart(0.0);
-       }
-       else{
-           telemetry.addLine("No taking in");
-           robot.intake.IntakeStop();
-       }
+
+    private void Intake() {
+        if (gamepad2.left_bumper) {
+            telemetry.addLine("Taking ball in");
+            robot.intake.IntakeStart(0.0);
+        } else {
+            telemetry.addLine("No taking in");
+            robot.intake.IntakeStop();
+        }
     }
 
 }

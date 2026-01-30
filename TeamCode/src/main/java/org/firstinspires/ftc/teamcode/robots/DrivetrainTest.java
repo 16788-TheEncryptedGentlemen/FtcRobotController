@@ -25,19 +25,24 @@ public class DrivetrainTest {
     /**
      * The constructor for a LinearOpMode program.
      */
-//    public DrivetrainTest(LinearOpMode runningLinearOpMode) {
-//        display = new Display(runningLinearOpMode.telemetry);
-//        HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
-//
-//
-//        display.showLoading("imu");
-//        imu = new Imu(hardwaremap);
-//        display.showLoading("odometry");
-//        odometry = new Odometry(hardwaremap);
-//        display.showLoading("drivetrain");
-//        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
-//        display.showLoading("Done initializing! Press start to play");
-//    }
+    public DrivetrainTest(LinearOpMode runningLinearOpMode) {
+        display = new Display(runningLinearOpMode.telemetry);
+        HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
+
+
+        display.showLoading("imu");
+        imu = new Imu(hardwaremap);
+        display.showLoading("odometry");
+        odometry = new Odometry(hardwaremap);
+        display.showLoading("drivetrain");
+        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        display.showLoading("shooter");
+        shooter = new Shooter(hardwaremap);
+        shooterV = new ShooterV(hardwaremap);
+        display.showLoading("intake");
+        intake = new Intake(hardwaremap);
+        display.showLoading("Done initializing! Press start to play");
+    }
 
     public DrivetrainTest(OpMode opMode) {
         display = new Display(opMode.telemetry);
@@ -52,6 +57,7 @@ public class DrivetrainTest {
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
+        shooterV = new ShooterV(hardwaremap);
         display.showLoading("intake");
         intake = new Intake(hardwaremap);
         display.showLoading("Done initializing! Press start to play");

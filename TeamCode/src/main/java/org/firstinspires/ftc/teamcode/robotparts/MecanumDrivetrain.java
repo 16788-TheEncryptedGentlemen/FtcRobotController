@@ -1,12 +1,8 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import org.firstinspires.ftc.teamcode.otherclasses.Display;
 
 public class MecanumDrivetrain {
 
@@ -303,7 +299,7 @@ public class MecanumDrivetrain {
      - Angle, speed and Desired angle: Sets the MotorSpeed array values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void setStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed);
-        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 30, 0.8);
+        double[] CorrectionFactors = imu.getTurnCorrectionValues(DesiredAngle, 10, -0.2);
         addSpeed(CorrectionFactors);
     }
 

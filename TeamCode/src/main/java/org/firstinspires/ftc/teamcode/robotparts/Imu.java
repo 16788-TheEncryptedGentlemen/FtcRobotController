@@ -5,14 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 
 public class Imu {
     /** The actual IMU in this object. */
-    private IMU imu;
+    private final IMU imu;
     /** The parameters of the IMU. */
     IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
@@ -23,6 +20,7 @@ public class Imu {
     public Imu(HardwareMap hardwareMap) {
         imu = hardwareMap.get(IMU.class, "IMU");
         imu.initialize(parameters);
+        reset(); // start angle at 0.
     }
 
 
@@ -73,6 +71,6 @@ public class Imu {
 
     /** Resets the entire IMU. This takes up a second. */
     public void reset() {
-        imu.initialize(parameters);
+        imu.resetYaw();
     }
 }
