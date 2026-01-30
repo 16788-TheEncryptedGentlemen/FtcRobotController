@@ -22,7 +22,7 @@ public class ShootForwards extends LinearOpMode {
         robot.shooter.DeliverBall();
         sleep(3000);
         robot.shooter.NewBall();
-        robot.shooterV.StopMotor();
+        robot.shooterV.stopMotor();
         robot.drivetrain.driveStraight(30, POWER);
 
     }

@@ -58,7 +58,7 @@ public class ShooterV extends LinearOpMode {
         MotorR.setVelocity(-RPM);
     }
 
-    public void StopMotor()
+    public void stopMotor()
     {
         MotorL.setPower(0.0);
         MotorR.setPower(0.0);

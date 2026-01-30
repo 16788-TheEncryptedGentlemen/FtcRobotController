@@ -21,7 +21,7 @@ public class ShootLeft extends LinearOpMode {
         robot.shooter.DeliverBall();
         sleep(3000);
         robot.shooter.NewBall();
-        robot.shooterV.StopMotor();
+        robot.shooterV.stopMotor();
         robot.drivetrain.strafeStraight(-30, POWER,0 );
 
     }
