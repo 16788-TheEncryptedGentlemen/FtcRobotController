@@ -60,6 +60,11 @@ public class ShooterV extends LinearOpMode {
         MotorR.setVelocity(-RPM);
     }
 
+    public void shootForAutonomous(double velocity){
+        MotorL.setVelocity(930);
+        MotorR.setVelocity(-930);
+    }
+
     public void stopMotor()
     {
         MotorL.setPower(0.0);

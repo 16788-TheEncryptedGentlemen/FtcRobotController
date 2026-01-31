@@ -16,6 +16,6 @@ public class DriveForwards extends LinearOpMode {
         // Initialisation.
         robot = new DrivetrainTest(this);
         waitForStart();
-        robot.drivetrain.driveStraight(30, POWER);
+        robot.drivetrain.driveStraight(50, POWER);
     }
 }
