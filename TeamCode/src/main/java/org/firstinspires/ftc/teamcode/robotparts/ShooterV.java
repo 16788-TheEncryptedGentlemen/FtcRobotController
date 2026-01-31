@@ -8,15 +8,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class ShooterV extends LinearOpMode {
     public DcMotorEx MotorL;
     public DcMotorEx MotorR;
-    public int RPM = 1075;
+    public int RPM = 1050;
 
     public ShooterV(HardwareMap hardwareMap) {
         MotorL = hardwareMap.get(DcMotorEx.class, "ShooterL");
         MotorL.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         MotorL.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        MotorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         MotorR = hardwareMap.get(DcMotorEx.class, "ShooterR");
         MotorR.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         MotorR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        MotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 

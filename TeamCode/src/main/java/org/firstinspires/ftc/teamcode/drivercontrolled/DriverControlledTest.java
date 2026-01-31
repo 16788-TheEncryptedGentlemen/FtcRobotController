@@ -217,7 +217,7 @@ public class DriverControlledTest extends OpMode {
         } else if (gamepad2.dpadDownWasPressed()) {
             robot.shooterV.RPM = robot.shooterV.RPM - 5;
         } else if (gamepad2.dpadRightWasPressed()) {
-            robot.shooterV.RPM = 1075;
+            robot.shooterV.RPM = 1050;
         } else if (gamepad2.dpadLeftWasPressed()) {
             robot.shooterV.RPM = 1500;
 
