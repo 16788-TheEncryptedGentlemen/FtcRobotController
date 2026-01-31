@@ -19,9 +19,11 @@ public class Shooter {
         motorL = hardwareMap.get(DcMotor.class, "ShooterL");
         motorL.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         motorL.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        motorL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorR = hardwareMap.get(DcMotor.class, "ShooterR");
         motorR.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         motorR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        motorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         CoreHexMotor = hardwareMap.get(DcMotor.class, "CoreHexMotor");
 
     }
