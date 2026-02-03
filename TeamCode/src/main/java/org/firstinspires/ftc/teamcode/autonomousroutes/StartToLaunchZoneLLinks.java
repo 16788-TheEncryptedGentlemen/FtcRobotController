@@ -21,9 +21,9 @@ public class StartToLaunchZoneLLinks extends LinearOpMode {
         robot.drivetrain.driveStraight(40,POWER);
         sleep (500);
         robot.drivetrain.strafeStraight(-3,POWER,0);
-        sleep(1000);
+        sleep(100);
         robot.shooter.DeliverBall();
-        sleep(500);
+        sleep(100);
         robot.intake.IntakeStart(-1.0);
         sleep(5000);
         robot.shooter.stopMotor();
@@ -35,8 +35,7 @@ public class StartToLaunchZoneLLinks extends LinearOpMode {
         robot.drivetrain.turnRobotAO(180,-0.3);
         sleep(500);
         robot.drivetrain.driveStraight(75,POWER);
-        robot.drivetrain.stop();
-        robot.intake.IntakeStop();
+
 
 
 
