@@ -10,7 +10,7 @@ public class StartToLaunchZoneLLinks extends LinearOpMode {
 
     DrivetrainTest robot;
 
-    final double POWER = 1.0;
+    final double POWER = 0.5;
 
     public void runOpMode() {
         // Initialisation.
@@ -19,13 +19,9 @@ public class StartToLaunchZoneLLinks extends LinearOpMode {
 
         robot.shooterV.shootForAutonomous(0);
         robot.drivetrain.driveStraight(40,POWER);
-        sleep (500);
-        robot.drivetrain.strafeStraight(-10,POWER,0);
-        sleep(100);
-        robot.drivetrain.turnRobotAO(-30,POWER);
-        sleep(100);
+        sleep(1000);
         robot.shooter.DeliverBall();
-        sleep(100);
+        sleep(500);
         robot.intake.IntakeStart(-1.0);
         sleep(5000);
         robot.shooter.stopMotor();
@@ -36,8 +32,9 @@ public class StartToLaunchZoneLLinks extends LinearOpMode {
         sleep(500);
         robot.drivetrain.turnRobotAO(180,-0.3);
         sleep(500);
-        robot.drivetrain.driveStraight(75,0.3);
-        sleep(100);
+        robot.drivetrain.driveStraight(100,POWER);
+        robot.drivetrain.stop();
+        robot.intake.IntakeStop();
 
 
 
