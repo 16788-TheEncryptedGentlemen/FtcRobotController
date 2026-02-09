@@ -6,12 +6,7 @@ import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 @TeleOp
-public class DriverControlled extends TeleOpMode {
-    /**
-     * The robot
-     */
-    CompetitionRobot robot;
-
+public class DriverControlled extends TeleOpMode<CompetitionRobot> {
     /**
      * The desired heading when strafing.
      */
