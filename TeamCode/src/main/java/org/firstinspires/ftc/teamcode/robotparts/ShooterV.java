@@ -1,14 +1,14 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class ShooterV extends LinearOpMode {
-    public DcMotorEx MotorL;
-    public DcMotorEx MotorR;
-    public int RPM = 1050;
+public class ShooterV {
+    private final DcMotorEx MotorL;
+    private final DcMotorEx MotorR;
+    private int revsPerMinute = 1050;
+    private boolean on;
 
     public ShooterV(HardwareMap hardwareMap) {
         MotorL = hardwareMap.get(DcMotorEx.class, "ShooterL");
@@ -19,57 +19,41 @@ public class ShooterV extends LinearOpMode {
         MotorR.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         MotorR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         MotorR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        MotorR.setDirection(DcMotor.Direction.REVERSE);
 
+        on = false;
     }
 
-
-    @Override
-    public void runOpMode() throws InterruptedException {
-
-        MotorL = hardwareMap.get(DcMotorEx.class, "Motor");
-        MotorR = hardwareMap.get(DcMotorEx.class, "Motor");
-
-        // Reset the encoder during initialization
-        MotorL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        MotorR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        waitForStart();
-
-        // Switch to RUN_TO_POSITION mode
-        MotorL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        MotorR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // Start the MotorL moving by setting the max velocity to 200 ticks per second
-        MotorL.setVelocity(200);
-        MotorR.setVelocity(200);
-
-        // While the Op Mode is running, show the MotorL's status via telemetry
-        while (opModeIsActive()) {
-            telemetry.addData("velocity", MotorL.getVelocity());
-            telemetry.addData("position", MotorL.getCurrentPosition());
-            telemetry.addData("is at target", !MotorL.isBusy());
-            telemetry.update();
-        }
-
-
+    public void start() {
+        on = true;
+        MotorL.setVelocity(revsPerMinute);
+        MotorR.setVelocity(revsPerMinute);
     }
 
-    public void shootV(double velocity) {
-        //todo: check these values
-        MotorL.setVelocity(RPM);
-        MotorR.setVelocity(-RPM);
-    }
-
-    public void shootForAutonomous(double velocity){
-        MotorL.setVelocity(930);
-        MotorR.setVelocity(-930);
-    }
-
-    public void stopMotor()
-    {
+    public void stop() {
+        on = false;
         MotorL.setPower(0.0);
         MotorR.setPower(0.0);
+    }
 
+    public void toggle() {
+        if (on) {
+            stop();
+        } else {
+            start();
+        }
+    }
+
+    public void changeRPM(int revsPerMinute) {
+        this.revsPerMinute = revsPerMinute;
+    }
+
+    public void faster() {
+        revsPerMinute += 5;
+    }
+
+    public void slower() {
+        revsPerMinute -= 5;
     }
 }
 

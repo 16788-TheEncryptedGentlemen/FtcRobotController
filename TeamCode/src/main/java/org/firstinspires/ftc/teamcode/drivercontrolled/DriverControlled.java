@@ -1,49 +1,38 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
-import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
-
-
+import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 @TeleOp
-public class DriverControlled extends OpMode {
-
+public class DriverControlled extends TeleOpMode {
     /**
      * The robot
      */
-    DrivetrainTest robot;
+    CompetitionRobot robot;
 
     /**
      * The desired heading when strafing.
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
-    public final double DefaultPosition = 0.8;
 
     @Override
-    /** Initialisation */
-    public void init() {
-        robot = new DrivetrainTest(this);
+    public void initCode() {
+        robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
     }
 
-    @Override
-    /** Repeats program until program is stopped */
-    public void loop() {
+    /**
+     * Repeats program until program is stopped
+     */
+    public void controlLoop() {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
-        BallDelivery();
-        Intake();
-
-
+        controlIntake();
     }
 
     private void controlDrivetrain() {
@@ -109,7 +98,6 @@ public class DriverControlled extends OpMode {
         robot.drivetrain.setPower();
     }
 
-
     private void correctHeading() {
         // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
@@ -140,54 +128,39 @@ public class DriverControlled extends OpMode {
             correctionFactor = Math.signum(deviationAngle);
         }
 
-
         robot.drivetrain.addSpeed(-correctionFactor, -correctionFactor, correctionFactor, correctionFactor);
-        telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
-
-    //:todo makeshure it works with the shooter after the bois reassembled the robot
-
-
-    //controles shooter
-    private void BallDelivery(){
-        if (gamepad2.left_stick_y < -0.5){
-            telemetry.addLine("Give Ball");
-            robot.shooter.DeliverBall();
-        }
-        else if(gamepad2.left_stick_y > 0.5){
-            telemetry.addLine("Reverse Ball");
-            robot.shooter.ReverseBall();
-        }
-        else{
-            telemetry.addLine("New Ball");
-            robot.shooter.NewBall();
-        }
-    }
-    private void controlShooter(){
-
-        if (gamepad2.right_bumper) {
-            telemetry.addLine("Shooting");
-            robot.shooter.shoot(0);
-        } else if (gamepad2.a && gamepad2.right_trigger > 0.4) {
-            telemetry.addLine("Shooting further");
-            robot.shooter.shootFaster(0);
-        }
-        else{
-            telemetry.addLine("Don't shoot");
-            robot.shooter.stopMotor();
-        }
-    }
-
-    private void Intake(){
+    private void controlIntake() {
         if (gamepad2.left_bumper) {
-            telemetry.addLine("Taking ball in");
-            robot.intake.IntakeStart(0.0);
+            robot.intake.start();
+        } else {
+            robot.intake.stop();
         }
-        else{
-            telemetry.addLine("No taking in");
-            robot.intake.IntakeStop();
+
+        if (gamepad2.left_stick_y > 0.5) {
+            robot.transport.deliverBall();
+        } else if (gamepad2.left_stick_y < -0.5) {
+            robot.transport.reverseBall();
+        } else {
+            robot.transport.stop();
         }
     }
 
+    private void controlShooter() {
+        if (gamepad2.rightBumperWasPressed()) {
+            robot.shooter.toggle();
+        }
+
+        // update speed
+        if (gamepad2.dpadUpWasPressed()) {
+            robot.shooter.faster();
+        } else if (gamepad2.dpadDownWasPressed()) {
+            robot.shooter.slower();
+        } else if (gamepad2.dpadRightWasPressed()) {
+            robot.shooter.changeRPM(1050);
+        } else if (gamepad2.dpadLeftWasPressed()) {
+            robot.shooter.changeRPM(1500);
+        }
+    }
 }
