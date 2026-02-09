@@ -29,29 +29,16 @@ public class DriverControlled extends TeleOpMode {
      */
     public void controlLoop() {
         controlDrivetrain();
-        telemetry.addData("X", robot.odometry.getX());
-        telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
         controlIntake();
     }
 
     private void controlDrivetrain() {
-        // If start is pressed then the current heading of the imu is set to 0.
-        if (gamepad1.start) {
-            robot.imu.reset();
-        }
-
-
         // The up and down movements of the left joystick on the gamepad of player 1.
         // There is a minus because up is negative and down is positive on the controller.
         double leftJoyY = -gamepad1.left_stick_y;
         // The left and right movements of the left joystick on the gamepad of player 1.
         double leftJoyX = gamepad1.left_stick_x;
-
-        // Show distance (x,y) of the robot on the driver hub for debugging.
-        //  telemetry.addData("X", robot.odometry.getX());
-        //   telemetry.addData("Y", robot.odometry.getY());
-        telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
         double strafeSpeed = Math.hypot(leftJoyX, leftJoyY);
@@ -101,8 +88,6 @@ public class DriverControlled extends TeleOpMode {
     private void correctHeading() {
         // The measured robot angle, from the IMU.
         double robotAngle = robot.imu.getAngle();
-        telemetry.addData("robot angle", robotAngle);
-        telemetry.addData("desired heading", desiredHeading);
 
         // Only update the correction angle during the first 0.5s of strafing.
         if (antiJerkTimer.getTime() < 0.1) {
@@ -113,7 +98,6 @@ public class DriverControlled extends TeleOpMode {
 
         // Compute the deviation from the desired angle.
         double deviationAngle = robotAngle - desiredHeading;
-        telemetry.addData("DeviationAngle", deviationAngle);
 
         // Do not correct the angle if there is a big jump in angle.
         if (Math.abs(deviationAngle) >= 90) {
