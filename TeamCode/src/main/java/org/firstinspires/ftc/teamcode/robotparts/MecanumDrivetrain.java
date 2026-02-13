@@ -38,11 +38,7 @@ public class MecanumDrivetrain {
         frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         backLeft.setDirection(DcMotorEx.Direction.FORWARD);
 
-        /** Sets power of encoders to zero. */ // TODO: figure out why we use this. (Is it so the encoders don"t break and the wheels just roll?)
-        frontRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        backRight.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        frontLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        backLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
         /** Run all motors with encoders. */
 //        frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -54,6 +50,14 @@ public class MecanumDrivetrain {
         backRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior brake) {
+        // Sets power of encoders to zero.
+        frontRight.setZeroPowerBehavior(brake);
+        backRight.setZeroPowerBehavior(brake);
+        frontLeft.setZeroPowerBehavior(brake);
+        backLeft.setZeroPowerBehavior(brake);
     }
 
 
@@ -255,14 +259,14 @@ public class MecanumDrivetrain {
 
     /** Turns the robot on the absolute orientation plane with a certain angle. */
     public void turnRobotAO(double angle) {
-        turnRobotAO(angle, 0.3);
+        turnRobotAO(angle, -0.3);
         stop();
     }
 
     /** Turns the robot on the absolute orientation plane with a certain angle. */
     public void turnRobotAO(double Angle, double speed) {
         while (Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested()) {
-            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 20, speed);
+            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 10, speed);
             setPower(SpeedValues);
         }
     }
