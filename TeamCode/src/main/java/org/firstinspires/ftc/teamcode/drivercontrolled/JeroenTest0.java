@@ -124,6 +124,12 @@ public class JeroenTest0 extends DriverControlled {
         if (leftGoal) {
             direction = -direction;
         }
+        // shooter is on the back-side:
+        if (direction > 0) {
+            direction -= 180;
+        } else {
+            direction += 180;
+        }
 
         robot.shooter.changeRPM((int) (distance * RPM_PER_CM));
         robot.shooter.start();
