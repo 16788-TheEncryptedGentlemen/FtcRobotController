@@ -18,8 +18,9 @@ public class JeroenTest0 extends DriverControlled {
     public double direction = 180;
     private final Timer speedUpTimer = new Timer();
 
-    static final double FIELD_SIDE = 365.75; // side length in cm
-    static final double RPM_PER_CM = 4.15; // power estimate
+    static final double FIELD_SIDE = 360; // side length in cm
+    static final double RPM_PER_CM = 2.2; // power estimate
+    static final double RPM_AT_ZERO = 780; // power estimate
 
     /**
      * Initialisation
@@ -117,9 +118,9 @@ public class JeroenTest0 extends DriverControlled {
     }
 
     private void shoot() {
-        robot.shooter.changeRPM((int) (distance * RPM_PER_CM));
+        robot.shooter.changeRPM((int) (distance * RPM_PER_CM + RPM_AT_ZERO));
         robot.shooter.start();
-        robot.drivetrain.turnRobotAO(direction, -0.3);
+        robot.drivetrain.turnRobotAO((position.invertHeading ? -1 : 1) * direction, -0.5);
         speedUpTimer.Reset();
         while (speedUpTimer.getTime() < 1.0) {
             if (isStopRequested()) return;
@@ -133,8 +134,8 @@ public class JeroenTest0 extends DriverControlled {
     }
 
     private void aim() {
-        double dx = FIELD_SIDE / 2 - abs(position.right);
-        double dy = FIELD_SIDE - position.forward;
+        double dx = FIELD_SIDE / 2 - abs(position.right) - 20;
+        double dy = FIELD_SIDE - position.forward - 20 - 20;
         distance = hypot(dx, dy);
         if (distance == 0) {
             print("Afstand tot de goal mag geen nul zijn!");

@@ -32,7 +32,7 @@ public class PositionTracker {
         double dx = x - previousX;
         double dy = y - previousY;
 
-        forward += dy * cos(heading_rad) + dx * sin(heading_rad);
+        forward += dy * cos(heading_rad) - dx * sin(heading_rad);
         right += dy * sin(heading_rad) + dx * cos(heading_rad);
 
         // update values.
