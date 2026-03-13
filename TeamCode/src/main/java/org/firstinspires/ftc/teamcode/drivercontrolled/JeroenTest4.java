@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
-
 @TeleOp
 public class JeroenTest4 extends JeroenTest0 {
     /**
@@ -11,7 +9,7 @@ public class JeroenTest4 extends JeroenTest0 {
      */
     @Override
     public void initCode() {
-        robot = new CompetitionRobot(this);
+        initRobot();
         position = new PositionTracker(robot.odometry, robot.imu);
         position.setParameters(false, false);
         telemetry.clear();

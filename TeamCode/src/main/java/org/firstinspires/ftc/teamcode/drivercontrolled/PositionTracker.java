@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import static java.lang.Math.PI;
-import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
-import static java.lang.Math.hypot;
 import static java.lang.Math.sin;
 
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
@@ -14,7 +12,7 @@ public class PositionTracker {
     double right = 0.0;
     private double previousX = 0.0; // cm
     private double previousY = 0.0; // cm
-    private double heading = 0.0; // deg
+    public double heading = 0.0; // deg
     private final Odometry odometry;
     private final Imu imu;
     boolean invertX = false;
@@ -28,18 +26,18 @@ public class PositionTracker {
     void update() {
         double x = (invertX ? -1 : 1) * odometry.getX(); // positive is right
         double y = odometry.getY(); // positive is forward
+        heading = (invertHeading ? -1 : 1) * imu.getAngle(); // positive is clockwise
+        double heading_rad = heading * PI / 180;
+
         double dx = x - previousX;
         double dy = y - previousY;
-        double course = atan2(-x, y) * 180 / PI - heading; // clockwise is positive
-        double distance = hypot(dx, dy);
 
-        forward += distance * cos(course);
-        right += distance * sin(course);
+        forward += dy * cos(heading_rad) + dx * sin(heading_rad);
+        right += dy * sin(heading_rad) + dx * cos(heading_rad);
 
         // update values.
         previousX = x;
         previousY = y;
-        heading = (invertHeading ? -1 : 1) * imu.getAngle();
     }
 
     /**

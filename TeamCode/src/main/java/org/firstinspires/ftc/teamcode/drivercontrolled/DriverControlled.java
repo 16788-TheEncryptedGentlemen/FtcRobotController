@@ -15,6 +15,10 @@ public class DriverControlled extends TeleOpMode<CompetitionRobot> {
 
     @Override
     public void initCode() {
+        initRobot();
+    }
+
+    protected void initRobot() {
         robot = new CompetitionRobot(this);
         antiJerkTimer = new Timer();
     }
