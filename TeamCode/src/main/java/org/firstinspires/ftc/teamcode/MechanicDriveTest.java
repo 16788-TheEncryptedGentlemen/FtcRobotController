@@ -1,14 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import static android.os.SystemClock.sleep;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.robots.CompetitionRobot;
 
 //@TeleOp
-public class MecanumDriveTest extends OpMode {
+public class MechanicDriveTest extends OpMode {
 
     /**
      * The robot
