@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
@@ -106,7 +103,7 @@ public class DriverControlled extends OpMode {
         else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
-        robot.drivetrain.setPower();
+        robot.drivetrain.updateMotorPower();
     }
 
 

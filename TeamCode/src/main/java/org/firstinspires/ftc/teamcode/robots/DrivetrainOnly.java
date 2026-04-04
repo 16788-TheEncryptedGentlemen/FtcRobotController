@@ -5,14 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
-import org.firstinspires.ftc.teamcode.robotparts.Arm2Motor;
-import org.firstinspires.ftc.teamcode.robotparts.BlockGrabber;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
-import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.robotparts.MechanicDriveTrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
-import org.firstinspires.ftc.teamcode.robotparts.Shooter;
-import org.firstinspires.ftc.teamcode.robotparts.Intake;
-import org.firstinspires.ftc.teamcode.robotparts.SliderGrabber2;
 
 /**
  * Contains all the robot parts.
@@ -22,7 +17,7 @@ public class DrivetrainOnly {
     public Display display;
     public Imu imu;
     public Odometry odometry;
-    public MecanumDrivetrain drivetrain;
+    public MechanicDriveTrain drivetrain;
 
 
 
@@ -39,7 +34,7 @@ public class DrivetrainOnly {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("drivetrain");
-        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        drivetrain = new MechanicDriveTrain(runningLinearOpMode, odometry, imu);
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -53,7 +48,7 @@ public class DrivetrainOnly {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("drivetrain");
-        drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        drivetrain = new MechanicDriveTrain(hardwaremap, odometry, imu);
         display.showLoading("Done initializing! Press start to play");
 
     }

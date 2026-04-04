@@ -106,7 +106,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
         else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
-        robot.drivetrain.setPower();
+        robot.drivetrain.updateMotorPower();
     }
 
 

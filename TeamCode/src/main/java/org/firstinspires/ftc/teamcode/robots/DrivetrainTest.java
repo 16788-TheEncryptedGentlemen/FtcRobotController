@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
-import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.robotparts.MechanicDriveTrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Shooter;
 import org.firstinspires.ftc.teamcode.robotparts.Intake;
@@ -17,7 +17,7 @@ public class DrivetrainTest {
     public Display display;
     public Imu imu;
     public Odometry odometry;
-    public MecanumDrivetrain drivetrain;
+    public MechanicDriveTrain drivetrain;
     public Shooter shooter;
     public Intake intake;
     public ShooterV shooterV;
@@ -35,7 +35,7 @@ public class DrivetrainTest {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("drivetrain");
-        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        drivetrain = new MechanicDriveTrain(runningLinearOpMode, odometry, imu);
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
         shooterV = new ShooterV(hardwaremap);
@@ -54,7 +54,7 @@ public class DrivetrainTest {
         display.showLoading("odometry");
         odometry = new Odometry(hardwaremap);
         display.showLoading("drivetrain");
-        drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        drivetrain = new MechanicDriveTrain(hardwaremap, odometry, imu);
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
         shooterV = new ShooterV(hardwaremap);

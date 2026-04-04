@@ -2,13 +2,11 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
 //@TeleOp
@@ -103,7 +101,7 @@ public class DriverControlledMiniRobot extends OpMode {
         else if (gamepad1.left_bumper) robot.drivetrain.multiplySpeed(0.2);
         else robot.drivetrain.multiplySpeed(0.5);
 
-        robot.drivetrain.setPower();
+        robot.drivetrain.updateMotorPower();
     }
 
     public class ShooterV extends LinearOpMode {

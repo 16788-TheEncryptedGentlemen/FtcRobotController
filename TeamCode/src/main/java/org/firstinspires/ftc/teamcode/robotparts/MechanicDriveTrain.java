@@ -4,12 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MecanumDrivetrain {
+import java.util.HashMap;
 
-    /** The LinearOpMode to start/stop the robot. */ // TODO: Explain what a LinearOpMode is.
+public class MechanicDriveTrain {
+
+    /** The LinearOpMode to start/stop the robot. */
     private LinearOpMode runningOpMode;
     /** An array to store the four different motor speeds. */
-    public double[] motorSpeed = new double[4]; // TODO: figure out if this needs to be an array.
+    public HashMap<DcMotorEx, Double> motorSpeed = new HashMap<>();
     /** Front right motor. */
     public DcMotorEx frontRight;
     /** Back right motor. */
@@ -23,33 +25,40 @@ public class MecanumDrivetrain {
     /** The Integrated Measurement Unit of the robot. */
     public Imu imu;
 
-    /** The default MecanumDrivetrain constructor. */ //TODO: Figure out how to simplify this constructor.
-    public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
+    /** The MechanicDriveTrain constructor. */
+    public MechanicDriveTrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
         odometry = _odometry;
         imu = _imu;
+
+        //#region Map the hardwareMap values.
         frontRight = hardwareMap.get(DcMotorEx.class, "FrontRight");
         backRight = hardwareMap.get(DcMotorEx.class, "BackRight");
         frontLeft = hardwareMap.get(DcMotorEx.class, "FrontLeft");
         backLeft = hardwareMap.get(DcMotorEx.class, "BackLeft");
+        //#endregion
 
-        /** Reversing motors because they are mirrored. */
+        //#region Reversing motors because they are mirrored.
         frontRight.setDirection(DcMotorEx.Direction.REVERSE);
         backRight.setDirection(DcMotorEx.Direction.REVERSE);
         frontLeft.setDirection(DcMotorEx.Direction.FORWARD);
         backLeft.setDirection(DcMotorEx.Direction.FORWARD);
+        //#endregion
+
+        //#region Populate the motorSpeed HashMap
+        motorSpeed.put(frontRight, (double) 0);
+        motorSpeed.put(backRight, (double) 0);
+        motorSpeed.put(frontLeft, (double) 0);
+        motorSpeed.put(backLeft, (double) 0);
+        //#endregion
 
         setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
-        /** Run all motors with encoders. */
-//        frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-//        backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-//        frontLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-//        backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        /** Run all motors without encoders. */
+        //#region Run all motors without encoders.
         frontRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        //#endregion
     }
 
     public void setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior brake) {
@@ -61,130 +70,101 @@ public class MecanumDrivetrain {
     }
 
 
-    /** Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap. */
-    public MecanumDrivetrain(LinearOpMode _runningOpMode, Odometry _Odometry, Imu _imu) {
+    /** Constructor for MechanicDriveTrain with an LinearOpMode as argument instead of hardwareMap. */
+    public MechanicDriveTrain(LinearOpMode _runningOpMode, Odometry _Odometry, Imu _imu) {
         this(_runningOpMode.hardwareMap, _Odometry, _imu);
         runningOpMode = _runningOpMode;
     }
 
-    //TODO: Figure out how to simplify this constructor.
-    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void setSpeed(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
-        motorSpeed[0] = SpeedFrontRight;
-        motorSpeed[1] = SpeedBackRight;
-        motorSpeed[2] = SpeedFrontLeft;
-        motorSpeed[3] = SpeedBackLeft;
+    /** Sets speed values to the MotorSpeed array.
+     * @param speedFrontRight Set the speed of the frontRight motor.
+     * @param speedBackRight Set the speed of the backRight motor.
+     * @param speedFrontLeft Set the speed of the frontLeft motor.
+     * @param speedBackLeft Set the speed of the backLeft motor.
+     */
+    public void setSpeed(double speedFrontRight, double speedBackRight, double speedFrontLeft, double speedBackLeft) {
+        motorSpeed.put(frontRight, speedFrontRight);
+        motorSpeed.put(backRight, speedBackRight);
+        motorSpeed.put(frontLeft, speedFrontLeft);
+        motorSpeed.put(backLeft, speedBackLeft);
     }
 
-    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void setSpeed(double Speed) {
-        motorSpeed[0] = Speed;
-        motorSpeed[1] = Speed;
-        motorSpeed[2] = Speed;
-        motorSpeed[3] = Speed;
+    /** Sets speed values to the MotorSpeed array.
+     * @param speed A single double to set every motor to.
+     */
+    public void setSpeed(double speed) {
+        motorSpeed.put(frontRight, speed);
+        motorSpeed.put(backRight, speed);
+        motorSpeed.put(frontLeft, speed);
+        motorSpeed.put(backLeft, speed);
     }
 
-    /** Sets speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void setSpeed(double[] Speedarr) {
-        motorSpeed[0] = Speedarr[0];
-        motorSpeed[1] = Speedarr[1];
-        motorSpeed[2] = Speedarr[2];
-        motorSpeed[3] = Speedarr[3];
-    }
-    //TODO: Figure out how to simplify this constructor.
-    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void addSpeed(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
-        motorSpeed[0] += SpeedFrontRight;
-        motorSpeed[1] += SpeedBackRight;
-        motorSpeed[2] += SpeedFrontLeft;
-        motorSpeed[3] += SpeedBackLeft;
+    /** Sets speed values to the MotorSpeed array.
+     * @param speedArray An array of speed values set in the order frontRight, backRight,
+     *                   frontLeft, backLeft.
+     */
+    public void setSpeed(double[] speedArray) {
+        motorSpeed.put(frontRight, speedArray[0]);
+        motorSpeed.put(backRight, speedArray[1]);
+        motorSpeed.put(frontLeft, speedArray[2]);
+        motorSpeed.put(backLeft, speedArray[3]);
     }
 
-    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void addSpeed(double Speed) {
-        motorSpeed[0] += Speed;
-        motorSpeed[1] += Speed;
-        motorSpeed[2] += Speed;
-        motorSpeed[3] += Speed;
+    /** Adds speed values to the MotorSpeed array.
+     * @param speedFrontRight Add to the current speed of the frontRight motor.
+     * @param speedBackRight Add to the current speed of the backRight motor.
+     * @param speedFrontLeft Add to the current speed of the frontLeft motor.
+     * @param speedBackLeft Add to the current speed of the backLeft motor.
+     */
+    public void addSpeed(double speedFrontRight, double speedBackRight, double speedFrontLeft, double speedBackLeft) {
+        motorSpeed.put(frontRight, motorSpeed.get(frontRight) + speedFrontRight);
+        motorSpeed.put(backRight, motorSpeed.get(backRight) + speedBackRight);
+        motorSpeed.put(frontLeft, motorSpeed.get(frontLeft) + speedFrontLeft);
+        motorSpeed.put(backLeft, motorSpeed.get(backLeft) + speedBackLeft);
     }
 
-    /** Adds speed values to the MotorSpeed array. The following arguments can be entered:
-     4 doubles, 1 double, 1 array. */
-    public void addSpeed(double[] Speedarr) {
-        motorSpeed[0] += Speedarr[0];
-        motorSpeed[1] += Speedarr[1];
-        motorSpeed[2] += Speedarr[2];
-        motorSpeed[3] += Speedarr[3];
+    /** Adds speed values to the MotorSpeed array.
+     *
+     */
+    public void addSpeed(double speed) {
+        motorSpeed.put(frontRight, motorSpeed.get(frontRight) + speed);
+        motorSpeed.put(backRight, motorSpeed.get(backRight) + speed);
+        motorSpeed.put(frontLeft, motorSpeed.get(frontLeft) + speed);
+        motorSpeed.put(backLeft, motorSpeed.get(backLeft) + speed);
     }
 
-    /** Sets power to the motors. The following arguments can be entered:
-     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
-     1 double, 1 array. */ //TODO; figure out if we can make this work without the array.
-    public void setPower() {
-        frontRight.setPower(motorSpeed[0]);
-        backRight.setPower(motorSpeed[1]);
-        frontLeft.setPower(motorSpeed[2]);
-        backLeft.setPower(motorSpeed[3]);
+    /** Adds speed values to the MotorSpeed array.
+     * @param speedArray An array of speed values that get added in the order of frontRight,
+     *                   backRight, frontLeft, backLeft.
+     */
+    public void addSpeed(double[] speedArray) {
+        motorSpeed.put(frontRight, motorSpeed.get(frontRight) + speedArray[0]);
+        motorSpeed.put(backRight, motorSpeed.get(backRight) + speedArray[1]);
+        motorSpeed.put(frontLeft, motorSpeed.get(frontLeft) + speedArray[2]);
+        motorSpeed.put(backLeft, motorSpeed.get(backLeft) + speedArray[3]);
     }
 
-    /** Sets power to the motors. The following arguments can be entered:
-     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
-     1 double, 1 array. */
-    public void setPower(double SpeedFrontRight, double SpeedBackRight, double SpeedFrontLeft, double SpeedBackLeft) {
-        frontRight.setPower(SpeedFrontRight);
-        backRight.setPower(SpeedBackRight);
-        frontLeft.setPower(SpeedFrontLeft);
-        backLeft.setPower(SpeedBackLeft);
+    /** Sets power to the motors. Always run this when you update speed values. */
+    public void updateMotorPower() {
+        frontRight.setPower(motorSpeed.get(frontRight));
+        backRight.setPower(motorSpeed.get(backRight));
+        frontLeft.setPower(motorSpeed.get(frontLeft));
+        backLeft.setPower(motorSpeed.get(backLeft));
     }
 
-    /** Sets power to the motors. The following arguments can be entered:
-     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
-     1 double, 1 array. */
-    public void setPower(double Speed) {
-        frontRight.setPower(Speed);
-        backRight.setPower(Speed);
-        frontLeft.setPower(Speed);
-        backLeft.setPower(Speed);
-    }
-
-    /** Sets power to the motors. The following arguments can be entered:
-     No arguments. This will cause the motors to be powered with the values in the MotorSpeed array,4 doubles
-     1 double, 1 array. */
-    public void setPower(double[] Speedarr) {
-        frontRight.setPower(Speedarr[0]);
-        backRight.setPower(Speedarr[1]);
-        frontLeft.setPower(Speedarr[2]);
-        backLeft.setPower(Speedarr[3]);
-    }
-
-    /** Stops the motors. */
+    /** Stops the motors and calls {@link MechanicDriveTrain#updateMotorPower()} */
     public void stop() {
-        setPower(0.0);
+        setSpeed(0.0);
+        updateMotorPower();
     }
 
-    /** Multiplies all speed values in the MotorSpeed array with a factor. */
+    /** Multiplies all speed values by a factor. */
     public void multiplySpeed(double factor) {
-        motorSpeed[0] *= factor;
-        motorSpeed[1] *= factor;
-        motorSpeed[2] *= factor;
-        motorSpeed[3] *= factor;
+        motorSpeed.put(frontRight, motorSpeed.get(frontRight) * factor);
+        motorSpeed.put(backRight, motorSpeed.get(backRight) * factor);
+        motorSpeed.put(frontLeft, motorSpeed.get(frontLeft) * factor);
+        motorSpeed.put(backLeft, motorSpeed.get(backLeft) * factor);
     }
-
-    /** Returns an array of the velocities of the motors. */ // Todo: figure out what is the difference between velocities and  speeds.
-    public double[] getVelocities() {
-        return new double[]{frontRight.getVelocity(), backRight.getVelocity(), frontLeft.getVelocity(), backLeft.getVelocity()};
-    }
-
-    /** Returns an array of the power values of the motors. */ // Todo: figure out what is the difference between powers and  speeds.
-    public double[] getPowers() {
-        return new double[]{frontRight.getPower(), backRight.getPower(), frontLeft.getPower(), backLeft.getPower()};
-    }
-
 
     /** Drives the robot forward a certain amount of cm with a given Speed. */
     public void driveStraight(double distance, double power) {
@@ -192,48 +172,20 @@ public class MecanumDrivetrain {
 
         driveStraightDirect(distance, power);
 
-        setPower(0);
+        stop();
     }
 
-    // Testing to see if the robot can drive backwards.
-    public void driveBackwards(double distance, double power) {
-        odometry.reset(); // reset odometry to start from the current position
-
-        // set motor power backwards
-        setPower(-power);
-
-        while (odometry.getY() > -distance && !runningOpMode.isStopRequested()) {
-            runningOpMode.telemetry.addData("Odometry x", odometry.getX());
-            runningOpMode.telemetry.addData("Odometry y", odometry.getY());
-            runningOpMode.telemetry.update();
-        }
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-    }
     /** Drives the robot forward a certain amount of cm with a given Speed. */
     public void driveStraightDirect(double distance, double power) {
         double originYPos = odometry.getY();
         double endDistance = Math.abs(distance + originYPos);
 
         while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()) {
-            setPower(power * Math.signum(distance));
+            setSpeed(power * Math.signum(distance));
             runningOpMode.telemetry.addData("Odometry x", odometry.getX());
             runningOpMode.telemetry.addData("Odometry y", odometry.getY());
             runningOpMode.telemetry.update();
-        }
-    }
-
-    /** Start op power en vertraag naar power 0.1 over distance cm. */
-    public void driveStraightEnd(double distance, double power) {
-        double originYPos = odometry.getY();
-        double endDistance = Math.abs(distance + originYPos);
-
-        while (Math.abs(odometry.getY()) < endDistance && !runningOpMode.isStopRequested()) {
-            double fraction = (endDistance - Math.abs(odometry.getY()))/endDistance;
-            double scaledPower = (power-0.1) * fraction + 0.1;
-            setPower(scaledPower * Math.signum(distance));
+            updateMotorPower();
         }
     }
 
@@ -243,18 +195,12 @@ public class MecanumDrivetrain {
         setSpeed(SpeedValues);
     }
 
-    /** Turns the robot to the robot a certain degrees without a while loop. */
-    public void turnRobotNoLoop(double NewAngle) {
-        setSpeedValuesTurnRobot(NewAngle);
-        setPower();
-    }
-
     /** The robot will follow a theoretical line with a specific angle. Note that this method does not loop. */
     public void follow(double NewAngle, double Speed) {
         setSpeedValuesTurnRobot(NewAngle);
         addSpeed(Speed);
         fixMotorSpeedOverflow();
-        setPower();
+        updateMotorPower();
     }
 
     /** Turns the robot on the absolute orientation plane with a certain angle. */
@@ -266,8 +212,9 @@ public class MecanumDrivetrain {
     /** Turns the robot on the absolute orientation plane with a certain angle. */
     public void turnRobotAO(double Angle, double speed) {
         while (Math.abs(Angle - imu.getAngle()) > 2 && !runningOpMode.isStopRequested()) {
-            double[] SpeedValues = imu.getTurnCorrectionValues(Angle, 10, speed);
-            setPower(SpeedValues);
+            double[] speedValues = imu.getTurnCorrectionValues(Angle, 10, speed);
+            setSpeed(speedValues);
+            updateMotorPower();
         }
     }
 
@@ -312,7 +259,7 @@ public class MecanumDrivetrain {
      - Angle, speed and Desired angle: Powers the motor values to associated values for strafing and corrects for a desired angle in the absolute orientation plane. */
     public void powerStrafeValues(double StrafeAngle, double Speed) {
         setStrafeValues(StrafeAngle, Speed);
-        setPower();
+        updateMotorPower();
     }
 
     /** powerStrafeValues(): powers robot to strafe in the desired direction. This method has two isomorphic methods:
@@ -321,7 +268,7 @@ public class MecanumDrivetrain {
     public void powerStrafeValues(double StrafeAngle, double Speed, double DesiredAngle) {
         setStrafeValues(StrafeAngle, Speed, DesiredAngle);
         fixMotorSpeedOverflow();
-        setPower();
+        updateMotorPower();
     }
 
     /** Drives the robot sideways a certain amount of cm with a given Power. Positive Distance == right, lookingDirection == absolute front angle*/
@@ -335,16 +282,17 @@ public class MecanumDrivetrain {
         while (Math.abs(odometry.getX()) < endDistance && !runningOpMode.isStopRequested()){
               powerStrafeValues(direction*90, Power, lookingDirection);
         }
-        setPower(0);
+        setSpeed(0);
+        updateMotorPower();
     }
 
 
     /** Decreases all values to be under a value of 1 if needed. */
     public void fixMotorSpeedOverflow() {
         double max = 1;
-        for (int i = 0; i < 4; i++) {
-            if (Math.abs(motorSpeed[i]) > max)
-                max = Math.abs(motorSpeed[i]);
+        for (int i = 0; i < motorSpeed.size(); i++) {
+            if (Math.abs(motorSpeed.get(motorSpeed.keySet().toArray()[i])) > max)
+                max = Math.abs(motorSpeed.get(motorSpeed.keySet().toArray()[i]));
         }
         multiplySpeed(1.0 / max);
     }
