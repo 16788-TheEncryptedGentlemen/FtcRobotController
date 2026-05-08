@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+//TODO: Ask Jeroen if this could be changed to an abstract class.
 public class Odometry {
     /** Counts per rotation of the encoder. */
     public final static int countsPerRotation = 2000;
