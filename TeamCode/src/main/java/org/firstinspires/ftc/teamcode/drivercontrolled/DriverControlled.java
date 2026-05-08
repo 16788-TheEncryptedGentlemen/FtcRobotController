@@ -21,17 +21,14 @@ public class DriverControlled extends OpMode {
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
-    public final double DefaultPosition = 0.8;
 
     @Override
-    /** Initialisation */
     public void init() {
         robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
     }
 
     @Override
-    /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
@@ -94,7 +91,7 @@ public class DriverControlled extends OpMode {
             correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
-            antiJerkTimer.Reset();
+            antiJerkTimer.reset();
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();
@@ -130,7 +127,7 @@ public class DriverControlled extends OpMode {
         }
 
         // Correct small angles proportional to the angle, capped at +/-1.
-        double correctionFactor = 0;
+        double correctionFactor;
         if (deviationAngle > -30 && deviationAngle < 30) {
             correctionFactor = deviationAngle / 30;
         } else {

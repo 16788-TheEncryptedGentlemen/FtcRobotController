@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * @deprecated
+ */
 public class Grabber {
     /** Servo of the grabber.*/
     public Servo servo;

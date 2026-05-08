@@ -8,6 +8,9 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
+/**
+ * @deprecated
+ */
 public class Webcam {
 
     public PipelineMarkerDetection pipeline;
@@ -49,7 +52,4 @@ public class Webcam {
 //    public double getResult(){
 //        return pipeline.getResult();
 //    }
-
-
-
 }

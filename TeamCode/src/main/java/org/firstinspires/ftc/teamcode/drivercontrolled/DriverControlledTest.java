@@ -21,17 +21,14 @@ public class DriverControlledTest extends OpMode {
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
     private boolean Shoot = false;
-    public final double DefaultPosition = 0.8;
 
     @Override
-    /** Initialisation */
     public void init() {
         robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
     }
 
     @Override
-    /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
         telemetry.addData("X", robot.odometry.getX());
@@ -69,7 +66,7 @@ public class DriverControlledTest extends OpMode {
         }
 
         // The direction in which the robot should strafe in <-180, 180].
-        double strafeAngle = 0;
+        double strafeAngle;
         if (strafeSpeed != 0 && leftJoyX != 0) {
             // If the robot is moving towards the side, then calculate the direction.
             strafeAngle = Math.signum(leftJoyX) * Math.toDegrees(Math.acos(leftJoyY / strafeSpeed));
@@ -93,7 +90,7 @@ public class DriverControlledTest extends OpMode {
             correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
-            antiJerkTimer.Reset();
+            antiJerkTimer.reset();
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();
@@ -129,7 +126,7 @@ public class DriverControlledTest extends OpMode {
         }
 
         // Correct small angles proportional to the angle, capped at +/-1.
-        double correctionFactor = 0;
+        double correctionFactor;
         if (deviationAngle > -30 && deviationAngle < 30) {
             correctionFactor = deviationAngle / 30;
         } else {

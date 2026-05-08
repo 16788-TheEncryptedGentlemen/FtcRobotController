@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.CRServo;
 
+/**
+ * @deprecated
+ */
 public class PixelWheel {
-
     public CRServo crservo;
 
 

@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.robotparts.MechanicDriveTrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Shooter;
 import org.firstinspires.ftc.teamcode.robotparts.Intake;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
+import org.firstinspires.ftc.teamcode.autonomousclasses.ShooterV;
 
 public class DrivetrainTest {
 

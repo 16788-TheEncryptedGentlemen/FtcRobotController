@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //TODO: To be tested + values need to be finetuned.
 
+/**
+ * @deprecated
+ */
 public class HangMechanism {
 
     public DcMotor motor;

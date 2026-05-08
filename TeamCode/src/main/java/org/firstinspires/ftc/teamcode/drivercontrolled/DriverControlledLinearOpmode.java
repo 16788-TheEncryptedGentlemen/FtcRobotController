@@ -97,7 +97,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
             correctHeading();
         } else {
             // Otherwise, keep the timer at 0.
-            antiJerkTimer.Reset();
+            antiJerkTimer.reset();
         }
 
         robot.drivetrain.fixMotorSpeedOverflow();

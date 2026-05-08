@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.robotparts;
+package org.firstinspires.ftc.teamcode.autonomousclasses;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;

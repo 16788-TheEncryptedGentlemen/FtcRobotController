@@ -60,7 +60,8 @@ public class BezierCurve
         return new Point(getX(T), getY(T));
     }
 
-    /** Returns a checkpoint on the curve at a given T value. */
+    /** Returns a checkpoint on the curve at a given T value.
+     *  */
     public CheckPoint getCheckPointPosition(double T)
     {
         return new CheckPoint(getX(T), getY(T), T);
