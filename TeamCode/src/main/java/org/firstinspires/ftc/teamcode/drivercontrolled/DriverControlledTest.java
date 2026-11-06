@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.robotparts.FlowerArm;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
@@ -39,7 +40,7 @@ public class DriverControlledTest extends OpMode {
         controlShooter();
         BallDelivery();
         Intake();
-        SpeedChange();
+        FlowerArm();
     }
 
     private void controlDrivetrain() {
@@ -142,36 +143,7 @@ public class DriverControlledTest extends OpMode {
     }
 
 
-    //:todo make sure it works with the shooter after the bois reassembled the robot
 
-    /* ElapsedTime Timer = new ElapsedTime();
-     int shootProcess = 0;
-
-     {
-         while (gamepad1.left_bumper) {
-             Timer.startTime();
-             switch (shootProcess) {// start of ball moving up.
-                 case 0:
-                     telemetry.addLine("Give Ball");
-                     robot.shooter.DeliverBall();
-
-                     Timer.reset();
-                     shootProcess++;
-                 case 1:
-                     // check if 2 seconds has past and move on
-                     if (Timer.time() >= 2.0) {
-                         // shooting
-                         telemetry.addLine("Shooting");
-                         robot.intake.IntakeStart(0);
-
-                         break;
-                     }
-             }
-         }
-     }
-
-
- */   //controls shooter
     private void BallDelivery() {
         if (gamepad2.left_stick_y > 0.5) {
             telemetry.addLine("Give Ball");
@@ -194,33 +166,12 @@ public class DriverControlledTest extends OpMode {
 
         if (Shoot) {
             telemetry.addLine("Shooting");
-            robot.shooterV.shootV(0);
+            //robot.shooterV.shootV(0);
         }
-        /*else if (gamepad2.left_bumper && gamepad2.right_bumper) {
-          telemetry.addLine("Shooting faster");
-          robot.shooter.shootFaster(0);
-      }*/
 
         else {
             telemetry.addLine("Don't shoot");
             robot.shooter.stopMotor();
-        }
-    }
-
-    //todo: values must be checked
-    private void SpeedChange() {
-
-        telemetry.addData("Shoot speed: ", robot.shooterV.RPM);
-        if (gamepad2.dpadUpWasPressed()) {
-            robot.shooterV.RPM = robot.shooterV.RPM + 5;
-
-        } else if (gamepad2.dpadDownWasPressed()) {
-            robot.shooterV.RPM = robot.shooterV.RPM - 5;
-        } else if (gamepad2.dpadRightWasPressed()) {
-            robot.shooterV.RPM = 1050;
-        } else if (gamepad2.dpadLeftWasPressed()) {
-            robot.shooterV.RPM = 1500;
-
         }
     }
 
@@ -233,5 +184,25 @@ public class DriverControlledTest extends OpMode {
             robot.intake.IntakeStop();
         }
     }
+
+    public void FlowerArm() {
+        if (gamepad2.dpad_up){
+            telemetry.addLine("Arm up");
+            robot.flowerArm.moveArmToTop();
+        }
+        else if(gamepad2.dpad_down){
+            telemetry.addLine("Arm down");
+            robot.flowerArm.moveArmToBotom();
+        }
+        else if(gamepad2.dpad_left){
+            telemetry.addLine("Grabber closed");
+            robot.flowerArm.closeBallGrabber();
+        }
+        else if(gamepad2.dpad_right){
+            telemetry.addLine("Grabber open");
+            robot.flowerArm.openBallGrabber();
+        }
+    }
+
 
 }

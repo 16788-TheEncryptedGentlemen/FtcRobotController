@@ -5,12 +5,12 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
+import org.firstinspires.ftc.teamcode.robotparts.FlowerArm;
 import org.firstinspires.ftc.teamcode.robotparts.Imu;
 import org.firstinspires.ftc.teamcode.robotparts.MecanumDrivetrain;
 import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Shooter;
 import org.firstinspires.ftc.teamcode.robotparts.Intake;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 public class DrivetrainTest {
 
@@ -20,7 +20,7 @@ public class DrivetrainTest {
     public MecanumDrivetrain drivetrain;
     public Shooter shooter;
     public Intake intake;
-    public ShooterV shooterV;
+    public FlowerArm flowerArm;
 
     /**
      * The constructor for a LinearOpMode program.
@@ -38,9 +38,9 @@ public class DrivetrainTest {
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
-        shooterV = new ShooterV(hardwaremap);
         display.showLoading("intake");
         intake = new Intake(hardwaremap);
+
         display.showLoading("Done initializing! Press start to play");
     }
 
@@ -57,7 +57,6 @@ public class DrivetrainTest {
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("shooter");
         shooter = new Shooter(hardwaremap);
-        shooterV = new ShooterV(hardwaremap);
         display.showLoading("intake");
         intake = new Intake(hardwaremap);
         display.showLoading("Done initializing! Press start to play");
