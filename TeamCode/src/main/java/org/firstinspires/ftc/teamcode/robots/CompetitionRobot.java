@@ -58,8 +58,8 @@ public class CompetitionRobot {
 
         display.showLoading("imu");
         imu = new Imu(hardwaremap);
-        display.showLoading("odometry");
-        odometry = new Odometry(hardwaremap);
+//        display.showLoading("odometry");
+//        odometry = new Odometry(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
         display.showLoading("grabber");

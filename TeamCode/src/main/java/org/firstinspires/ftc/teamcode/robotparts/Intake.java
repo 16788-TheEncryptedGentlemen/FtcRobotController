@@ -4,19 +4,20 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Intake {
 
-    public DcMotor Intake;
+    private DcMotor intakeMotor;
 
     public static final double Power = -1.0;
+    public static final double POWER_OFF = 0;
 
     public Intake(HardwareMap hardwareMap){
-       Intake = hardwareMap.get(DcMotor.class, "IntakeMotor");
-       Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-       Intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+       intake = hardwareMap.get(DcMotor.class, "IntakeMotor");
+       intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+       intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
     public void IntakeStart(double power) {
-        Intake.setPower(Power);
+        intake.setPower(Power);
     }
     public void IntakeStop(){
-        Intake.setPower(0.0);
+        intake.setPower(0.0);
     }
 }
