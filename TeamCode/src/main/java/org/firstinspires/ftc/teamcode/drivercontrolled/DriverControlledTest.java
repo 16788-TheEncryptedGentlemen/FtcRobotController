@@ -57,8 +57,8 @@ public class DriverControlledTest extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-        //  telemetry.addData("X", robot.odometry.getX());
-        //   telemetry.addData("Y", robot.odometry.getY());
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).
@@ -178,7 +178,7 @@ public class DriverControlledTest extends OpMode {
     private void Intake() {
         if (gamepad2.left_bumper) {
             telemetry.addLine("Taking ball in");
-            robot.intake.IntakeStart(0.0);
+            robot.intake.IntakeStart();
         } else {
             telemetry.addLine("No taking in");
             robot.intake.IntakeStop();

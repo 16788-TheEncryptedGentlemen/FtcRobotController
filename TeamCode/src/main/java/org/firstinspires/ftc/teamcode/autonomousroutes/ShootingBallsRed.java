@@ -22,12 +22,12 @@ public class ShootingBallsRed extends LinearOpMode {
     }
 
     public void redRoute() {
-        robot.shooterV.shootForAutonomous(0);
+        robot.shooterV.shootForAutonomous();
         robot.drivetrain.driveStraight(40,POWER);
         sleep(1000);
         robot.shooter.DeliverBall();
         sleep(500);
-        robot.intake.IntakeStart(-1.0);
+        robot.intake.IntakeStart();
         sleep(5000);
         robot.shooter.stopMotor();
         robot.intake.IntakeStop();

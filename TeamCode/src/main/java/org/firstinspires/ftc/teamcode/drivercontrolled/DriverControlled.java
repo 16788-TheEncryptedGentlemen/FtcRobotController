@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode.drivercontrolled;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
@@ -182,7 +179,7 @@ public class DriverControlled extends OpMode {
     private void Intake(){
         if (gamepad2.left_bumper) {
             telemetry.addLine("Taking ball in");
-            robot.intake.IntakeStart(0.0);
+            robot.intake.IntakeStart();
         }
         else{
             telemetry.addLine("No taking in");

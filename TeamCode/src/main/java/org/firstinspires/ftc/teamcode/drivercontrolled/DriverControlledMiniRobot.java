@@ -2,13 +2,11 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainOnly;
-import org.firstinspires.ftc.teamcode.robotparts.ShooterV;
 
 
 //@TeleOp
@@ -57,8 +55,8 @@ public class DriverControlledMiniRobot extends OpMode {
         double leftJoyX = gamepad1.left_stick_x;
 
         // Show distance (x,y) of the robot on the driver hub for debugging.
-        //  telemetry.addData("X", robot.odometry.getX());
-        //   telemetry.addData("Y", robot.odometry.getY());
+        telemetry.addData("X", robot.odometry.getX());
+        telemetry.addData("Y", robot.odometry.getY());
         telemetry.addData("IMU", robot.imu.getAngle());
 
         // The speed of strafing (between 0 and 1).

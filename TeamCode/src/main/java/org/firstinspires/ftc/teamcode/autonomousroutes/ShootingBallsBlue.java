@@ -22,11 +22,11 @@ public class ShootingBallsBlue extends LinearOpMode {
     }
 
     public void blueRoute() {
-        robot.shooterV.shootForAutonomous(0);
+        robot.shooterV.shootForAutonomous();
         robot.drivetrain.driveStraight(40,POWER);
         sleep(1000);
         robot.shooter.DeliverBall();
-        robot.intake.IntakeStart(1);
+        robot.intake.IntakeStart();
         sleep(3000);
         robot.shooter.stopMotor();
         robot.intake.IntakeStop();
@@ -36,7 +36,7 @@ public class ShootingBallsBlue extends LinearOpMode {
         sleep(100);
         robot.drivetrain.turnRobotAO(-176);
         sleep(100);
-        robot.intake.IntakeStart(1);
+        robot.intake.IntakeStart();
         robot.shooter.DeliverBall();
         robot.drivetrain.driveStraight(85,0.3);
         sleep(400);

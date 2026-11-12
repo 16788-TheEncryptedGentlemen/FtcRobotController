@@ -54,13 +54,13 @@ public class ShooterV extends LinearOpMode {
 
     }
 
-    public void shootV(double velocity) {
+    public void shootV() {
         //todo: check these values
         MotorL.setVelocity(RPM);
         MotorR.setVelocity(-RPM);
     }
 
-    public void shootForAutonomous(double velocity){
+    public void shootForAutonomous(){
         MotorL.setVelocity(930);
         MotorR.setVelocity(-930);
     }
