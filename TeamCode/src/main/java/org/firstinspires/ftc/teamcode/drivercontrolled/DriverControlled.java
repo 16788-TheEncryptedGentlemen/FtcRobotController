@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
@@ -21,26 +22,25 @@ public class DriverControlled extends OpMode {
      */
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
-    public final double DefaultPosition = 0.8;
 
     @Override
     /** Initialisation */
     public void init() {
         robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
+        robot.odometry.reset();
     }
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
+        robot.odometry.update();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
         BallDelivery();
         Intake();
-
-
     }
 
     private void controlDrivetrain() {
@@ -165,10 +165,10 @@ public class DriverControlled extends OpMode {
 
         if (gamepad2.right_bumper) {
             telemetry.addLine("Shooting");
-            robot.shooter.shoot(0);
+            robot.shooter.shoot();
         } else if (gamepad2.a && gamepad2.right_trigger > 0.4) {
             telemetry.addLine("Shooting further");
-            robot.shooter.shootFaster(0);
+            robot.shooter.shootFaster();
         }
         else{
             telemetry.addLine("Don't shoot");

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robotparts.FlowerArm;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
@@ -22,19 +21,20 @@ public class DriverControlledTest extends OpMode {
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
     private boolean Shoot = false;
-    public final double DefaultPosition = 0.8;
 
     @Override
     /** Initialisation */
     public void init() {
         robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
+        robot.odometry.reset();
     }
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
+        robot.odometry.update();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
