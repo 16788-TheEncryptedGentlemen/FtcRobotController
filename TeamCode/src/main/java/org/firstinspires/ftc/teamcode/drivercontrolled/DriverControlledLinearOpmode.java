@@ -38,6 +38,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
      */
     public void controlLoop() {
         controlDrivetrain();
+        robot.odometry.update();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();

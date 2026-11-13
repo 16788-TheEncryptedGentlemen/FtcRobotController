@@ -30,8 +30,8 @@ public class Odometry extends BaseOdometry {
      * @param hardwareMap The hardware map of the robot.
      */
     public Odometry(HardwareMap hardwareMap) {
-        xWheel = hardwareMap.get(DcMotorEx.class, "CoreHexMotor");
-        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor");
+        xWheel = hardwareMap.get(DcMotorEx.class, "Xwheel");
+        yWheel = hardwareMap.get(DcMotorEx.class, "Ywheel");
 
         reset();
 

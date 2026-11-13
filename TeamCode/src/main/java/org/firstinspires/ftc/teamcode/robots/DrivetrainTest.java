@@ -48,10 +48,6 @@ public class DrivetrainTest {
         imu = new Imu(hardwaremap);
         display.showLoading("odometry");
         odometry = new PinPointOdometry(hardwaremap); // INFO: changed odometry type. change type to select old Odometry
-        display.showLoading("shooter");
-        shooter = new Shooter(hardwaremap);
-        display.showLoading("shooterV");
-        shooterV = new ShooterV(hardwaremap);
         display.showLoading("intake");
         intake = new Intake(hardwaremap);
         display.showLoading("flowerArm");

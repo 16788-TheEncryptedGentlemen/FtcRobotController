@@ -13,19 +13,22 @@ public class PinPointOdometry extends BaseOdometry {
     public PinPointOdometry(HardwareMap hardwareMap) {
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "PinPoint");
         pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        pinpoint.setEncoderDirections(EncoderDirection.FORWARD, EncoderDirection.FORWARD);
-        pinpoint.setOffsets(0.0, 0.0, DistanceUnit.MM);
+        pinpoint.setEncoderDirections(EncoderDirection.FORWARD, EncoderDirection.REVERSED);
+        pinpoint.setOffsets(0.0, 0.0, DistanceUnit.CM);
     }
 
     /** Returns the x position of the pinpointodometry. */
     @Override
-    public double getX() { return pinpoint.getPosX(DistanceUnit.MM); }
+    public double getX() { return  pinpoint.getPosX(DistanceUnit.CM); }
 
     /** Returns the y position of the pinpointodometry. */
     @Override
-    public double getY() { return pinpoint.getPosY(DistanceUnit.MM); }
+    public double getY() { return pinpoint.getPosY(DistanceUnit.CM); }
 
     /** Resets the encoders. */
     @Override
     public void reset() { pinpoint.resetPosAndIMU(); }
+
+    @Override
+    public void update() {pinpoint.update();}
 }

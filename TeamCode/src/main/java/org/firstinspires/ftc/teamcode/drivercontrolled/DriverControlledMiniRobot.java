@@ -29,17 +29,16 @@ public class DriverControlledMiniRobot extends OpMode {
     public void init() {
         robot = new DrivetrainOnly(this);
         antiJerkTimer = new Timer();
+        robot.odometry.reset();
     }
 
     @Override
     /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
+        robot.odometry.update();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
-       
-
-
     }
 
     private void controlDrivetrain() {
