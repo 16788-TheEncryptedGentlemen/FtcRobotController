@@ -39,7 +39,6 @@ public class DriverControlled extends OpMode {
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
-        BallDelivery();
         Intake();
     }
 
@@ -147,7 +146,7 @@ public class DriverControlled extends OpMode {
 
 
     //controles shooter
-    private void BallDelivery(){
+/*    private void BallDelivery(){
         if (gamepad2.left_stick_y < -0.5){
             telemetry.addLine("Give Ball");
             robot.shooter.DeliverBall();
@@ -160,7 +159,7 @@ public class DriverControlled extends OpMode {
             telemetry.addLine("New Ball");
             robot.shooter.NewBall();
         }
-    }
+    }*/
     private void controlShooter(){
 
         if (gamepad2.right_bumper) {

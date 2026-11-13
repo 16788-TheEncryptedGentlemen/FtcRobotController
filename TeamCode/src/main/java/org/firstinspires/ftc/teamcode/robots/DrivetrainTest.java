@@ -15,9 +15,9 @@ public class DrivetrainTest {
     public BaseOdometry odometry;
     public MecanumDrivetrain drivetrain;
     public Shooter shooter;
-    public ShooterV shooterV;
     public Intake intake;
     public FlowerArm flowerArm;
+    public BallBlocker ballBlocker;
 
     /**
      * The constructor for a LinearOpMode program.
@@ -36,6 +36,7 @@ public class DrivetrainTest {
         Initialize(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        display.showLoading("Done initializing! Press start to play");
     }
 
 
@@ -52,6 +53,10 @@ public class DrivetrainTest {
         intake = new Intake(hardwaremap);
         display.showLoading("flowerArm");
         flowerArm = new FlowerArm(hardwaremap);
-        display.showLoading("Done initializing! Press start to play");
+        display.showLoading("Shooter");
+        shooter = new Shooter(hardwaremap);
+        display.showLoading("BallBlocker");
+        ballBlocker = new BallBlocker(hardwaremap);
+
     }
 }

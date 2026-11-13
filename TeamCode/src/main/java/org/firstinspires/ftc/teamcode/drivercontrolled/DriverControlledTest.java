@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.robotparts.BallBlocker;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
@@ -21,6 +22,7 @@ public class DriverControlledTest extends OpMode {
     private double desiredHeading = 0;
     private Timer antiJerkTimer;
     private boolean Shoot = false;
+    private boolean Block = false;
 
     @Override
     /** Initialisation */
@@ -28,6 +30,7 @@ public class DriverControlledTest extends OpMode {
         robot = new DrivetrainTest(this);
         antiJerkTimer = new Timer();
         robot.odometry.reset();
+        robot.flowerArm.reset();
     }
 
     @Override
@@ -38,9 +41,9 @@ public class DriverControlledTest extends OpMode {
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
-        BallDelivery();
         Intake();
         FlowerArm();
+        BallBlocker();
     }
 
     private void controlDrivetrain() {
@@ -142,22 +145,7 @@ public class DriverControlledTest extends OpMode {
         telemetry.addData("GyroCorrectionFactor", correctionFactor);
     }
 
-
-
-    private void BallDelivery() {
-        if (gamepad2.left_stick_y > 0.5) {
-            telemetry.addLine("Give Ball");
-            robot.shooter.DeliverBall();
-        } else if (gamepad2.left_stick_y < -0.5) {
-            telemetry.addLine("Reverse Ball");
-            robot.shooter.ReverseBall();
-        } else {
-            telemetry.addLine("New Ball");
-            robot.shooter.NewBall();
-        }
-    }
-
-    private void controlShooter() {
+   private void controlShooter() {
 
         if (gamepad2.rightBumperWasPressed()) {
             Shoot = !Shoot; //On / Off toggle
@@ -204,5 +192,17 @@ public class DriverControlledTest extends OpMode {
         }
     }
 
+    public void BallBlocker(){
+        if (gamepad2.aWasPressed()){
+            Block = !Block;
+            telemetry.addData("Block", Block);
+        }
+
+        if(Block){robot.ballBlocker.blockBall();}
+
+        else {robot.ballBlocker.unblockBall();}
+    }
+
 
 }
+

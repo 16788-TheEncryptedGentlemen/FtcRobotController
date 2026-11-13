@@ -10,10 +10,10 @@ public class FlowerArm {
     public DcMotorEx ArmMotor;
     public Servo Grabber;
 
-    private int groundPos = 0/*some number here*/ ;
-    private int airPos = 365/*some sumber here*/ ;
-    private double open = 0/*some number here*/ ;
-    private double closed = 0.5/*some number here*/ ;
+    private int groundPos = 0 ;
+    private int airPos = 365 ;
+    private double open = 0 ;
+    private double closed = 0.5 ;
 
     public FlowerArm (HardwareMap hardwareMap){
         ArmMotor = hardwareMap.get(DcMotorEx.class, "ArmMotor");
@@ -37,6 +37,10 @@ public class FlowerArm {
     }
     public void closeBallGrabber(){
         Grabber.setPosition(closed);
+    }
+    public void reset(){
+        ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
 }

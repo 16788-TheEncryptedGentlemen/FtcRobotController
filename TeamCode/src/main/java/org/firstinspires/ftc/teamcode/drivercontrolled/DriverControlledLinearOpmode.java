@@ -42,9 +42,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
-        BallDelivery();
         Intake();
-        SpeedChange();
     }
 
     private void controlDrivetrain() {
@@ -146,18 +144,6 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
     }
 
     //controls shooter
-    private void BallDelivery() {
-        if (gamepad2.left_stick_y > 0.5) {
-            telemetry.addLine("Give Ball");
-            robot.shooter.DeliverBall();
-        } else if (gamepad2.left_stick_y < -0.5) {
-            telemetry.addLine("Reverse Ball");
-            robot.shooter.ReverseBall();
-        } else {
-            telemetry.addLine("New Ball");
-            robot.shooter.NewBall();
-        }
-    }
 
     private void controlShooter() {
 
@@ -168,26 +154,10 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
 
         if (Shoot) {
             telemetry.addLine("Shooting");
-            robot.shooterV.shootV();
+            //robot.shooterV.shootV();
         } else {
             telemetry.addLine("Don't shoot");
             robot.shooter.stopMotor();
-        }
-    }
-
-    private void SpeedChange() {
-
-        telemetry.addData("Shoot speed: ", robot.shooterV.RPM);
-        if (gamepad2.dpadUpWasPressed()) {
-            robot.shooterV.RPM = robot.shooterV.RPM + 5;
-
-        } else if (gamepad2.dpadDownWasPressed()) {
-            robot.shooterV.RPM = robot.shooterV.RPM - 5;
-        } else if (gamepad2.dpadRightWasPressed()) {
-            robot.shooterV.RPM = 1050;
-        } else if (gamepad2.dpadLeftWasPressed()) {
-            robot.shooterV.RPM = 1500;
-
         }
     }
 
