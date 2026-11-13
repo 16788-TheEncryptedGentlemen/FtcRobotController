@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
+
 public class MecanumDrivetrain {
 
     /** The LinearOpMode to start/stop the robot. */ // TODO: Explain what a LinearOpMode is.
@@ -19,12 +21,13 @@ public class MecanumDrivetrain {
     /** Back left motor . */
     public DcMotorEx backLeft;
     /** The odometry of the robot. */
-    public Odometry odometry;
+    public BaseOdometry odometry;
     /** The Integrated Measurement Unit of the robot. */
     public Imu imu;
 
     /** The default MecanumDrivetrain constructor. */ //TODO: Figure out how to simplify this constructor.
-    public MecanumDrivetrain(HardwareMap hardwareMap, Odometry _odometry, Imu _imu) {
+
+    public MecanumDrivetrain(HardwareMap hardwareMap, BaseOdometry _odometry, Imu _imu) {
         odometry = _odometry;
         imu = _imu;
         frontRight = hardwareMap.get(DcMotorEx.class, "FrontRight");
@@ -52,19 +55,18 @@ public class MecanumDrivetrain {
         backLeft.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    /** Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap. */
+    public MecanumDrivetrain(LinearOpMode _runningOpMode, BaseOdometry _Odometry, Imu _imu) {
+        this(_runningOpMode.hardwareMap, _Odometry, _imu);
+        runningOpMode = _runningOpMode;
+    }
+
     public void setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior brake) {
         // Sets power of encoders to zero.
         frontRight.setZeroPowerBehavior(brake);
         backRight.setZeroPowerBehavior(brake);
         frontLeft.setZeroPowerBehavior(brake);
         backLeft.setZeroPowerBehavior(brake);
-    }
-
-
-    /** Constructor for MecanumDrivetrain with an LinearOpMode as argument instead of hardwareMap. */
-    public MecanumDrivetrain(LinearOpMode _runningOpMode, Odometry _Odometry, Imu _imu) {
-        this(_runningOpMode.hardwareMap, _Odometry, _imu);
-        runningOpMode = _runningOpMode;
     }
 
     //TODO: Figure out how to simplify this constructor.

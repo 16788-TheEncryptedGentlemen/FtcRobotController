@@ -167,7 +167,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
 
         if (Shoot) {
             telemetry.addLine("Shooting");
-            robot.shooterV.shootV(0);
+            robot.shooterV.shootV();
         } else {
             telemetry.addLine("Don't shoot");
             robot.shooter.stopMotor();
@@ -193,7 +193,7 @@ public class DriverControlledLinearOpmode extends LinearOpMode {
     private void Intake() {
         if (gamepad2.left_bumper) {
             telemetry.addLine("Taking ball in");
-            robot.intake.IntakeStart(0.0);
+            robot.intake.IntakeStart();
         } else {
             telemetry.addLine("No taking in");
             robot.intake.IntakeStop();

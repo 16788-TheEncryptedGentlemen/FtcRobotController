@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.robotparts;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Odometry {
+import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
+
+public class Odometry extends BaseOdometry {
     /** Counts per rotation of the encoder. */
     public final static int countsPerRotation = 2000;
     /** Diameter of the odometry wheels in cm. */
@@ -30,7 +31,7 @@ public class Odometry {
      */
     public Odometry(HardwareMap hardwareMap) {
         xWheel = hardwareMap.get(DcMotorEx.class, "CoreHexMotor");
-        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor ");
+        yWheel = hardwareMap.get(DcMotorEx.class, "IntakeMotor");
 
         reset();
 
@@ -39,23 +40,22 @@ public class Odometry {
     }
 
     /** Returns the x position of the odometry. */
+    @Override
     public double getX() {
         // Minus cmPerCount because the values are revered. Drive to left= - and drive to right = +.
         return -cmPerCount * xWheel.getCurrentPosition() * horizontalCorrection;
     }
 
     /** Returns the y position of the odometry. */
+    @Override
     public double getY() {
         return cmPerCount * yWheel.getCurrentPosition() * verticalCorrection;
     }
 
     /** Gets distance from the original starting position. */
-    public double getDistanceFromStart() {
-        /** Use Pythagoras */
-        return Math.hypot(getY(), getX());
-    }
 
     /** Resets the encoders. */
+    @Override
     public void reset() {
         xWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         yWheel.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
