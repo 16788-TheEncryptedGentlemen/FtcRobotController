@@ -16,6 +16,4 @@ public class BaseOdometry {
 
     /** Resets the encoders. */
     public void reset() { }
-
-    public void update(){}
 }
