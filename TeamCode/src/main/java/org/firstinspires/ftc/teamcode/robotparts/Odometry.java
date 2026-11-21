@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.robotparts;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
-
 public class Odometry extends BaseOdometry {
     /** Counts per rotation of the encoder. */
     public final static int countsPerRotation = 2000;

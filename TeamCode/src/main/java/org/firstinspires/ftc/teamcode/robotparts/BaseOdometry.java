@@ -1,7 +1,7 @@
-package org.firstinspires.ftc.teamcode.robotparts.template;
+package org.firstinspires.ftc.teamcode.robotparts;
 
 public class BaseOdometry {
-    public BaseOdometry() {};
+    public BaseOdometry() {}
     /** Returns the x position of the pinpointodometry. */
     public double getX() { return 0; }
 
@@ -10,12 +10,10 @@ public class BaseOdometry {
 
     /// get straight distance from startpoint
     public double getDistance() {
-        /** Use Pythagoras */
+        /* Use Pythagoras */
         return Math.hypot(getY(), getX());
     }
 
     /** Resets the encoders. */
     public void reset() { }
-
-    public void update(){}
 }
