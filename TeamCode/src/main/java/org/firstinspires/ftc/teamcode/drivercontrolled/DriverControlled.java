@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.drivercontrolled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.robotparts.Odometry;
 import org.firstinspires.ftc.teamcode.robotparts.Timer;
 import org.firstinspires.ftc.teamcode.robots.DrivetrainTest;
 
@@ -35,7 +34,6 @@ public class DriverControlled extends OpMode {
     /** Repeats program until program is stopped */
     public void loop() {
         controlDrivetrain();
-        robot.odometry.update();
         telemetry.addData("X", robot.odometry.getX());
         telemetry.addData("Y", robot.odometry.getY());
         controlShooter();
@@ -143,7 +141,7 @@ public class DriverControlled extends OpMode {
     }
 
 
-    //:todo makeshure it works with the shooter after the bois reassembled the robot
+    //TODO: makeshure it works with the shooter after the bois reassembled the robot
 
 
     //controles shooter

@@ -5,7 +5,6 @@ import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver.EncoderDirection;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
 
 public class PinPointOdometry extends BaseOdometry {
     public GoBildaPinpointDriver pinpoint;
@@ -19,16 +18,13 @@ public class PinPointOdometry extends BaseOdometry {
 
     /** Returns the x position of the pinpointodometry. */
     @Override
-    public double getX() { return  pinpoint.getPosX(DistanceUnit.CM); }
+    public double getX() { pinpoint.update(); return pinpoint.getPosX(DistanceUnit.CM); }
 
     /** Returns the y position of the pinpointodometry. */
     @Override
-    public double getY() { return pinpoint.getPosY(DistanceUnit.CM); }
+    public double getY() { pinpoint.update(); return pinpoint.getPosY(DistanceUnit.CM); }
 
     /** Resets the encoders. */
     @Override
     public void reset() { pinpoint.resetPosAndIMU(); }
-
-    @Override
-    public void update() {pinpoint.update();}
 }

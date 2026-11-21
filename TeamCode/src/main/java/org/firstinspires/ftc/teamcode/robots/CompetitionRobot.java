@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
 import org.firstinspires.ftc.teamcode.robotparts.*;
-import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
 
 /**
  * Contains all the robot parts.
@@ -29,8 +28,9 @@ public class CompetitionRobot {
         display = new Display(runningLinearOpMode.telemetry);
         HardwareMap hardwaremap = runningLinearOpMode.hardwareMap;
         Initialize(hardwaremap);
-        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
         display.showLoading("drivetrain");
+        drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        display.showLoading("Done initializing! Press start to play");
     }
 
     public CompetitionRobot(OpMode opMode) {
@@ -39,6 +39,7 @@ public class CompetitionRobot {
         Initialize(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        display.showLoading("Done initializing! Press start to play");
     }
 
     /**
@@ -56,6 +57,5 @@ public class CompetitionRobot {
         arm = new Arm2Motor(hardwaremap);
         display.showLoading("slidergrabber");
         sliderGrabber2 = new SliderGrabber2(hardwaremap);
-        display.showLoading("Done initializing! Press start to play");
     }
 }

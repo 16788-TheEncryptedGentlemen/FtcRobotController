@@ -4,8 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.robotparts.template.BaseOdometry;
-
 public class MecanumDrivetrain {
 
     /** The LinearOpMode to start/stop the robot. */ // TODO: Explain what a LinearOpMode is.

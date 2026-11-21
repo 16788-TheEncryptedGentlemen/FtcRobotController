@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.otherclasses.Display;
 import org.firstinspires.ftc.teamcode.robotparts.*;
-import org.firstinspires.ftc.teamcode.robotparts.template.*;
 
 public class DrivetrainTest {
 
@@ -28,6 +27,7 @@ public class DrivetrainTest {
         Initialize(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(runningLinearOpMode, odometry, imu);
+        display.showLoading("Done initializing! Press start to play");
     }
 
     public DrivetrainTest(OpMode opMode) {
@@ -36,6 +36,7 @@ public class DrivetrainTest {
         Initialize(hardwaremap);
         display.showLoading("drivetrain");
         drivetrain = new MecanumDrivetrain(hardwaremap, odometry, imu);
+        display.showLoading("Done initializing! Press start to play");
     }
 
 
@@ -52,6 +53,5 @@ public class DrivetrainTest {
         intake = new Intake(hardwaremap);
         display.showLoading("flowerArm");
         flowerArm = new FlowerArm(hardwaremap);
-        display.showLoading("Done initializing! Press start to play");
     }
 }
